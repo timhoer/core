@@ -56,10 +56,12 @@ bool SEInitialEnvironment::IsValid() const
 bool SEInitialEnvironment::Load(const CDM::InitialEnvironmentData& in)
 {
   SEEnvironmentCondition::Load(in);
-  if (in.ConditionsFile().present())
+  if (in.ConditionsFile().present()) {
     SetConditionsFile(in.ConditionsFile().get());
-  if (in.Conditions().present())
+  }
+  if (in.Conditions().present()) {
     GetConditions().Load(in.Conditions().get());
+  }
   return true;
 }
 
@@ -72,10 +74,11 @@ CDM::InitialEnvironmentData* SEInitialEnvironment::Unload() const
 void SEInitialEnvironment::Unload(CDM::InitialEnvironmentData& data) const
 {
   SEEnvironmentCondition::Unload(data);
-  if (HasConditions())
+  if (HasConditions()) {
     data.Conditions(std::unique_ptr<CDM::EnvironmentalConditionsData>(m_Conditions->Unload()));
-  else if (HasConditionsFile())
+  } else if (HasConditionsFile()) {
     data.ConditionsFile(m_ConditionsFile);
+  }
 }
 
 bool SEInitialEnvironment::HasConditions() const
@@ -85,8 +88,9 @@ bool SEInitialEnvironment::HasConditions() const
 SEEnvironmentalConditions& SEInitialEnvironment::GetConditions()
 {
   m_ConditionsFile = "";
-  if (m_Conditions == nullptr)
+  if (m_Conditions == nullptr) {
     m_Conditions = new SEEnvironmentalConditions(m_Substances);
+  }
   return *m_Conditions;
 }
 const SEEnvironmentalConditions* SEInitialEnvironment::GetConditions() const
@@ -116,10 +120,12 @@ void SEInitialEnvironment::InvalidateConditionsFile()
 void SEInitialEnvironment::ToString(std::ostream& str) const
 {
   str << "Environment Change";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
-  if (HasConditionsFile())
+  }
+  if (HasConditionsFile()) {
     str << "\n\tConditions File: ";
+  }
   str << m_ConditionsFile;
   if (HasConditions()) {
     str << "\n\tSurroundingType: ";

@@ -110,8 +110,9 @@ extern "C" JNIEXPORT void JNICALL Java_mil_tatrc_physiology_biogears_engine_BioG
   BioGearsEngineJNI* engineJNI = reinterpret_cast<BioGearsEngineJNI*>(ptr);
   //engineJNI->jniEnv = env; I am not doing this because the cancel comes in on another thread
   //engineJNI->jniObj = obj; and it has valid copies of the env and obj for its context
-  if (engineJNI->exec != nullptr)
-    engineJNI->exec->Cancel(); // This will not do anything with JNI
+  if (engineJNI->exec != nullptr) {
+    engineJNI->exec->Cancel(); // This will not do anything with JNI }
+  }
 }
 
 extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_biogears_engine_BioGearsEngine_nativeLoadState(JNIEnv* env, jobject obj, jlong ptr, jstring stateFilename, jdouble simTime_s, jstring dataRequestsXML)
@@ -173,8 +174,9 @@ extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_biogears_engine_
   bool ret = false;
   const char* pXML = env->GetStringUTFChars(patientXML, JNI_FALSE);
   const char* cXML = nullptr;
-  if (conditionsXML != nullptr)
+  if (conditionsXML != nullptr) {
     cXML = env->GetStringUTFChars(conditionsXML, JNI_FALSE);
+  }
   const char* drXML = env->GetStringUTFChars(dataRequestsXML, JNI_FALSE);
   try {
     BioGearsEngineJNI* engineJNI = reinterpret_cast<BioGearsEngineJNI*>(ptr);
@@ -270,8 +272,9 @@ extern "C" JNIEXPORT bool JNICALL Java_mil_tatrc_physiology_biogears_engine_BioG
 extern "C" JNIEXPORT bool JNICALL Java_mil_tatrc_physiology_biogears_engine_BioGearsEngine_nativeProcessActions(JNIEnv* env, jobject obj, jlong ptr, jstring actionsXML)
 {
   bool success = true;
-  if (actionsXML == nullptr)
+  if (actionsXML == nullptr) {
     return success;
+  }
   BioGearsEngineJNI* engineJNI = reinterpret_cast<BioGearsEngineJNI*>(ptr);
   engineJNI->jniEnv = env;
   engineJNI->jniObj = obj;
@@ -284,8 +287,9 @@ extern "C" JNIEXPORT bool JNICALL Java_mil_tatrc_physiology_biogears_engine_BioG
   try {
     for (unsigned int i = 0; i < aList->Action().size(); i++) {
       SEAction* a = SEAction::newFromBind(aList->Action()[i], engineJNI->eng->GetSubstanceManager());
-      if (!engineJNI->eng->ProcessAction(*a))
+      if (!engineJNI->eng->ProcessAction(*a)) {
         success = false;
+      }
       SAFE_DELETE(a);
     }
   } catch (CommonDataModelException& ex) {
@@ -406,11 +410,13 @@ void BioGearsEngineJNI::PushData(double time_s)
     if (firstUpdate) {
       firstUpdate = false;
       jobjectArray sary = jniEnv->NewObjectArray(static_cast<jsize>(headings.size()), jniEnv->FindClass("java/lang/String"), jniEnv->NewStringUTF(""));
-      for (unsigned int i = 0; i < headings.size(); i++)
+      for (unsigned int i = 0; i < headings.size(); i++) {
         jniEnv->SetObjectArrayElement(sary, i, jniEnv->NewStringUTF(headings[i].c_str()));
+      }
       m = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "setCDMHeadings", "([Ljava/lang/String;)V");
-      if (m == nullptr)
+      if (m == nullptr) {
         std::cerr << "Can't find setCDMHeadings method in Java" << std::endl;
+      }
       jniEnv->CallVoidMethod(jniObj, m, sary);
     }
 
@@ -420,14 +426,17 @@ void BioGearsEngineJNI::PushData(double time_s)
 
     jboolean isCopy = JNI_FALSE;
     jdouble* reqData = jniEnv->GetDoubleArrayElements(ary, &isCopy);
-    for (unsigned int i = 0; i < headings.size(); i++)
+    for (unsigned int i = 0; i < headings.size(); i++) {
       reqData[i] = trk->GetProbe(headings[i]);
-    if (isCopy == JNI_TRUE)
+    }
+    if (isCopy == JNI_TRUE) {
       jniEnv->ReleaseDoubleArrayElements(ary, reqData, JNI_COMMIT);
+    }
 
     m = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "updateCDM", "(D[D)V");
-    if (m == nullptr)
+    if (m == nullptr) {
       std::cerr << "Can't find updateCDM method in Java" << std::endl;
+    }
     jniEnv->CallVoidMethod(jniObj, m, time_s, ary);
   }
 }
@@ -437,8 +446,9 @@ void BioGearsEngineJNI::ForwardDebug(const std::string& msg, const std::string& 
   if (jniEnv != nullptr && jniObj != nullptr) {
     jstring m = jniEnv->NewStringUTF(msg.c_str());
     jstring o = jniEnv->NewStringUTF(origin.c_str());
-    if (jniDebugMethodID == nullptr)
+    if (jniDebugMethodID == nullptr) {
       jniDebugMethodID = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "LogDebug", "(Ljava/lang/String;Ljava/lang/String;)V");
+    }
     jniEnv->CallVoidMethod(jniObj, jniDebugMethodID, m, o);
   }
 }
@@ -448,8 +458,9 @@ void BioGearsEngineJNI::ForwardInfo(const std::string& msg, const std::string& o
   if (jniEnv != nullptr && jniObj != nullptr) {
     jstring m = jniEnv->NewStringUTF(msg.c_str());
     jstring o = jniEnv->NewStringUTF(origin.c_str());
-    if (jniInfoMethodID == nullptr)
+    if (jniInfoMethodID == nullptr) {
       jniInfoMethodID = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "LogInfo", "(Ljava/lang/String;Ljava/lang/String;)V");
+    }
     jniEnv->CallVoidMethod(jniObj, jniInfoMethodID, m, o);
   }
 }
@@ -459,8 +470,9 @@ void BioGearsEngineJNI::ForwardWarning(const std::string& msg, const std::string
   if (jniEnv != nullptr && jniObj != nullptr) {
     jstring m = jniEnv->NewStringUTF(msg.c_str());
     jstring o = jniEnv->NewStringUTF(origin.c_str());
-    if (jniWarnMethodID == nullptr)
+    if (jniWarnMethodID == nullptr) {
       jniWarnMethodID = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "LogWarning", "(Ljava/lang/String;Ljava/lang/String;)V");
+    }
     jniEnv->CallVoidMethod(jniObj, jniWarnMethodID, m, o);
   }
 }
@@ -470,8 +482,9 @@ void BioGearsEngineJNI::ForwardError(const std::string& msg, const std::string& 
   if (jniEnv != nullptr && jniObj != nullptr) {
     jstring m = jniEnv->NewStringUTF(msg.c_str());
     jstring o = jniEnv->NewStringUTF(origin.c_str());
-    if (jniErrorMethodID == nullptr)
+    if (jniErrorMethodID == nullptr) {
       jniErrorMethodID = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "LogError", "(Ljava/lang/String;Ljava/lang/String;)V");
+    }
     jniEnv->CallVoidMethod(jniObj, jniErrorMethodID, m, o);
   }
 }
@@ -481,8 +494,9 @@ void BioGearsEngineJNI::ForwardFatal(const std::string& msg, const std::string& 
   if (jniEnv != nullptr && jniObj != nullptr) {
     jstring m = jniEnv->NewStringUTF(msg.c_str());
     jstring o = jniEnv->NewStringUTF(origin.c_str());
-    if (jniFatalMethodID == nullptr)
+    if (jniFatalMethodID == nullptr) {
       jniFatalMethodID = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "LogFatal", "(Ljava/lang/String;Ljava/lang/String;)V");
+    }
     jniEnv->CallVoidMethod(jniObj, jniFatalMethodID, m, o);
   }
   std::string err;
@@ -496,8 +510,9 @@ void BioGearsEngineJNI::HandlePatientEvent(CDM::enumPatientEvent::value type, bo
 {
   if (jniEnv != nullptr && jniObj != nullptr) {
     jmethodID m = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "handleEvent", "(IIZD)V");
-    if (m == nullptr)
+    if (m == nullptr) {
       std::cerr << "Can't find handleEvent method in Java" << std::endl;
+    }
     jniEnv->CallVoidMethod(jniObj, m, 0, type, active, time != nullptr ? time->GetValue(TimeUnit::s) : 0);
   }
 }
@@ -505,8 +520,9 @@ void BioGearsEngineJNI::HandleAnesthesiaMachineEvent(CDM::enumAnesthesiaMachineE
 {
   if (jniEnv != nullptr && jniObj != nullptr) {
     jmethodID m = jniEnv->GetMethodID(jniEnv->GetObjectClass(jniObj), "handleEvent", "(IIZD)V");
-    if (m == nullptr)
+    if (m == nullptr) {
       std::cerr << "Can't find handleEvent method in Java" << std::endl;
+    }
     jniEnv->CallVoidMethod(jniObj, m, 1, type, active, time != nullptr ? time->GetValue(TimeUnit::s) : 0);
   }
 }

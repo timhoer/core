@@ -34,8 +34,9 @@ void SEFunctionVolumeVsTime::Clear()
 
 bool SEFunctionVolumeVsTime::Load(const CDM::FunctionVolumeVsTimeData& in)
 {
-  if (!SEFunction::Load(in))
+  if (!SEFunction::Load(in)) {
     return false;
+  }
   m_TimeUnit = &TimeUnit::GetCompoundUnit(in.IndependentUnit().get());
   m_VolumeUnit = &VolumeUnit::GetCompoundUnit(in.DependentUnit().get());
   return IsValid();
@@ -43,8 +44,9 @@ bool SEFunctionVolumeVsTime::Load(const CDM::FunctionVolumeVsTimeData& in)
 
 CDM::FunctionVolumeVsTimeData* SEFunctionVolumeVsTime::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::FunctionVolumeVsTimeData* data(new CDM::FunctionVolumeVsTimeData());
   Unload(*data);
   return data;
@@ -59,10 +61,12 @@ void SEFunctionVolumeVsTime::Unload(CDM::FunctionVolumeVsTimeData& data) const
 
 double SEFunctionVolumeVsTime::GetTimeValue(unsigned int index, const TimeUnit& unit)
 {
-  if (m_TimeUnit == nullptr)
+  if (m_TimeUnit == nullptr) {
     throw CommonDataModelException("No time units have been set");
-  if (index >= m_Independent.size())
+  }
+  if (index >= m_Independent.size()) {
     throw CommonDataModelException("Independent index out of bounds");
+  }
   return Convert(m_Independent[index], *m_TimeUnit, unit);
 }
 std::vector<double>& SEFunctionVolumeVsTime::GetTime()
@@ -80,10 +84,12 @@ void SEFunctionVolumeVsTime::SetTimeUnit(const TimeUnit& unit)
 
 double SEFunctionVolumeVsTime::GetVolumeValue(unsigned int index, const VolumeUnit& unit)
 {
-  if (m_VolumeUnit == nullptr)
+  if (m_VolumeUnit == nullptr) {
     throw CommonDataModelException("No volume units have been set");
-  if (index >= m_Dependent.size())
+  }
+  if (index >= m_Dependent.size()) {
     throw CommonDataModelException("Dependent index out of bounds");
+  }
   return Convert(m_Dependent[index], *m_VolumeUnit, unit);
 }
 std::vector<double>& SEFunctionVolumeVsTime::GetVolume()

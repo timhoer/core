@@ -70,10 +70,12 @@ CDM::SepsisData* SESepsis::Unload() const
 void SESepsis::Unload(CDM::SepsisData& data) const
 {
   SEPatientAction::Unload(data);
-  if (HasCompartment())
+  if (HasCompartment()) {
     data.Compartment(m_Compartment);
-  if (m_Severity != nullptr)
+  }
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 std::string SESepsis::GetCompartment() const
@@ -99,8 +101,9 @@ bool SESepsis::HasSeverity() const
 }
 SEScalar0To1& SESepsis::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
@@ -155,8 +158,9 @@ void SESepsis::BuildTissueResistorMap()
 void SESepsis::ToString(std::ostream& str) const
 {
   str << "Patient Action : Sepsis";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity:  ";
   str << *m_Severity;
   str << "\n\tCompartment: ";

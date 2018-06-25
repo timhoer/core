@@ -57,17 +57,20 @@ void SEHistogram::Invalidate()
 bool SEHistogram::Load(const CDM::HistogramData& in)
 {
   Clear();
-  for (unsigned int i = 0; i < in.Dependent().DoubleList().size(); i++)
+  for (unsigned int i = 0; i < in.Dependent().DoubleList().size(); i++) {
     m_Dependent.push_back(in.Dependent().DoubleList()[i]);
-  for (unsigned int i = 0; i < in.Independent().DoubleList().size(); i++)
+  }
+  for (unsigned int i = 0; i < in.Independent().DoubleList().size(); i++) {
     m_Independent.push_back(in.Independent().DoubleList()[i]);
+  }
   return IsValid();
 }
 
 CDM::HistogramData* SEHistogram::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::HistogramData* data(new CDM::HistogramData());
   Unload(*data);
   return data;
@@ -79,30 +82,35 @@ void SEHistogram::Unload(CDM::HistogramData& data) const
   data.Dependent().DoubleList(std::unique_ptr<CDM::DoubleList>(new CDM::DoubleList()));
   data.Independent(std::unique_ptr<CDM::DoubleList>(new CDM::DoubleList()));
   data.Independent().DoubleList(std::unique_ptr<CDM::DoubleList>(new CDM::DoubleList()));
-  for (unsigned int i = 0; i < m_Dependent.size(); i++)
+  for (unsigned int i = 0; i < m_Dependent.size(); i++) {
     data.Dependent().DoubleList().push_back(m_Dependent[i]);
-  for (unsigned int i = 0; i < m_Independent.size(); i++)
+  }
+  for (unsigned int i = 0; i < m_Independent.size(); i++) {
     data.Independent().DoubleList().push_back(m_Independent[i]);
+  }
 }
 
 unsigned int SEHistogram::NumberOfBins() const
 {
-  if (IsValid())
+  if (IsValid()) {
     return m_Dependent.size();
+  }
   return 0;
 }
 
 unsigned int SEHistogram::NumberOfBoundaries() const
 {
-  if (IsValid())
+  if (IsValid()) {
     return m_Independent.size();
+  }
   return 0;
 }
 
 double SEHistogram::GetDependentValue(unsigned int index) const
 {
-  if (index >= m_Dependent.size())
+  if (index >= m_Dependent.size()) {
     throw CommonDataModelException("Dependent index out of bounds");
+  }
   return m_Dependent[index];
 }
 
@@ -117,8 +125,9 @@ const std::vector<double>& SEHistogram::GetDependent() const
 
 double SEHistogram::GetIndependentValue(unsigned int index) const
 {
-  if (index >= m_Independent.size())
+  if (index >= m_Independent.size()) {
     throw CommonDataModelException("Independent index out of bounds");
+  }
   return m_Independent[index];
 }
 

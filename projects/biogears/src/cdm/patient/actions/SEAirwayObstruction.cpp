@@ -60,8 +60,9 @@ CDM::AirwayObstructionData* SEAirwayObstruction::Unload() const
 void SEAirwayObstruction::Unload(CDM::AirwayObstructionData& data) const
 {
   SEPatientAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SEAirwayObstruction::HasSeverity() const
@@ -71,16 +72,18 @@ bool SEAirwayObstruction::HasSeverity() const
 
 SEScalar0To1& SEAirwayObstruction::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SEAirwayObstruction::ToString(std::ostream& str) const
 {
   str << "Patient Action : Airway Obstruction";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity: ";
   HasSeverity() ? str << *m_Severity : str << "Not Set";
   str << std::flush;

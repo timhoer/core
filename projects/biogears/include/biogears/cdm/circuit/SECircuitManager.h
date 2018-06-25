@@ -143,22 +143,26 @@ protected:
   {
     PathType* path;
     NodeType* node = GetNode(name, ledger);
-    if (node == nullptr)
+    if (node == nullptr) {
       return;
+    }
     // Remove this node from any circuits
-    for (auto citr : ledger.circuits)
+    for (auto citr : ledger.circuits) {
       citr.second->RemoveNode(*node);
+    }
     // Search the paths and delete any paths that has this node
     // And remove those paths from any circuits
     for (auto pitr = ledger.paths.begin(); pitr != ledger.paths.end();) {
       if (pitr->second->GetSourceNode().GetName() == name) {
         path = pitr->second;
         ledger.paths.erase(pitr++);
-        for (auto citr : ledger.circuits)
+        for (auto citr : ledger.circuits) {
           citr.second->RemovePath(*path);
+        }
         SAFE_DELETE(path);
-      } else
+      } else {
         pitr++;
+      }
     }
     ledger.nodes.erase(node->GetName());
     SAFE_DELETE(node);
@@ -172,16 +176,18 @@ protected:
   NodeType* GetNode(const std::string& name, SECircuitLedger<CIRCUIT_LEDGER_TYPES>& ledger)
   {
     auto itr = ledger.nodes.find(name);
-    if (itr != ledger.nodes.end())
+    if (itr != ledger.nodes.end()) {
       return itr->second;
+    }
     return nullptr;
   }
   template <CIRCUIT_LEDGER_TEMPLATE>
   const NodeType* GetNode(const std::string& name, const SECircuitLedger<CIRCUIT_LEDGER_TYPES>& ledger) const
   {
     auto itr = ledger.nodes.find(name);
-    if (itr != ledger.nodes.end())
+    if (itr != ledger.nodes.end()) {
       return itr->second;
+    }
     return nullptr;
   }
   template <CIRCUIT_LEDGER_TEMPLATE>
@@ -200,11 +206,13 @@ protected:
   void DeletePath(const std::string& name, SECircuitLedger<CIRCUIT_LEDGER_TYPES>& ledger)
   {
     PathType* path = GetPath(name, ledger);
-    if (path == nullptr)
+    if (path == nullptr) {
       return;
+    }
     ledger.paths.erase(name);
-    for (auto itr : ledger.circuits)
+    for (auto itr : ledger.circuits) {
       itr.second->RemovePath(*path);
+    }
     SAFE_DELETE(path);
   }
   template <CIRCUIT_LEDGER_TEMPLATE>
@@ -216,16 +224,18 @@ protected:
   PathType* GetPath(const std::string& name, SECircuitLedger<CIRCUIT_LEDGER_TYPES>& ledger)
   {
     auto itr = ledger.paths.find(name);
-    if (itr != ledger.paths.end())
+    if (itr != ledger.paths.end()) {
       return itr->second;
+    }
     return nullptr;
   }
   template <CIRCUIT_LEDGER_TEMPLATE>
   const PathType* GetPath(const std::string& name, const SECircuitLedger<CIRCUIT_LEDGER_TYPES>& ledger) const
   {
     auto itr = ledger.paths.find(name);
-    if (itr != ledger.paths.end())
+    if (itr != ledger.paths.end()) {
       return itr->second;
+    }
     return nullptr;
   }
   template <CIRCUIT_LEDGER_TEMPLATE>
@@ -244,8 +254,9 @@ protected:
   void DeleteCircuit(const std::string& name, SECircuitLedger<CIRCUIT_LEDGER_TYPES>& ledger)
   {
     CircuitType* circuit = GetCircuit(name, ledger);
-    if (circuit == nullptr)
+    if (circuit == nullptr) {
       return;
+    }
     ledger.circuits.erase(name);
     SAFE_DELETE(circuit);
   }
@@ -258,16 +269,18 @@ protected:
   CircuitType* GetCircuit(const std::string& name, SECircuitLedger<CIRCUIT_LEDGER_TYPES>& ledger)
   {
     auto itr = ledger.circuits.find(name);
-    if (itr != ledger.circuits.end())
+    if (itr != ledger.circuits.end()) {
       return itr->second;
+    }
     return nullptr;
   }
   template <CIRCUIT_LEDGER_TEMPLATE>
   const CircuitType* GetCircuit(const std::string& name, const SECircuitLedger<CIRCUIT_LEDGER_TYPES>& ledger) const
   {
     auto itr = ledger.circuits.find(name);
-    if (itr != ledger.circuits.end())
+    if (itr != ledger.circuits.end()) {
       return itr->second;
+    }
     return nullptr;
   }
 };

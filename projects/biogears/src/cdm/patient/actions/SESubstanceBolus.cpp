@@ -70,12 +70,15 @@ CDM::SubstanceBolusData* SESubstanceBolus::Unload() const
 void SESubstanceBolus::Unload(CDM::SubstanceBolusData& data) const
 {
   SESubstanceAdministration::Unload(data);
-  if (m_Dose != nullptr)
+  if (m_Dose != nullptr) {
     data.Dose(std::unique_ptr<CDM::ScalarVolumeData>(m_Dose->Unload()));
-  if (m_Concentration != nullptr)
+  }
+  if (m_Concentration != nullptr) {
     data.Concentration(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_Concentration->Unload()));
-  if (HasAdminRoute())
+  }
+  if (HasAdminRoute()) {
     data.AdminRoute(m_AdminRoute);
+  }
   data.Substance(m_Substance.GetName());
 }
 
@@ -102,8 +105,9 @@ bool SESubstanceBolus::HasDose() const
 }
 SEScalarVolume& SESubstanceBolus::GetDose()
 {
-  if (m_Dose == nullptr)
+  if (m_Dose == nullptr) {
     m_Dose = new SEScalarVolume();
+  }
   return *m_Dose;
 }
 
@@ -113,8 +117,9 @@ bool SESubstanceBolus::HasConcentration() const
 }
 SEScalarMassPerVolume& SESubstanceBolus::GetConcentration()
 {
-  if (m_Concentration == nullptr)
+  if (m_Concentration == nullptr) {
     m_Concentration = new SEScalarMassPerVolume();
+  }
   return *m_Concentration;
 }
 
@@ -126,8 +131,9 @@ SESubstance& SESubstanceBolus::GetSubstance() const
 void SESubstanceBolus::ToString(std::ostream& str) const
 {
   str << "Patient Action : Substance Bolus";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tDose: ";
   HasDose() ? str << *m_Dose : str << "No Dose Set";
   str << "\n\tConcentration: ";

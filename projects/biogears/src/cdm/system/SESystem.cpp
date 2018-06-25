@@ -41,11 +41,13 @@ const SEScalar* SESystem::GetScalar(const std::string& name, std::vector<SESyste
 {
   const SEScalar* s;
   for (auto itr = systems->begin(); itr != systems->end(); itr++) {
-    if (*itr == nullptr)
+    if (*itr == nullptr) {
       continue;
+    }
     s = (*itr)->GetScalar(name);
-    if (s != nullptr)
+    if (s != nullptr) {
       return s;
+    }
   }
   return nullptr;
 }

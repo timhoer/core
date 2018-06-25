@@ -101,8 +101,9 @@ bool BioGearsEngine::LoadState(const std::string& file, const SEScalarTime* simT
 {
   std::unique_ptr<CDM::ObjectData> bind = Serializer::ReadFile(file, GetLogger());
   CDM::BioGearsStateData* state = dynamic_cast<CDM::BioGearsStateData*>(bind.get());
-  if (state != nullptr)
+  if (state != nullptr) {
     return LoadState(*state, simTime);
+  }
   Error("File does not contain a valid PhysiologyEngineState");
   return false;
 }
@@ -144,10 +145,11 @@ bool BioGearsEngine::LoadState(const CDM::PhysiologyEngineStateData& state, cons
   m_Intubation = bgState->Intubation();
 
   /// Patient //
-  if (!bgState->Patient().present())
+  if (!bgState->Patient().present()) {
     m_ss << "BioGearsState must have a patient" << std::endl;
-  else if (!m_Patient->Load(bgState->Patient().get()))
+  } else if (!m_Patient->Load(bgState->Patient().get())) {
     m_ss << "Error loading patient data" << std::endl;
+  }
   // Conditions //
   m_Conditions->Clear();
   for (const CDM::ConditionData& cData : bgState->Condition()) {
@@ -167,32 +169,36 @@ bool BioGearsEngine::LoadState(const CDM::PhysiologyEngineStateData& state, cons
       sub = new SESubstance(GetLogger());
       m_Substances->AddSubstance(*sub);
     }
-    if (!sub->Load(subData))
+    if (!sub->Load(subData)) {
       m_ss << "Unable to load substance" << subData.Name() << std::endl;
+    }
     m_Substances->AddActiveSubstance(*sub);
   }
   // Compounds //
   for (const CDM::SubstanceCompoundData& cmpdData : bgState->ActiveSubstanceCompound()) {
     SESubstanceCompound* cmpd = m_Substances->GetCompound(cmpdData.Name());
-    if (cmpd == nullptr)
+    if (cmpd == nullptr) {
       cmpd = new SESubstanceCompound(GetLogger());
-    if (!cmpd->Load(cmpdData, *m_Substances))
+    }
+    if (!cmpd->Load(cmpdData, *m_Substances)) {
       m_ss << "Unable to load compound" << cmpdData.Name() << std::endl;
+    }
   }
   // Circuit Manager //
-  if (!bgState->CircuitManager().present())
+  if (!bgState->CircuitManager().present()) {
     m_ss << "BioGearsState must have a circuit manager" << std::endl;
-  else {
+  } else {
     const CDM::CircuitManagerData* cmptMgrData = dynamic_cast<const CDM::CircuitManagerData*>(&bgState->CircuitManager().get());
-    if (cmptMgrData == nullptr)
+    if (cmptMgrData == nullptr) {
       m_ss << "BioGearsState must have a BioGears circuit manager" << std::endl;
-    else if (!m_Circuits->Load(*cmptMgrData))
+    } else if (!m_Circuits->Load(*cmptMgrData)) {
       m_ss << "Error loading circuit manager data" << std::endl;
+    }
   }
   // Compartment Manager //
-  if (!bgState->CompartmentManager().present())
+  if (!bgState->CompartmentManager().present()) {
     m_ss << "BioGearsState must have a compartment manager" << std::endl;
-  else {
+  } else {
     const CDM::CompartmentManagerData* cmptMgrData = dynamic_cast<const CDM::CompartmentManagerData*>(&bgState->CompartmentManager().get());
     if (cmptMgrData == nullptr)
       m_ss << "BioGearsState must have a BioGears compartment manager" << std::endl;
@@ -200,14 +206,15 @@ bool BioGearsEngine::LoadState(const CDM::PhysiologyEngineStateData& state, cons
       m_ss << "Error loading compartment manager data" << std::endl;
   }
   // Configuration //
-  if (!bgState->Configuration().present())
+  if (!bgState->Configuration().present()) {
     m_ss << "BioGearsState must have a configuration" << std::endl;
-  else {
+  } else {
     const CDM::BioGearsConfigurationData* confData = dynamic_cast<const CDM::BioGearsConfigurationData*>(&bgState->Configuration().get());
-    if (confData == nullptr)
+    if (confData == nullptr) {
       m_ss << "BioGearsState must have a BioGears configuration" << std::endl;
-    else if (!m_Config->Load(*confData))
+    } else if (!m_Config->Load(*confData)) {
       m_ss << "Error loading configuration data" << std::endl;
+    }
   }
   // Now, Let's see if there is anything to merge into our base configuration
   // At this point I don't think we should be doing this... but maybe you want to...
@@ -240,23 +247,27 @@ bool BioGearsEngine::LoadState(const CDM::PhysiologyEngineStateData& state, cons
   for (const CDM::SystemData& sysData : bgState->System()) {
     if (bcData == nullptr) {
       bcData = dynamic_cast<const CDM::BioGearsBloodChemistrySystemData*>(&sysData);
-      if (bcData != nullptr && !m_BloodChemistrySystem->Load(*bcData))
+      if (bcData != nullptr && !m_BloodChemistrySystem->Load(*bcData)) {
         m_ss << "Error loading Blood Chemistry data" << std::endl;
+      }
     }
     if (cvData == nullptr) {
       cvData = dynamic_cast<const CDM::BioGearsCardiovascularSystemData*>(&sysData);
-      if (cvData != nullptr && !m_CardiovascularSystem->Load(*cvData))
+      if (cvData != nullptr && !m_CardiovascularSystem->Load(*cvData)) {
         m_ss << "Error loading Cardiovascular data" << std::endl;
+      }
     }
     if (dData == nullptr) {
       dData = dynamic_cast<const CDM::BioGearsDrugSystemData*>(&sysData);
-      if (dData != nullptr && !m_DrugSystem->Load(*dData))
+      if (dData != nullptr && !m_DrugSystem->Load(*dData)) {
         m_ss << "Error loading Drug data" << std::endl;
+      }
     }
     if (ndoData == nullptr) {
       ndoData = dynamic_cast<const CDM::BioGearsEndocrineSystemData*>(&sysData);
-      if (ndoData != nullptr && !m_EndocrineSystem->Load(*ndoData))
+      if (ndoData != nullptr && !m_EndocrineSystem->Load(*ndoData)) {
         m_ss << "Error loading Endocrine data" << std::endl;
+      }
     }
     if (nrgData == nullptr) {
       nrgData = dynamic_cast<const CDM::BioGearsEnergySystemData*>(&sysData);
@@ -270,48 +281,57 @@ bool BioGearsEngine::LoadState(const CDM::PhysiologyEngineStateData& state, cons
     }
     if (hepData == nullptr) {
       hepData = dynamic_cast<const CDM::BioGearsHepaticSystemData*>(&sysData);
-      if (hepData != nullptr && !m_HepaticSystem->Load(*hepData))
+      if (hepData != nullptr && !m_HepaticSystem->Load(*hepData)) {
         m_ss << "Error loading Hepatic data" << std::endl;
+      }
     }
     if (nrvData == nullptr) {
       nrvData = dynamic_cast<const CDM::BioGearsNervousSystemData*>(&sysData);
-      if (nrvData != nullptr && !m_NervousSystem->Load(*nrvData))
+      if (nrvData != nullptr && !m_NervousSystem->Load(*nrvData)) {
         m_ss << "Error loading Nervous data" << std::endl;
+      }
     }
     if (rnlData == nullptr) {
       rnlData = dynamic_cast<const CDM::BioGearsRenalSystemData*>(&sysData);
-      if (rnlData != nullptr && !m_RenalSystem->Load(*rnlData))
+      if (rnlData != nullptr && !m_RenalSystem->Load(*rnlData)) {
         m_ss << "Error loading Renal data" << std::endl;
+      }
     }
     if (rspData == nullptr) {
       rspData = dynamic_cast<const CDM::BioGearsRespiratorySystemData*>(&sysData);
-      if (rspData != nullptr && !m_RespiratorySystem->Load(*rspData))
+      if (rspData != nullptr && !m_RespiratorySystem->Load(*rspData)) {
         m_ss << "Error loading Respiratory data" << std::endl;
+      }
     }
     if (tsuData == nullptr) {
       tsuData = dynamic_cast<const CDM::BioGearsTissueSystemData*>(&sysData);
-      if (tsuData != nullptr && !m_TissueSystem->Load(*tsuData))
+      if (tsuData != nullptr && !m_TissueSystem->Load(*tsuData)) {
         m_ss << "Error loading Tissue data" << std::endl;
+      }
     }
     if (envData == nullptr) {
       envData = dynamic_cast<const CDM::BioGearsEnvironmentData*>(&sysData);
-      if (envData != nullptr && !m_Environment->Load(*envData))
+      if (envData != nullptr && !m_Environment->Load(*envData)) {
         m_ss << "Error loading Environment data" << std::endl;
+      }
     }
     if (amData == nullptr) {
       amData = dynamic_cast<const CDM::BioGearsAnesthesiaMachineData*>(&sysData);
-      if (amData != nullptr && !m_AnesthesiaMachine->Load(*amData))
+      if (amData != nullptr && !m_AnesthesiaMachine->Load(*amData)) {
         m_ss << "Error loading Anesthesia Machine data" << std::endl;
+      }
     }
     if (ecgData == nullptr) {
       ecgData = dynamic_cast<const CDM::BioGearsElectroCardioGramData*>(&sysData);
-      if (ecgData != nullptr && !m_ECG->Load(*ecgData))
+      if (ecgData != nullptr && !m_ECG->Load(*ecgData)) {
         m_ss << "Error loading ECG data" << std::endl;
+      }
     }
     if (nhlData == nullptr) {
       nhlData = dynamic_cast<const CDM::BioGearsInhalerData*>(&sysData);
-      if (nhlData != nullptr && !m_Inhaler->Load(*nhlData))
+      if (nhlData != nullptr && !m_Inhaler->Load(*nhlData)) {
         m_ss << "Error loading Inhaler data" << std::endl;
+      }
     }
   }
   // Make sure we had all systems in the state
@@ -319,32 +339,42 @@ bool BioGearsEngine::LoadState(const CDM::PhysiologyEngineStateData& state, cons
     m_ss << "Missing Blood Chemistry State" << std::endl;
   if (cvData == nullptr)
     m_ss << "Missing Cardiovascular State" << std::endl;
-  if (dData == nullptr)
+  if (dData == nullptr) {
     m_ss << "Missing Drug State" << std::endl;
-  if (ndoData == nullptr)
+  }
+  if (ndoData == nullptr) {
     m_ss << "Missing Endocrine State" << std::endl;
-  if (nrgData == nullptr)
+  }
+  if (nrgData == nullptr) {
     m_ss << "Missing Energy State" << std::endl;
-  if (gasData == nullptr)
+  }
+  if (gasData == nullptr) {
     m_ss << "Missing Gastrointestinal State" << std::endl;
+  }
   if (hepData == nullptr)
     m_ss << "Missing Hepatic State" << std::endl;
-  if (nrvData == nullptr)
+  if (nrvData == nullptr) {
     m_ss << "Missing Nervous State" << std::endl;
-  if (rnlData == nullptr)
+  }
+  if (rnlData == nullptr) {
     m_ss << "Missing Renal State" << std::endl;
-  if (rspData == nullptr)
+  }
+  if (rspData == nullptr) {
     m_ss << "Missing Respiratory State" << std::endl;
+  }
   if (tsuData == nullptr)
     m_ss << "Missing Tissue State" << std::endl;
   if (envData == nullptr)
     m_ss << "Missing Environment State" << std::endl;
-  if (amData == nullptr)
+  if (amData == nullptr) {
     m_ss << "Missing Anesthesia Machine State" << std::endl;
-  if (ecgData == nullptr)
+  }
+  if (ecgData == nullptr) {
     m_ss << "Missing ECG State" << std::endl;
-  if (nhlData == nullptr)
+  }
+  if (nhlData == nullptr) {
     m_ss << "Missing Inhaler State" << std::endl;
+  }
 
   if (!m_ss.str().empty()) {
     Error(m_ss);
@@ -370,8 +400,9 @@ std::unique_ptr<CDM::PhysiologyEngineStateData> BioGearsEngine::SaveState(const 
   state->contentVersion(BGE::Version);
 
   state->SimulationTime(std::unique_ptr<CDM::ScalarTimeData>(m_SimulationTime->Unload()));
-  if (m_EngineTrack.GetDataRequestManager().HasDataRequests())
+  if (m_EngineTrack.GetDataRequestManager().HasDataRequests()) {
     state->DataRequests(std::unique_ptr<CDM::DataRequestsData>(m_EngineTrack.GetDataRequestManager().Unload()));
+  }
 
   ((CDM::BioGearsStateData*)state.get())->AirwayMode(m_AirwayMode);
   ((CDM::BioGearsStateData*)state.get())->Intubation(m_Intubation);
@@ -380,18 +411,22 @@ std::unique_ptr<CDM::PhysiologyEngineStateData> BioGearsEngine::SaveState(const 
   // Conditions
   std::vector<CDM::ConditionData*> conditions;
   m_Conditions->Unload(conditions);
-  for (CDM::ConditionData* cData : conditions)
+  for (CDM::ConditionData* cData : conditions) {
     state->Condition().push_back(std::unique_ptr<CDM::ConditionData>(cData));
+  }
   // Actions
   std::vector<CDM::ActionData*> activeActions;
   m_Actions->Unload(activeActions);
-  for (CDM::ActionData* aData : activeActions)
+  for (CDM::ActionData* aData : activeActions) {
     state->ActiveAction().push_back(std::unique_ptr<CDM::ActionData>(aData));
+  }
   // Active Substances/Compounds
-  for (SESubstance* s : m_Substances->GetActiveSubstances())
+  for (SESubstance* s : m_Substances->GetActiveSubstances()) {
     state->ActiveSubstance().push_back(std::unique_ptr<CDM::SubstanceData>(s->Unload()));
-  for (SESubstanceCompound* c : m_Substances->GetActiveCompounds())
+  }
+  for (SESubstanceCompound* c : m_Substances->GetActiveCompounds()) {
     state->ActiveSubstanceCompound().push_back(std::unique_ptr<CDM::SubstanceCompoundData>(c->Unload()));
+  }
   // Systems
   state->System().push_back(std::unique_ptr<CDM::BioGearsBloodChemistrySystemData>(m_BloodChemistrySystem->Unload()));
   state->System().push_back(std::unique_ptr<CDM::BioGearsCardiovascularSystemData>(m_CardiovascularSystem->Unload()));
@@ -471,15 +506,17 @@ bool BioGearsEngine::InitializeEngine(const std::vector<const SECondition*>* con
   }
 
   m_State = EngineState::InitialStabilization;
-  if (!m_Config->GetStabilizationCriteria()->StabilizeRestingState(*this))
+  if (!m_Config->GetStabilizationCriteria()->StabilizeRestingState(*this)) {
     return false;
+  }
   // We need to process conditions here, so systems can prepare for them in their AtSteadyState method
   if (conditions != nullptr && !conditions->empty()) {
     for (const SECondition* c : *conditions) {
       m_ss << "[Condition] " << *c;
       Info(m_ss);
-      if (!m_Conditions->ProcessCondition(*c))
+      if (!m_Conditions->ProcessCondition(*c)) {
         return false;
+      }
     }
   }
   AtSteadyState(EngineState::AtInitialStableState);
@@ -489,11 +526,13 @@ bool BioGearsEngine::InitializeEngine(const std::vector<const SECondition*>* con
   // now that it's steady with provided patient, environment, and feedback
   if (conditions != nullptr && !conditions->empty()) { // Now restabilize the patient with any conditions that were applied
     // Push conditions into condition manager
-    if (!m_Config->GetStabilizationCriteria()->StabilizeConditions(*this, *conditions))
+    if (!m_Config->GetStabilizationCriteria()->StabilizeConditions(*this, *conditions)) {
       return false;
+    }
   } else {
-    if (!m_Config->GetStabilizationCriteria()->StabilizeFeedbackState(*this))
+    if (!m_Config->GetStabilizationCriteria()->StabilizeFeedbackState(*this)) {
       return false;
+    }
   }
   AtSteadyState(EngineState::AtSecondaryStableState);
 
@@ -509,8 +548,9 @@ bool BioGearsEngine::InitializeEngine(const std::vector<const SECondition*>* con
   //if (!m_Config->GetStabilizationCriteria()->StabilizeFeedbackState(*this))
   //  return false;
 
-  if (!m_Config->GetStabilizationCriteria()->IsTrackingStabilization())
+  if (!m_Config->GetStabilizationCriteria()->IsTrackingStabilization()) {
     m_SimulationTime->SetValue(0, TimeUnit::s);
+  }
   // Don't allow any changes to Quantity/Potential/Flux values directly
   // Use Quantity/Potential/Flux Sources
   m_Circuits->SetReadOnly(true);
@@ -530,10 +570,12 @@ double BioGearsEngine::GetSimulationTime(const TimeUnit& unit)
 
 void BioGearsEngine::AdvanceModelTime()
 {
-  if (!IsReady())
+  if (!IsReady()) {
     return;
-  if (m_Patient->IsEventActive(CDM::enumPatientEvent::IrreversibleState))
+  }
+  if (m_Patient->IsEventActive(CDM::enumPatientEvent::IrreversibleState)) {
     return;
+  }
 
   PreProcess();
   Process();
@@ -548,8 +590,9 @@ void BioGearsEngine::AdvanceModelTime(double time, const TimeUnit& unit)
 {
   double time_s = Convert(time, unit, TimeUnit::s);
   int count = (int)(time_s / m_Config->GetTimeStep(TimeUnit::s));
-  for (int i = 0; i < count; i++)
+  for (int i = 0; i < count; i++) {
     AdvanceModelTime();
+  }
 }
 
 bool BioGearsEngine::ProcessAction(const SEAction& action)
@@ -562,16 +605,17 @@ bool BioGearsEngine::ProcessAction(const SEAction& action)
   const SESerializeState* serialize = dynamic_cast<const SESerializeState*>(&action);
   if (serialize != nullptr) {
     if (serialize->GetType() == CDM::enumSerializationType::Save) {
-      if (serialize->HasFilename())
+      if (serialize->HasFilename()) {
         SaveState(serialize->GetFilename());
-      else {
+      } else {
         std::stringstream ss;
         MKDIR("./states");
         ss << "./states/" << m_Patient->GetName() << "@" << GetSimulationTime(TimeUnit::s) << "s.xml";
         SaveState(ss.str());
       }
-    } else
+    } else {
       return LoadState(serialize->GetFilename());
+    }
     return true;
   }
 
@@ -584,8 +628,9 @@ bool BioGearsEngine::ProcessAction(const SEAction& action)
 
       // Write out the Assessement
       std::string pftFile = GetEngineTrack()->GetDataRequestManager().GetResultFilename();
-      if (pftFile.empty())
+      if (pftFile.empty()) {
         pftFile = "PulmonaryFunctionTest";
+      }
       m_ss << "PFT@" << GetSimulationTime(TimeUnit::s) << "s";
       pftFile = Replace(pftFile, "Results", m_ss.str());
       pftFile = Replace(pftFile, ".csv", ".xml");
@@ -608,8 +653,9 @@ bool BioGearsEngine::ProcessAction(const SEAction& action)
       GetPatientAssessment(upan);
 
       std::string upanFile = GetEngineTrack()->GetDataRequestManager().GetResultFilename();
-      if (upanFile.empty())
+      if (upanFile.empty()) {
         upanFile = "Urinalysis";
+      }
       m_ss << "Urinalysis@" << GetSimulationTime(TimeUnit::s) << "s";
       upanFile = Replace(upanFile, "Results", m_ss.str());
       upanFile = Replace(upanFile, ".csv", ".xml");
@@ -631,8 +677,9 @@ bool BioGearsEngine::ProcessAction(const SEAction& action)
       SECompleteBloodCount cbc(m_Logger);
       GetPatientAssessment(cbc);
       std::string cbcFile = GetEngineTrack()->GetDataRequestManager().GetResultFilename();
-      if (cbcFile.empty())
+      if (cbcFile.empty()) {
         cbcFile = "CompleteBloodCount";
+      }
       m_ss << "CBC@" << GetSimulationTime(TimeUnit::s) << "s";
       cbcFile = Replace(cbcFile, "Results", m_ss.str());
       cbcFile = Replace(cbcFile, ".csv", ".xml");
@@ -654,8 +701,9 @@ bool BioGearsEngine::ProcessAction(const SEAction& action)
       SEComprehensiveMetabolicPanel mp(m_Logger);
       GetPatientAssessment(mp);
       std::string mpFile = GetEngineTrack()->GetDataRequestManager().GetResultFilename();
-      if (mpFile.empty())
+      if (mpFile.empty()) {
         mpFile = "ComprehensiveMetabolicPanel";
+      }
       m_ss << "CMP@" << GetSimulationTime(TimeUnit::s) << "s";
       mpFile = Replace(mpFile, "Results", m_ss.str());
       mpFile = Replace(mpFile, ".csv", ".xml");
@@ -696,8 +744,9 @@ bool BioGearsEngine::IsReady()
 void BioGearsEngine::SetEventHandler(SEEventHandler* handler)
 {
   m_EventHandler = handler;
-  if (m_Patient != nullptr)
+  if (m_Patient != nullptr) {
     m_Patient->ForwardEvents(m_EventHandler);
+  }
   m_AnesthesiaMachine->ForwardEvents(m_EventHandler);
 }
 
@@ -713,8 +762,9 @@ const SEPatient& BioGearsEngine::GetPatient()
 
 bool BioGearsEngine::GetPatientAssessment(SEPatientAssessment& assessment)
 {
-  if (!IsReady())
+  if (!IsReady()) {
     return false;
+  }
   return BioGears::GetPatientAssessment(assessment);
 }
 

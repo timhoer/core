@@ -50,8 +50,9 @@ DataTrack::~DataTrack()
 void DataTrack::Clear()
 {
   Reset();
-  if (m_FileStream.is_open())
+  if (m_FileStream.is_open()) {
     m_FileStream.close();
+  }
   m_HeadingOrder.clear();
 }
 
@@ -74,14 +75,16 @@ std::vector<std::string>& DataTrack::GetHeadings()
 
 void DataTrack::SetFormatting(const std::string& name, const SEDecimalFormat& f)
 {
-  if (std::find(m_HeadingOrder.begin(), m_HeadingOrder.end(), name) == m_HeadingOrder.end())
+  if (std::find(m_HeadingOrder.begin(), m_HeadingOrder.end(), name) == m_HeadingOrder.end()) {
     m_HeadingOrder.push_back(name);
+  }
   m_Formatting[name].Set(f);
 }
 void DataTrack::SetFormatting(const std::string& name, std::streamsize precision)
 {
-  if (std::find(m_HeadingOrder.begin(), m_HeadingOrder.end(), name) == m_HeadingOrder.end())
+  if (std::find(m_HeadingOrder.begin(), m_HeadingOrder.end(), name) == m_HeadingOrder.end()) {
     m_HeadingOrder.push_back(name);
+  }
   m_Formatting[name].SetPrecision(precision);
 }
 void DataTrack::SetDefaultFormatting(std::streamsize precision)
@@ -121,10 +124,12 @@ void DataTrack::Probe(const SEFluidCircuit& c)
     }
   }
   for (SEFluidCircuitPath* p : c.GetPaths()) {
-    if (p->HasSwitch())
+    if (p->HasSwitch()) {
       Probe(p->GetName() + "_Switch", p->GetSwitch() == CDM::enumOpenClosed::Open ? 1 : 0);
-    if (p->HasValve())
+    }
+    if (p->HasValve()) {
       Probe(p->GetName() + "_Valve", p->GetValve() == CDM::enumOpenClosed::Closed ? 1 : 0);
+    }
 
     if (p->HasResistance()) {
       auto unit = p->GetResistance().GetUnit();
@@ -166,10 +171,12 @@ void DataTrack::Probe(const SEThermalCircuit& c)
     }
   }
   for (SEThermalCircuitPath* p : c.GetPaths()) {
-    if (p->HasSwitch())
+    if (p->HasSwitch()) {
       Probe(p->GetName() + "_Switch", p->GetSwitch() == CDM::enumOpenClosed::Open ? 1 : 0);
-    if (p->HasValve())
+    }
+    if (p->HasValve()) {
       Probe(p->GetName() + "_Valve", p->GetValve() == CDM::enumOpenClosed::Closed ? 1 : 0);
+    }
 
     if (p->HasResistance()) {
       auto unit = p->GetResistance().GetUnit();
@@ -211,10 +218,12 @@ void DataTrack::Probe(const SEElectricalCircuit& c)
     }
   }
   for (SEElectricalCircuitPath* p : c.GetPaths()) {
-    if (p->HasSwitch())
+    if (p->HasSwitch()) {
       Probe(p->GetName() + "_Switch", p->GetSwitch() == CDM::enumOpenClosed::Open ? 1 : 0);
-    if (p->HasValve())
+    }
+    if (p->HasValve()) {
       Probe(p->GetName() + "_Valve", p->GetValve() == CDM::enumOpenClosed::Closed ? 1 : 0);
+    }
 
     if (p->HasResistance()) {
       auto unit = p->GetResistance().GetUnit();
@@ -290,8 +299,9 @@ void DataTrack::Probe(const SELiquidCompartmentGraph& graph)
 
 double DataTrack::GetProbe(const std::string& name)
 {
-  if (m_Probe.find(name) == m_Probe.end())
+  if (m_Probe.find(name) == m_Probe.end()) {
     return std::numeric_limits<double>::quiet_NaN();
+  }
   return m_Probe[name];
 }
 
@@ -320,8 +330,9 @@ void DataTrack::Track(const std::string& name, double time, double value)
     v = new std::vector<double>();
     m_Track[name] = v;
     // Initialize any empty slots to NaN
-    for (unsigned int i = 0; i < m_Time.size(); i++)
+    for (unsigned int i = 0; i < m_Time.size(); i++) {
       v->push_back(std::numeric_limits<double>::quiet_NaN());
+    }
   }
 
   if (v->size() == 0) {
@@ -348,10 +359,12 @@ void DataTrack::Track(double time_s, const SEElectricalCircuit& c)
     }
   }
   for (SEElectricalCircuitPath* p : c.GetPaths()) {
-    if (p->HasSwitch())
+    if (p->HasSwitch()) {
       Track(p->GetName() + "_Switch", time_s, p->GetSwitch() == CDM::enumOpenClosed::Open ? 1 : 0);
-    if (p->HasValve())
+    }
+    if (p->HasValve()) {
       Track(p->GetName() + "_Valve", time_s, p->GetValve() == CDM::enumOpenClosed::Closed ? 1 : 0);
+    }
 
     if (p->HasResistance()) {
       auto unit = p->GetResistance().GetUnit();
@@ -392,10 +405,12 @@ void DataTrack::Track(double time_s, const SEFluidCircuit& c)
     }
   }
   for (SEFluidCircuitPath* p : c.GetPaths()) {
-    if (p->HasSwitch())
+    if (p->HasSwitch()) {
       Track(p->GetName() + "_Switch", time_s, p->GetSwitch() == CDM::enumOpenClosed::Open ? 1 : 0);
-    if (p->HasValve())
+    }
+    if (p->HasValve()) {
       Track(p->GetName() + "_Valve", time_s, p->GetValve() == CDM::enumOpenClosed::Closed ? 1 : 0);
+    }
 
     if (p->HasResistance()) {
       auto unit = p->GetResistance().GetUnit();
@@ -436,10 +451,12 @@ void DataTrack::Track(double time_s, const SEThermalCircuit& c)
     }
   }
   for (SEThermalCircuitPath* p : c.GetPaths()) {
-    if (p->HasSwitch())
+    if (p->HasSwitch()) {
       Track(p->GetName() + "_Switch", time_s, p->GetSwitch() == CDM::enumOpenClosed::Open ? 1 : 0);
-    if (p->HasValve())
+    }
+    if (p->HasValve()) {
       Track(p->GetName() + "_Valve", time_s, p->GetValve() == CDM::enumOpenClosed::Closed ? 1 : 0);
+    }
 
     if (p->HasResistance()) {
       auto unit = p->GetResistance().GetUnit();
@@ -480,8 +497,9 @@ void DataTrack::Track(double time_s, const SEGasCompartmentGraph& graph, std::ve
     }
 
     for (SEGasSubstanceQuantity* subQ : cmpt->GetSubstanceQuantities()) {
-      if (substances != nullptr && !substances->empty() && !Contains((*substances), subQ->GetSubstance()))
+      if (substances != nullptr && !substances->empty() && !Contains((*substances), subQ->GetSubstance())) {
         continue;
+      }
 
       if (subQ->HasPartialPressure()) {
         auto unit = subQ->GetPartialPressure().GetUnit();
@@ -519,8 +537,9 @@ void DataTrack::Track(double time_s, const SELiquidCompartmentGraph& graph, std:
     }
 
     for (SELiquidSubstanceQuantity* subQ : cmpt->GetSubstanceQuantities()) {
-      if (substances != nullptr && !substances->empty() && !Contains((*substances), subQ->GetSubstance()))
+      if (substances != nullptr && !substances->empty() && !Contains((*substances), subQ->GetSubstance())) {
         continue;
+      }
 
       if (subQ->HasSaturation()) {
         Track(cmpt->GetName() + "_" + subQ->GetSubstance().GetName() + "_Saturation", time_s, subQ->GetSaturation().GetValue());
@@ -554,13 +573,15 @@ void DataTrack::Track(double time_s, const SELiquidCompartmentGraph& graph, std:
 double DataTrack::GetTrack(const std::string& name, double time)
 {
   std::vector<double>* v = m_Track[name];
-  if (v == nullptr)
+  if (v == nullptr) {
     return std::numeric_limits<double>::quiet_NaN();
-  for (unsigned int i = 0; i < m_Time.size(); i++) {
-    if (m_Time[i] == time)
-      return v->at(i); // All lengths should be the same
   }
-  return std::numeric_limits<double>::quiet_NaN();
+  for (unsigned int i = 0; i < m_Time.size(); i++) {
+    if (m_Time[i] == time) {
+      return v->at(i); // All lengths should be the same }
+    }
+    return std::numeric_limits<double>::quiet_NaN();
+  }
 }
 
 std::vector<double>* DataTrack::GetTrack(const std::string& name)
@@ -583,9 +604,11 @@ std::vector<std::string> DataTrack::ReadTrackFromFile(const char* fileName)
   std::istringstream iss(line);
   std::vector<std::string> headings;
   std::size_t pos = 0;
-  while (pos < line.size())
-    if ((pos = line.find_first_of(',', pos)) != std::string::npos)
+  while (pos < line.size()) {
+    if ((pos = line.find_first_of(',', pos)) != std::string::npos) {
       line[pos] = ' ';
+    }
+  }
   copy(std::istream_iterator<std::string>(iss),
     std::istream_iterator<std::string>(),
     std::back_inserter<std::vector<std::string>>(headings));
@@ -593,9 +616,11 @@ std::vector<std::string> DataTrack::ReadTrackFromFile(const char* fileName)
   std::vector<double> values;
   while (std::getline(infile, line)) {
     pos = 0;
-    while (pos < line.size())
-      if ((pos = line.find_first_of(',', pos)) != std::string::npos)
+    while (pos < line.size()) {
+      if ((pos = line.find_first_of(',', pos)) != std::string::npos) {
         line[pos] = ' ';
+      }
+    }
     std::istringstream iss(line);
     copy(std::istream_iterator<double>(iss),
       std::istream_iterator<double>(),
@@ -619,9 +644,11 @@ std::vector<std::string> DataTrack::StreamDataFromFile(const char* fileName)
   // Grab the headings from the first line
   std::getline(m_FileStream, line);
   std::size_t pos = 0;
-  while (pos < line.size())
-    if ((pos = line.find_first_of(',', pos)) != std::string::npos)
+  while (pos < line.size()) {
+    if ((pos = line.find_first_of(',', pos)) != std::string::npos) {
       line[pos] = ' ';
+    }
+  }
   std::istringstream iss(line);
   std::vector<std::string> headings;
   copy(std::istream_iterator<std::string>(iss),
@@ -639,16 +666,19 @@ double DataTrack::StreamDataFromFile(std::vector<std::string>* headings)
   std::vector<double> values;
   if (std::getline(m_FileStream, line)) {
     std::size_t pos = 0;
-    while (pos < line.size())
-      if ((pos = line.find_first_of(',', pos)) != std::string::npos)
+    while (pos < line.size()) {
+      if ((pos = line.find_first_of(',', pos)) != std::string::npos) {
         line[pos] = ' ';
+      }
+    }
     std::istringstream iss(line);
     copy(std::istream_iterator<double>(iss),
       std::istream_iterator<double>(),
       std::back_inserter<std::vector<double>>(values));
     time = values[0];
-    for (unsigned int i = 1; i < values.size(); i++)
+    for (unsigned int i = 1; i < values.size(); i++) {
       Probe(headings->at(i), values[i]);
+    }
     values.clear();
   }
   return time;
@@ -661,8 +691,9 @@ void DataTrack::CreateFile(const char* fileName, std::ofstream& file)
   file << "Time(s)" << m_Delimiter;
   for (unsigned int i = 0; i < m_HeadingOrder.size(); i++) {
     file << m_HeadingOrder.at(i);
-    if (i < (m_HeadingOrder.size() - 1))
+    if (i < (m_HeadingOrder.size() - 1)) {
       file << m_Delimiter;
+    }
   }
   file << std::endl;
   file.flush();
@@ -676,8 +707,9 @@ void DataTrack::WriteTrackToFile(const char* fileName)
   file << "Time(s)" << m_Delimiter;
   for (unsigned int i = 0; i < m_HeadingOrder.size(); i++) {
     file << m_HeadingOrder.at(i);
-    if (i < (m_HeadingOrder.size() - 1))
+    if (i < (m_HeadingOrder.size() - 1)) {
       file << m_Delimiter;
+    }
   }
   file << std::endl;
   file.flush();
@@ -706,8 +738,9 @@ void DataTrack::StreamTrackToFile(std::ofstream& file)
         m_Formatting[s].SetStream(file);
         file << d;
       }
-      if (h < (m_HeadingOrder.size() - 1))
+      if (h < (m_HeadingOrder.size() - 1)) {
         file << m_Delimiter;
+      }
     }
     file << std::endl;
   }
@@ -740,8 +773,9 @@ void DataTrack::StreamProbesToFile(double time, std::ofstream& file)
       m_Formatting[s].SetStream(file);
       file << d;
     }
-    if (h < (m_HeadingOrder.size() - 1))
+    if (h < (m_HeadingOrder.size() - 1)) {
       file << m_Delimiter;
+    }
   }
   file << std::endl;
   file.flush();

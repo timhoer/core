@@ -48,8 +48,9 @@ CDM::EquipmentDataRequestData* SEEquipmentDataRequest::Unload() const
 void SEEquipmentDataRequest::Unload(CDM::EquipmentDataRequestData& data) const
 {
   SEDataRequest::Unload(data);
-  if (HasType())
+  if (HasType()) {
     data.Type(m_Type);
+  }
 }
 
 bool SEEquipmentDataRequest::HasType() const

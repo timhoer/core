@@ -115,8 +115,9 @@ void CommonDataModelTest::LargeFlowTransportTest(const std::string& sTestDirecto
         outTrk.Probe(link->GetName() + "Flow(L/s)", 0);
     }
     outTrk.Probe("TotalMass(g)", totalMass);
-    if (time == 0)
+    if (time == 0) {
       outTrk.CreateFile(std::string(sTestDirectory + "/LargeFlowTransport.csv").c_str(), file);
+    }
     outTrk.StreamProbesToFile(time, file);
 
     CircuitCalculator.Process(circuit, deltaT);
@@ -299,8 +300,9 @@ void CommonDataModelTest::LiquidTransportTest(const std::string& rptDirectory)
       graph = cmptMgr.GetLiquidGraph("Graph");
     }
 
-    if (time == 0)
+    if (time == 0) {
       outTrk.CreateFile(std::string(rptDirectory + "/LiquidTransport.csv").c_str(), file);
+    }
     outTrk.StreamProbesToFile(time, file);
     time += deltaT_s;
   }
@@ -420,8 +422,9 @@ void CommonDataModelTest::GasTransportTest(const std::string& rptDirectory)
   gndCO2->GetVolume().SetValue(std::numeric_limits<double>::infinity(), VolumeUnit::mL);
 
   for (SEFluidCircuitNode* n : circuit.GetNodes()) {
-    if (n == &Ground)
+    if (n == &Ground) {
       continue;
+    }
     SEGasCompartment& cmpt = cmptMgr.CreateGasCompartment(n->GetName());
     cmpt.MapNode(*n);
     graph->AddCompartment(cmpt);
@@ -473,8 +476,9 @@ void CommonDataModelTest::GasTransportTest(const std::string& rptDirectory)
       graph = cmptMgr.GetGasGraph("Graph");
     }
 
-    if (time == 0)
+    if (time == 0) {
       outTrk.CreateFile(std::string(rptDirectory + "/GasTransport.csv").c_str(), file);
+    }
     outTrk.StreamProbesToFile(time, file);
     time += deltaT_s;
   }

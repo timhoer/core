@@ -21,8 +21,9 @@ const MassUnit MassUnit::lb("lb");
 
 CDM::ScalarMassData* SEScalarMass::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarMassData* data(new CDM::ScalarMassData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -30,14 +31,18 @@ CDM::ScalarMassData* SEScalarMass::Unload() const
 
 bool MassUnit::IsValidUnit(const std::string& unit)
 {
-  if (g.GetString().compare(unit) == 0)
+  if (g.GetString().compare(unit) == 0) {
     return true;
-  if (ug.GetString().compare(unit) == 0)
+  }
+  if (ug.GetString().compare(unit) == 0) {
     return true;
-  if (mg.GetString().compare(unit) == 0)
+  }
+  if (mg.GetString().compare(unit) == 0) {
     return true;
-  if (kg.GetString().compare(unit) == 0)
+  }
+  if (kg.GetString().compare(unit) == 0) {
     return true;
+  }
   if (lb.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -45,16 +50,21 @@ bool MassUnit::IsValidUnit(const std::string& unit)
 
 const MassUnit& MassUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (g.GetString().compare(unit) == 0)
+  if (g.GetString().compare(unit) == 0) {
     return g;
-  if (ug.GetString().compare(unit) == 0)
+  }
+  if (ug.GetString().compare(unit) == 0) {
     return ug;
-  if (mg.GetString().compare(unit) == 0)
+  }
+  if (mg.GetString().compare(unit) == 0) {
     return mg;
-  if (kg.GetString().compare(unit) == 0)
+  }
+  if (kg.GetString().compare(unit) == 0) {
     return kg;
-  if (lb.GetString().compare(unit) == 0)
+  }
+  if (lb.GetString().compare(unit) == 0) {
     return lb;
+  }
   std::stringstream err;
   err << unit << " is not a valid Mass unit";
   throw CommonDataModelException(err.str());

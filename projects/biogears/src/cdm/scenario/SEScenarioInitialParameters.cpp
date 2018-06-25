@@ -49,22 +49,24 @@ bool SEScenarioInitialParameters::Load(const CDM::ScenarioInitialParametersData&
 {
   Clear();
 
-  if (in.Configuration().present())
+  if (in.Configuration().present()) {
     GetConfiguration().Load(in.Configuration().get());
+  }
 
-  if (in.PatientFile().present())
+  if (in.PatientFile().present()) {
     m_PatientFile = in.PatientFile().get();
-  else if (in.Patient().present())
+  } else if (in.Patient().present()) {
     GetPatient().Load(in.Patient().get());
-  else {
+  } else {
     Error("No patient provided");
     return false;
   }
 
   for (unsigned int i = 0; i < in.Condition().size(); i++) {
     SECondition* c = SECondition::newFromBind(in.Condition()[i], m_SubMgr);
-    if (c != nullptr)
+    if (c != nullptr) {
       m_Conditions.push_back(c);
+    }
   }
 
   return IsValid();
@@ -79,20 +81,24 @@ CDM::ScenarioInitialParametersData* SEScenarioInitialParameters::Unload() const
 
 void SEScenarioInitialParameters::Unload(CDM::ScenarioInitialParametersData& data) const
 {
-  if (HasPatientFile())
+  if (HasPatientFile()) {
     data.PatientFile(m_PatientFile);
-  else if (HasPatient())
+  } else if (HasPatient()) {
     data.Patient(std::unique_ptr<CDM::PatientData>(m_Patient->Unload()));
-  for (SECondition* c : m_Conditions)
+  }
+  for (SECondition* c : m_Conditions) {
     data.Condition().push_back(std::unique_ptr<CDM::ConditionData>(c->Unload()));
-  if (HasConfiguration())
+  }
+  if (HasConfiguration()) {
     data.Configuration(std::unique_ptr<CDM::PhysiologyEngineConfigurationData>(m_Configuration->Unload()));
+  }
 }
 
 bool SEScenarioInitialParameters::IsValid() const
 {
-  if (!HasPatientFile() && HasPatient())
+  if (!HasPatientFile() && HasPatient()) {
     return false;
+  }
   return true;
 }
 
@@ -102,8 +108,9 @@ bool SEScenarioInitialParameters::HasConfiguration() const
 }
 PhysiologyEngineConfiguration& SEScenarioInitialParameters::GetConfiguration()
 {
-  if (m_Configuration == nullptr)
+  if (m_Configuration == nullptr) {
     m_Configuration = new PhysiologyEngineConfiguration(GetLogger());
+  }
   return *m_Configuration;
 }
 const PhysiologyEngineConfiguration* SEScenarioInitialParameters::GetConfiguration() const
@@ -140,8 +147,9 @@ void SEScenarioInitialParameters::InvalidatePatientFile()
 SEPatient& SEScenarioInitialParameters::GetPatient()
 {
   InvalidatePatientFile();
-  if (m_Patient == nullptr)
+  if (m_Patient == nullptr) {
     m_Patient = new SEPatient(GetLogger());
+  }
   return *m_Patient;
 }
 const SEPatient* SEScenarioInitialParameters::GetPatient() const

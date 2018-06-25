@@ -18,8 +18,9 @@ const OsmolarityUnit OsmolarityUnit::mOsm_Per_L("mOsm/L");
 
 CDM::ScalarOsmolarityData* SEScalarOsmolarity::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarOsmolarityData* data(new CDM::ScalarOsmolarityData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,19 +28,23 @@ CDM::ScalarOsmolarityData* SEScalarOsmolarity::Unload() const
 
 bool OsmolarityUnit::IsValidUnit(const std::string& unit)
 {
-  if (Osm_Per_L.GetString().compare(unit) == 0)
+  if (Osm_Per_L.GetString().compare(unit) == 0) {
     return true;
-  if (mOsm_Per_L.GetString().compare(unit) == 0)
+  }
+  if (mOsm_Per_L.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const OsmolarityUnit& OsmolarityUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (Osm_Per_L.GetString().compare(unit) == 0)
+  if (Osm_Per_L.GetString().compare(unit) == 0) {
     return Osm_Per_L;
-  if (mOsm_Per_L.GetString().compare(unit) == 0)
+  }
+  if (mOsm_Per_L.GetString().compare(unit) == 0) {
     return mOsm_Per_L;
+  }
   std::stringstream err;
   err << unit << " is not a valid Osmolarity unit";
   throw CommonDataModelException(err.str());

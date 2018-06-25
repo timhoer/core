@@ -74,65 +74,88 @@ bool SEDrugSystem::Load(const CDM::DrugSystemData& in)
 {
   SESystem::Load(in);
 
-  if (in.AntibioticMassInBody().present())
+  if (in.AntibioticMassInBody().present()) {
     GetAntibioticMassInBody().Load(in.AntibioticMassInBody().get());
-  if (in.BronchodilationLevel().present())
+  }
+  if (in.BronchodilationLevel().present()) {
     GetBronchodilationLevel().Load(in.BronchodilationLevel().get());
-  if (in.HeartRateChange().present())
+  }
+  if (in.HeartRateChange().present()) {
     GetHeartRateChange().Load(in.HeartRateChange().get());
-  if (in.MeanBloodPressureChange().present())
+  }
+  if (in.MeanBloodPressureChange().present()) {
     GetMeanBloodPressureChange().Load(in.MeanBloodPressureChange().get());
-  if (in.NeuromuscularBlockLevel().present())
+  }
+  if (in.NeuromuscularBlockLevel().present()) {
     GetNeuromuscularBlockLevel().Load(in.NeuromuscularBlockLevel().get());
-  if (in.PulsePressureChange().present())
+  }
+  if (in.PulsePressureChange().present()) {
     GetPulsePressureChange().Load(in.PulsePressureChange().get());
-  if (in.PupillaryResponse().present())
+  }
+  if (in.PupillaryResponse().present()) {
     GetPupillaryResponse().Load(in.PupillaryResponse().get());
-  if (in.RespirationRateChange().present())
+  }
+  if (in.RespirationRateChange().present()) {
     GetRespirationRateChange().Load(in.RespirationRateChange().get());
-  if (in.SedationLevel().present())
+  }
+  if (in.SedationLevel().present()) {
     GetSedationLevel().Load(in.SedationLevel().get());
-  if (in.TidalVolumeChange().present())
+  }
+  if (in.TidalVolumeChange().present()) {
     GetTidalVolumeChange().Load(in.TidalVolumeChange().get());
-  if (in.TubularPermeabilityChange().present())
+  }
+  if (in.TubularPermeabilityChange().present()) {
     GetTubularPermeabilityChange().Load(in.TubularPermeabilityChange().get());
-  if (in.CentralNervousResponse().present())
+  }
+  if (in.CentralNervousResponse().present()) {
     GetCentralNervousResponse().Load(in.CentralNervousResponse().get());
+  }
 
   return true;
 }
 
 const SEScalar* SEDrugSystem::GetScalar(const std::string& name)
 {
-  if (name.compare("AntibioticMassInBody") == 0)
+  if (name.compare("AntibioticMassInBody") == 0) {
     return &GetAntibioticMassInBody();
-  if (name.compare("BronchodilationLevel") == 0)
+  }
+  if (name.compare("BronchodilationLevel") == 0) {
     return &GetBronchodilationLevel();
-  if (name.compare("HeartRateChange") == 0)
+  }
+  if (name.compare("HeartRateChange") == 0) {
     return &GetHeartRateChange();
-  if (name.compare("MeanBloodPressureChange") == 0)
+  }
+  if (name.compare("MeanBloodPressureChange") == 0) {
     return &GetMeanBloodPressureChange();
-  if (name.compare("NeuromuscularBlockLevel") == 0)
+  }
+  if (name.compare("NeuromuscularBlockLevel") == 0) {
     return &GetNeuromuscularBlockLevel();
-  if (name.compare("PulsePressureChange") == 0)
+  }
+  if (name.compare("PulsePressureChange") == 0) {
     return &GetPulsePressureChange();
-  if (name.compare("RespirationRateChange") == 0)
+  }
+  if (name.compare("RespirationRateChange") == 0) {
     return &GetRespirationRateChange();
-  if (name.compare("SedationLevel") == 0)
+  }
+  if (name.compare("SedationLevel") == 0) {
     return &GetSedationLevel();
+  }
   if (name.compare("TidalVolumeChange") == 0)
     return &GetTidalVolumeChange();
-  if (name.compare("TubularPermeabilityChange") == 0)
+  if (name.compare("TubularPermeabilityChange") == 0) {
     return &GetTubularPermeabilityChange();
-  if (name.compare("CentralNervousResponse") == 0)
+  }
+  if (name.compare("CentralNervousResponse") == 0) {
     return &GetCentralNervousResponse();
+  }
 
   size_t split = name.find('-');
   if (split != name.npos) {
     std::string child = name.substr(0, split);
     std::string prop = name.substr(split + 1, name.npos);
-    if (child == "PupillaryResponse")
+    if (child == "PupillaryResponse") {
       return GetPupillaryResponse().GetScalar(prop);
+    }
   }
 
   return nullptr;
@@ -149,30 +172,42 @@ void SEDrugSystem::Unload(CDM::DrugSystemData& data) const
 {
   SESystem::Unload(data);
 
-  if (m_AntibioticMassInBody != nullptr)
+  if (m_AntibioticMassInBody != nullptr) {
     data.AntibioticMassInBody(std::unique_ptr<CDM::ScalarMassData>(m_AntibioticMassInBody->Unload()));
-  if (m_BronchodilationLevel != nullptr)
+  }
+  if (m_BronchodilationLevel != nullptr) {
     data.BronchodilationLevel(std::unique_ptr<CDM::ScalarFractionData>(m_BronchodilationLevel->Unload()));
-  if (m_HeartRateChange != nullptr)
+  }
+  if (m_HeartRateChange != nullptr) {
     data.HeartRateChange(std::unique_ptr<CDM::ScalarFrequencyData>(m_HeartRateChange->Unload()));
-  if (m_MeanBloodPressureChange != nullptr)
+  }
+  if (m_MeanBloodPressureChange != nullptr) {
     data.MeanBloodPressureChange(std::unique_ptr<CDM::ScalarPressureData>(m_MeanBloodPressureChange->Unload()));
-  if (m_NeuromuscularBlockLevel != nullptr)
+  }
+  if (m_NeuromuscularBlockLevel != nullptr) {
     data.NeuromuscularBlockLevel(std::unique_ptr<CDM::ScalarFractionData>(m_NeuromuscularBlockLevel->Unload()));
-  if (m_PulsePressureChange != nullptr)
+  }
+  if (m_PulsePressureChange != nullptr) {
     data.PulsePressureChange(std::unique_ptr<CDM::ScalarPressureData>(m_PulsePressureChange->Unload()));
-  if (m_PupillaryResponse != nullptr)
+  }
+  if (m_PupillaryResponse != nullptr) {
     data.PupillaryResponse(std::unique_ptr<CDM::PupillaryResponseData>(m_PupillaryResponse->Unload()));
-  if (m_RespirationRateChange != nullptr)
+  }
+  if (m_RespirationRateChange != nullptr) {
     data.RespirationRateChange(std::unique_ptr<CDM::ScalarFrequencyData>(m_RespirationRateChange->Unload()));
-  if (m_SedationLevel != nullptr)
+  }
+  if (m_SedationLevel != nullptr) {
     data.SedationLevel(std::unique_ptr<CDM::ScalarFractionData>(m_SedationLevel->Unload()));
-  if (m_TidalVolumeChange != nullptr)
+  }
+  if (m_TidalVolumeChange != nullptr) {
     data.TidalVolumeChange(std::unique_ptr<CDM::ScalarVolumeData>(m_TidalVolumeChange->Unload()));
-  if (m_TubularPermeabilityChange != nullptr)
+  }
+  if (m_TubularPermeabilityChange != nullptr) {
     data.TubularPermeabilityChange(std::unique_ptr<CDM::ScalarFractionData>(m_TubularPermeabilityChange->Unload()));
-  if (m_CentralNervousResponse != nullptr)
+  }
+  if (m_CentralNervousResponse != nullptr) {
     data.CentralNervousResponse(std::unique_ptr<CDM::ScalarFractionData>(m_CentralNervousResponse->Unload()));
+  }
 }
 
 bool SEDrugSystem::HasAntibioticMassInBody() const
@@ -181,14 +216,16 @@ bool SEDrugSystem::HasAntibioticMassInBody() const
 }
 SEScalarMass& SEDrugSystem::GetAntibioticMassInBody()
 {
-  if (m_AntibioticMassInBody == nullptr)
+  if (m_AntibioticMassInBody == nullptr) {
     m_AntibioticMassInBody = new SEScalarMass();
+  }
   return *m_AntibioticMassInBody;
 }
 double SEDrugSystem::GetAntibioticMassInBody(const MassUnit& unit) const
 {
-  if (m_AntibioticMassInBody == nullptr)
+  if (m_AntibioticMassInBody == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_AntibioticMassInBody->GetValue(unit);
 }
 
@@ -198,14 +235,16 @@ bool SEDrugSystem::HasBronchodilationLevel() const
 }
 SEScalarFraction& SEDrugSystem::GetBronchodilationLevel()
 {
-  if (m_BronchodilationLevel == nullptr)
+  if (m_BronchodilationLevel == nullptr) {
     m_BronchodilationLevel = new SEScalarFraction();
+  }
   return *m_BronchodilationLevel;
 }
 double SEDrugSystem::GetBronchodilationLevel() const
 {
-  if (m_BronchodilationLevel == nullptr)
+  if (m_BronchodilationLevel == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_BronchodilationLevel->GetValue();
 }
 
@@ -215,14 +254,16 @@ bool SEDrugSystem::HasHeartRateChange() const
 }
 SEScalarFrequency& SEDrugSystem::GetHeartRateChange()
 {
-  if (m_HeartRateChange == nullptr)
+  if (m_HeartRateChange == nullptr) {
     m_HeartRateChange = new SEScalarFrequency();
+  }
   return *m_HeartRateChange;
 }
 double SEDrugSystem::GetHeartRateChange(const FrequencyUnit& unit) const
 {
-  if (m_HeartRateChange == nullptr)
+  if (m_HeartRateChange == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_HeartRateChange->GetValue(unit);
 }
 
@@ -232,14 +273,16 @@ bool SEDrugSystem::HasMeanBloodPressureChange() const
 }
 SEScalarPressure& SEDrugSystem::GetMeanBloodPressureChange()
 {
-  if (m_MeanBloodPressureChange == nullptr)
+  if (m_MeanBloodPressureChange == nullptr) {
     m_MeanBloodPressureChange = new SEScalarPressure();
+  }
   return *m_MeanBloodPressureChange;
 }
 double SEDrugSystem::GetMeanBloodPressureChange(const PressureUnit& unit) const
 {
-  if (m_MeanBloodPressureChange == nullptr)
+  if (m_MeanBloodPressureChange == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_MeanBloodPressureChange->GetValue(unit);
 }
 
@@ -249,14 +292,16 @@ bool SEDrugSystem::HasNeuromuscularBlockLevel() const
 }
 SEScalarFraction& SEDrugSystem::GetNeuromuscularBlockLevel()
 {
-  if (m_NeuromuscularBlockLevel == nullptr)
+  if (m_NeuromuscularBlockLevel == nullptr) {
     m_NeuromuscularBlockLevel = new SEScalarFraction();
+  }
   return *m_NeuromuscularBlockLevel;
 }
 double SEDrugSystem::GetNeuromuscularBlockLevel() const
 {
-  if (m_NeuromuscularBlockLevel == nullptr)
+  if (m_NeuromuscularBlockLevel == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NeuromuscularBlockLevel->GetValue();
 }
 
@@ -266,14 +311,16 @@ bool SEDrugSystem::HasPulsePressureChange() const
 }
 SEScalarPressure& SEDrugSystem::GetPulsePressureChange()
 {
-  if (m_PulsePressureChange == nullptr)
+  if (m_PulsePressureChange == nullptr) {
     m_PulsePressureChange = new SEScalarPressure();
+  }
   return *m_PulsePressureChange;
 }
 double SEDrugSystem::GetPulsePressureChange(const PressureUnit& unit) const
 {
-  if (m_PulsePressureChange == nullptr)
+  if (m_PulsePressureChange == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_PulsePressureChange->GetValue(unit);
 }
 
@@ -283,8 +330,9 @@ bool SEDrugSystem::HasPupillaryResponse() const
 }
 SEPupillaryResponse& SEDrugSystem::GetPupillaryResponse()
 {
-  if (m_PupillaryResponse == nullptr)
+  if (m_PupillaryResponse == nullptr) {
     m_PupillaryResponse = new SEPupillaryResponse(GetLogger());
+  }
   return *m_PupillaryResponse;
 }
 const SEPupillaryResponse* SEDrugSystem::GetPupillaryResponse() const
@@ -302,14 +350,16 @@ bool SEDrugSystem::HasRespirationRateChange() const
 }
 SEScalarFrequency& SEDrugSystem::GetRespirationRateChange()
 {
-  if (m_RespirationRateChange == nullptr)
+  if (m_RespirationRateChange == nullptr) {
     m_RespirationRateChange = new SEScalarFrequency();
+  }
   return *m_RespirationRateChange;
 }
 double SEDrugSystem::GetRespirationRateChange(const FrequencyUnit& unit) const
 {
-  if (m_RespirationRateChange == nullptr)
+  if (m_RespirationRateChange == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_RespirationRateChange->GetValue(unit);
 }
 
@@ -319,14 +369,16 @@ bool SEDrugSystem::HasSedationLevel() const
 }
 SEScalarFraction& SEDrugSystem::GetSedationLevel()
 {
-  if (m_SedationLevel == nullptr)
+  if (m_SedationLevel == nullptr) {
     m_SedationLevel = new SEScalarFraction();
+  }
   return *m_SedationLevel;
 }
 double SEDrugSystem::GetSedationLevel() const
 {
-  if (m_SedationLevel == nullptr)
+  if (m_SedationLevel == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SedationLevel->GetValue();
 }
 
@@ -336,15 +388,17 @@ bool SEDrugSystem::HasTidalVolumeChange() const
 }
 SEScalarVolume& SEDrugSystem::GetTidalVolumeChange()
 {
-  if (m_TidalVolumeChange == nullptr)
+  if (m_TidalVolumeChange == nullptr) {
     m_TidalVolumeChange = new SEScalarVolume();
+  }
   return *m_TidalVolumeChange;
 }
 
 double SEDrugSystem::GetTidalVolumeChange(const VolumeUnit& unit) const
 {
-  if (m_TidalVolumeChange == nullptr)
+  if (m_TidalVolumeChange == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_TidalVolumeChange->GetValue(unit);
 }
 
@@ -354,14 +408,16 @@ bool SEDrugSystem::HasTubularPermeabilityChange() const
 }
 SEScalarFraction& SEDrugSystem::GetTubularPermeabilityChange()
 {
-  if (m_TubularPermeabilityChange == nullptr)
+  if (m_TubularPermeabilityChange == nullptr) {
     m_TubularPermeabilityChange = new SEScalarFraction();
+  }
   return *m_TubularPermeabilityChange;
 }
 double SEDrugSystem::GetTubularPermeabilityChange() const
 {
-  if (m_TubularPermeabilityChange == nullptr)
+  if (m_TubularPermeabilityChange == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_TubularPermeabilityChange->GetValue();
 }
 
@@ -372,13 +428,15 @@ bool SEDrugSystem::HasCentralNervousResponse() const
 
 SEScalarFraction& SEDrugSystem::GetCentralNervousResponse()
 {
-  if (m_CentralNervousResponse == nullptr)
+  if (m_CentralNervousResponse == nullptr) {
     m_CentralNervousResponse = new SEScalarFraction();
+  }
   return *m_CentralNervousResponse;
 }
 double SEDrugSystem::GetCentralNervousResponse() const
 {
-  if (m_CentralNervousResponse == nullptr)
+  if (m_CentralNervousResponse == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_CentralNervousResponse->GetValue();
 }

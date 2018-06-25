@@ -37,8 +37,9 @@ void SESubstanceTissuePharmacokinetics::Clear()
 bool SESubstanceTissuePharmacokinetics::Load(const CDM::SubstanceTissuePharmacokineticsData& in)
 {
   Clear();
-  if (in.PartitionCoefficient().present())
+  if (in.PartitionCoefficient().present()) {
     GetPartitionCoefficient().Load(in.PartitionCoefficient().get());
+  }
   return true;
 }
 CDM::SubstanceTissuePharmacokineticsData* SESubstanceTissuePharmacokinetics::Unload() const
@@ -50,14 +51,16 @@ CDM::SubstanceTissuePharmacokineticsData* SESubstanceTissuePharmacokinetics::Unl
 void SESubstanceTissuePharmacokinetics::Unload(CDM::SubstanceTissuePharmacokineticsData& data) const
 {
   data.Name(m_Name);
-  if (m_PartitionCoefficient != nullptr)
+  if (m_PartitionCoefficient != nullptr) {
     data.PartitionCoefficient(std::unique_ptr<CDM::ScalarData>(m_PartitionCoefficient->Unload()));
+  }
 }
 
 const SEScalar* SESubstanceTissuePharmacokinetics::GetScalar(const std::string& name)
 {
-  if (name.compare("PartitionCoefficient") == 0)
+  if (name.compare("PartitionCoefficient") == 0) {
     return &GetPartitionCoefficient();
+  }
 
   return nullptr;
 }
@@ -73,13 +76,15 @@ bool SESubstanceTissuePharmacokinetics::HasPartitionCoefficient() const
 }
 SEScalar& SESubstanceTissuePharmacokinetics::GetPartitionCoefficient()
 {
-  if (m_PartitionCoefficient == nullptr)
+  if (m_PartitionCoefficient == nullptr) {
     m_PartitionCoefficient = new SEScalar();
+  }
   return *m_PartitionCoefficient;
 }
 double SESubstanceTissuePharmacokinetics::GetPartitionCoefficient() const
 {
-  if (m_PartitionCoefficient == nullptr)
+  if (m_PartitionCoefficient == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_PartitionCoefficient->GetValue();
 }

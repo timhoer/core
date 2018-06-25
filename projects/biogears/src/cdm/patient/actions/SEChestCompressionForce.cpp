@@ -59,8 +59,9 @@ CDM::ChestCompressionForceData* SEChestCompressionForce::Unload() const
 void SEChestCompressionForce::Unload(CDM::ChestCompressionForceData& data) const
 {
   SEChestCompression::Unload(data);
-  if (m_Force != nullptr)
+  if (m_Force != nullptr) {
     data.Force(std::unique_ptr<CDM::ScalarForceData>(m_Force->Unload()));
+  }
 }
 
 bool SEChestCompressionForce::HasForce() const
@@ -70,16 +71,18 @@ bool SEChestCompressionForce::HasForce() const
 
 SEScalarForce& SEChestCompressionForce::GetForce()
 {
-  if (m_Force == nullptr)
+  if (m_Force == nullptr) {
     m_Force = new SEScalarForce();
+  }
   return *m_Force;
 }
 
 void SEChestCompressionForce::ToString(std::ostream& str) const
 {
   str << "Patient Action : Chest Compression";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tForce: ";
   HasForce() ? str << *m_Force : str << "NaN";
   str << std::flush;

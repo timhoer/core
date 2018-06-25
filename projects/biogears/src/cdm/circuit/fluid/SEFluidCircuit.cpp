@@ -27,26 +27,31 @@ SEFluidCircuit::~SEFluidCircuit()
 SEFluidCircuitNode& SEFluidCircuit::CreateNode(const std::string& name)
 {
   SEFluidCircuitNode* node = m_Mgr.GetFluidNode(name);
-  if (node == nullptr)
+  if (node == nullptr) {
     node = &m_Mgr.CreateFluidNode(name);
+  }
   AddNode(*node);
   return *node;
 }
 SEFluidCircuitPath& SEFluidCircuit::CreatePath(SEFluidCircuitNode& src, SEFluidCircuitNode& tgt, const std::string& name)
 {
   SEFluidCircuitPath* path = m_Mgr.GetFluidPath(name);
-  if (path == nullptr)
+  if (path == nullptr) {
     path = &m_Mgr.CreateFluidPath(src, tgt, name);
+  }
   AddPath(*path);
   return *path;
 }
 
 void SEFluidCircuit::AddCircuit(SEFluidCircuit& circuit)
 {
-  for (SEFluidCircuitNode* node : circuit.GetNodes())
+  for (SEFluidCircuitNode* node : circuit.GetNodes()) {
     AddNode(*node);
-  for (SEFluidCircuitPath* path : circuit.GetPaths())
+  }
+  for (SEFluidCircuitPath* path : circuit.GetPaths()) {
     AddPath(*path);
-  for (SEFluidCircuitNode* node : circuit.GetReferenceNodes())
+  }
+  for (SEFluidCircuitNode* node : circuit.GetReferenceNodes()) {
     AddReferenceNode(*node);
+  }
 }

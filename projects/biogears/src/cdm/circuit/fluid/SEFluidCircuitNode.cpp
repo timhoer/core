@@ -31,16 +31,21 @@ void SEFluidCircuitNode::Clear()
 bool SEFluidCircuitNode::Load(const CDM::FluidCircuitNodeData& in)
 {
   SECircuitNode::Load(in);
-  if (in.Pressure().present())
+  if (in.Pressure().present()) {
     GetPressure().Load(in.Pressure().get());
-  if (in.NextPressure().present())
+  }
+  if (in.NextPressure().present()) {
     GetNextPressure().Load(in.NextPressure().get());
-  if (in.Volume().present())
+  }
+  if (in.Volume().present()) {
     GetVolume().Load(in.Volume().get());
-  if (in.NextVolume().present())
+  }
+  if (in.NextVolume().present()) {
     GetNextVolume().Load(in.NextVolume().get());
-  if (in.VolumeBaseline().present())
+  }
+  if (in.VolumeBaseline().present()) {
     GetVolumeBaseline().Load(in.VolumeBaseline().get());
+  }
   return true;
 }
 CDM::FluidCircuitNodeData* SEFluidCircuitNode::Unload() const
@@ -52,16 +57,21 @@ CDM::FluidCircuitNodeData* SEFluidCircuitNode::Unload() const
 void SEFluidCircuitNode::Unload(CDM::FluidCircuitNodeData& data) const
 {
   SECircuitNode::Unload(data);
-  if (HasPressure())
+  if (HasPressure()) {
     data.Pressure(std::unique_ptr<CDM::ScalarPressureData>(m_Potential->Unload()));
-  if (HasNextPressure())
+  }
+  if (HasNextPressure()) {
     data.NextPressure(std::unique_ptr<CDM::ScalarPressureData>(m_NextPotential->Unload()));
-  if (HasVolume())
+  }
+  if (HasVolume()) {
     data.Volume(std::unique_ptr<CDM::ScalarVolumeData>(m_Quantity->Unload()));
-  if (HasNextVolume())
+  }
+  if (HasNextVolume()) {
     data.NextVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_NextQuantity->Unload()));
-  if (HasVolumeBaseline())
+  }
+  if (HasVolumeBaseline()) {
     data.VolumeBaseline(std::unique_ptr<CDM::ScalarVolumeData>(m_QuantityBaseline->Unload()));
+  }
 }
 
 bool SEFluidCircuitNode::HasPressure() const
@@ -74,8 +84,9 @@ SEScalarPressure& SEFluidCircuitNode::GetPressure()
 }
 double SEFluidCircuitNode::GetPressure(const PressureUnit& unit) const
 {
-  if (m_Potential == nullptr)
+  if (m_Potential == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Potential->GetValue(unit);
 }
 
@@ -89,8 +100,9 @@ SEScalarPressure& SEFluidCircuitNode::GetNextPressure()
 }
 double SEFluidCircuitNode::GetNextPressure(const PressureUnit& unit) const
 {
-  if (m_NextPotential == nullptr)
+  if (m_NextPotential == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextPotential->GetValue(unit);
 }
 
@@ -104,8 +116,9 @@ SEScalarVolume& SEFluidCircuitNode::GetVolume()
 }
 double SEFluidCircuitNode::GetVolume(const VolumeUnit& unit) const
 {
-  if (m_Quantity == nullptr)
+  if (m_Quantity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Quantity->GetValue(unit);
 }
 
@@ -119,8 +132,9 @@ SEScalarVolume& SEFluidCircuitNode::GetNextVolume()
 }
 double SEFluidCircuitNode::GetNextVolume(const VolumeUnit& unit) const
 {
-  if (m_NextQuantity == nullptr)
+  if (m_NextQuantity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextQuantity->GetValue(unit);
 }
 
@@ -134,7 +148,8 @@ SEScalarVolume& SEFluidCircuitNode::GetVolumeBaseline()
 }
 double SEFluidCircuitNode::GetVolumeBaseline(const VolumeUnit& unit) const
 {
-  if (m_QuantityBaseline == nullptr)
+  if (m_QuantityBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_QuantityBaseline->GetValue(unit);
 }

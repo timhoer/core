@@ -40,10 +40,12 @@ void SEHepaticSystem::Clear()
 
 const SEScalar* SEHepaticSystem::GetScalar(const std::string& name)
 {
-  if (name.compare("KetoneProductionRate") == 0)
+  if (name.compare("KetoneProductionRate") == 0) {
     return &GetKetoneProductionRate();
-  if (name.compare("HepaticGluconeogenesisRate") == 0)
+  }
+  if (name.compare("HepaticGluconeogenesisRate") == 0) {
     return &GetHepaticGluconeogenesisRate();
+  }
   return nullptr;
 }
 
@@ -51,10 +53,12 @@ bool SEHepaticSystem::Load(const CDM::HepaticSystemData& in)
 {
   SESystem::Load(in);
 
-  if (in.KetoneProductionRate().present())
+  if (in.KetoneProductionRate().present()) {
     GetKetoneProductionRate().Load(in.KetoneProductionRate().get());
-  if (in.HepaticGluconeogenesisRate().present())
+  }
+  if (in.HepaticGluconeogenesisRate().present()) {
     GetHepaticGluconeogenesisRate().Load(in.HepaticGluconeogenesisRate().get());
+  }
 
   return true;
 }
@@ -68,10 +72,12 @@ void SEHepaticSystem::Unload(CDM::HepaticSystemData& data) const
 {
   SESystem::Unload(data);
 
-  if (m_KetoneProductionRate != nullptr)
+  if (m_KetoneProductionRate != nullptr) {
     data.KetoneProductionRate(std::unique_ptr<CDM::ScalarAmountPerTimeData>(m_KetoneProductionRate->Unload()));
-  if (m_HepaticGluconeogenesisRate != nullptr)
+  }
+  if (m_HepaticGluconeogenesisRate != nullptr) {
     data.HepaticGluconeogenesisRate(std::unique_ptr<CDM::ScalarMassPerTimeData>(m_HepaticGluconeogenesisRate->Unload()));
+  }
 }
 
 bool SEHepaticSystem::HasKetoneProductionRate() const
@@ -80,14 +86,16 @@ bool SEHepaticSystem::HasKetoneProductionRate() const
 }
 SEScalarAmountPerTime& SEHepaticSystem::GetKetoneProductionRate()
 {
-  if (m_KetoneProductionRate == nullptr)
+  if (m_KetoneProductionRate == nullptr) {
     m_KetoneProductionRate = new SEScalarAmountPerTime();
+  }
   return *m_KetoneProductionRate;
 }
 double SEHepaticSystem::GetKetoneProductionRate(const AmountPerTimeUnit& unit) const
 {
-  if (m_KetoneProductionRate == nullptr)
+  if (m_KetoneProductionRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_KetoneProductionRate->GetValue(unit);
 }
 
@@ -97,13 +105,15 @@ bool SEHepaticSystem::HasHepaticGluconeogenesisRate() const
 }
 SEScalarMassPerTime& SEHepaticSystem::GetHepaticGluconeogenesisRate()
 {
-  if (m_HepaticGluconeogenesisRate == nullptr)
+  if (m_HepaticGluconeogenesisRate == nullptr) {
     m_HepaticGluconeogenesisRate = new SEScalarMassPerTime();
+  }
   return *m_HepaticGluconeogenesisRate;
 }
 double SEHepaticSystem::GetHepaticGluconeogenesisRate(const MassPerTimeUnit& unit) const
 {
-  if (m_HepaticGluconeogenesisRate == nullptr)
+  if (m_HepaticGluconeogenesisRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_HepaticGluconeogenesisRate->GetValue(unit);
 }

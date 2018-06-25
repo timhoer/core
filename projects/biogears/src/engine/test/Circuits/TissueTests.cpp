@@ -98,20 +98,23 @@ void BioGearsEngineTest::DistributeMass(SETestSuite& testSuite)
   tsu.DistributeMassbyVolumeWeighted(L0C0, *sub, delta_g, MassUnit::g);
 
   double L2C0_calc = L2C0.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C0_calc - expected_L2C0_g) > ZERO_APPROX)
+  if (std::abs(L2C0_calc - expected_L2C0_g) > ZERO_APPROX) {
     testCase.AddFailure("DistributeMassbyVolumeWeighted L2C0 mass is not expected mass");
+  }
 
   double L2C1_calc = L2C1.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C1_calc - expected_L2C1_g) > ZERO_APPROX)
+  if (std::abs(L2C1_calc - expected_L2C1_g) > ZERO_APPROX) {
     testCase.AddFailure("DistributeMassbyVolumeWeighted L2C1 mass is not expected mass");
+  }
 
   double L2C2_calc = L2C2.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
   if (std::abs(L2C2_calc - expected_L2C2_g) > ZERO_APPROX)
     testCase.AddFailure("DistributeMassbyVolumeWeighted L2C2 mass is not expected mass");
 
   double L2C3_calc = L2C3.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C3_calc - expected_L2C3_g) > ZERO_APPROX)
+  if (std::abs(L2C3_calc - expected_L2C3_g) > ZERO_APPROX) {
     testCase.AddFailure("DistributeMassbyVolumeWeighted L2C3 mass is not expected mass");
+  }
 
   // Log how long our test took
   testCase.GetDuration().SetValue(timer.GetElapsedTime_s("Test"), TimeUnit::s);
@@ -150,20 +153,24 @@ void BioGearsEngineTest::DistributeMass(SETestSuite& testSuite)
   tsu.DistributeMassbyMassWeighted(L0C0, *sub, delta_g, MassUnit::g);
 
   L2C0_calc = L2C0.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C0_calc - expected_L2C0_g) > ZERO_APPROX)
+  if (std::abs(L2C0_calc - expected_L2C0_g) > ZERO_APPROX) {
     testCase2.AddFailure("DistributeMassbyMassWeighted L2C0 mass is not expected mass");
+  }
 
   L2C1_calc = L2C1.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C1_calc - expected_L2C1_g) > ZERO_APPROX)
+  if (std::abs(L2C1_calc - expected_L2C1_g) > ZERO_APPROX) {
     testCase2.AddFailure("DistributeMassbyMassWeighted L2C1 mass is not expected mass");
+  }
 
   L2C2_calc = L2C2.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C2_calc - expected_L2C2_g) > ZERO_APPROX)
+  if (std::abs(L2C2_calc - expected_L2C2_g) > ZERO_APPROX) {
     testCase2.AddFailure("DistributeMassbyMassWeighted L2C2 mass is not expected mass");
+  }
 
   L2C3_calc = L2C3.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C3_calc - expected_L2C3_g) > ZERO_APPROX)
+  if (std::abs(L2C3_calc - expected_L2C3_g) > ZERO_APPROX) {
     testCase2.AddFailure("DistributeMassbyMassWeighted L2C3 mass is not expected mass");
+  }
 
   // Third test case
   // Second test case
@@ -200,20 +207,23 @@ void BioGearsEngineTest::DistributeMass(SETestSuite& testSuite)
   tsu.DistributeMassbyMassWeighted(L0C0, *sub, delta_g, MassUnit::g);
 
   L2C0_calc = L2C0.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C0_calc - expected_L2C0_g) > ZERO_APPROX)
+  if (std::abs(L2C0_calc - expected_L2C0_g) > ZERO_APPROX) {
     testCase3.AddFailure("L2C0 mass is not expected mass - Expecting zero");
+  }
 
   L2C1_calc = L2C1.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C1_calc - expected_L2C1_g) > ZERO_APPROX)
+  if (std::abs(L2C1_calc - expected_L2C1_g) > ZERO_APPROX) {
     testCase3.AddFailure("L2C1 mass is not expected mass - Expecting zero");
+  }
 
   L2C2_calc = L2C2.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
   if (std::abs(L2C2_calc - expected_L2C2_g) > ZERO_APPROX)
     testCase3.AddFailure("L2C2 mass is not expected mass - Expecting zero");
 
   L2C3_calc = L2C3.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
-  if (std::abs(L2C3_calc - expected_L2C3_g) > ZERO_APPROX)
+  if (std::abs(L2C3_calc - expected_L2C3_g) > ZERO_APPROX) {
     testCase3.AddFailure("L2C3 mass is not expected mass - Expecting zero");
+  }
 }
 
 void BioGearsEngineTest::PerfusionLimitedDiffusionTest(SETestSuite& testSuite)
@@ -501,12 +511,14 @@ void BioGearsEngineTest::InstantDiffusionTest(SETestSuite& testSuite)
   cmpt1.Balance(BalanceLiquidBy::Mass);
   cmpt2.Balance(BalanceLiquidBy::Mass);
 
-  if (std::abs(cmpt1.GetSubstanceQuantity(*o2)->GetConcentration(MassPerVolumeUnit::g_Per_L) - cmpt2.GetSubstanceQuantity(*o2)->GetConcentration(MassPerVolumeUnit::g_Per_L)) > ZERO_APPROX)
+  if (std::abs(cmpt1.GetSubstanceQuantity(*o2)->GetConcentration(MassPerVolumeUnit::g_Per_L) - cmpt2.GetSubstanceQuantity(*o2)->GetConcentration(MassPerVolumeUnit::g_Per_L)) > ZERO_APPROX) {
     testCase1.AddFailure("Unequal concentrations after instant diffusion.");
+  }
   if (std::abs(cmpt1.GetSubstanceQuantity(*o2)->GetConcentration(MassPerVolumeUnit::g_Per_L) - 9.0909090909090909) > ZERO_APPROX)
     testCase1.AddFailure("Compartment 1 concentration after instant diffusion not as expected.");
-  if (std::abs(cmpt2.GetSubstanceQuantity(*o2)->GetConcentration(MassPerVolumeUnit::g_Per_L) - 9.0909090909090909) > ZERO_APPROX)
+  if (std::abs(cmpt2.GetSubstanceQuantity(*o2)->GetConcentration(MassPerVolumeUnit::g_Per_L) - 9.0909090909090909) > ZERO_APPROX) {
     testCase1.AddFailure("Compartment 2 concentration after instant diffusion not as expected.");
+  }
 
   testCase1.GetDuration().SetValue(timer.GetElapsedTime_s("Test"), TimeUnit::s);
 
@@ -1334,8 +1346,9 @@ void BioGearsEngineTest::TissueCombinedTransportTest(const std::string& rptDirec
     lymphFlowBaseline_mL_Per_s = pEx3ToLymph.GetFlow(VolumePerTimeUnit::mL_Per_s);
     muscleExtracellularVolume_mL = cExtraCell.GetVolume(VolumeUnit::mL); //Get stabilized volume to use for lymph relationship
     for (auto comp : Comps) {
-      if ((comp->GetName() == "MuscleExtracellularCompartment") || (comp->GetName() == "MuscleLymphCompartment"))
+      if ((comp->GetName() == "MuscleExtracellularCompartment") || (comp->GetName() == "MuscleLymphCompartment")) {
         continue;
+      }
       vascularVolumeBaseline_mL += comp->GetVolume(VolumeUnit::mL);
     }
     //Set albumin concentrations first
@@ -1356,8 +1369,9 @@ void BioGearsEngineTest::TissueCombinedTransportTest(const std::string& rptDirec
       //Diffuse ions by instant diffusion
       //Note:  "mass-moved" variable doesn't matter, function just needs to return a double
       for (auto ion : subs) {
-        if (ion->GetName() == "Albumin")
+        if (ion->GetName() == "Albumin") {
           continue;
+        }
         tsu.MoveMassByInstantDiffusion(cMuscle, cExtraCell, *ion, dt);
         cMuscle.GetSubstanceQuantity(*ion)->Balance(BalanceLiquidBy::Mass);
         cExtraCell.GetSubstanceQuantity(*ion)->Balance(BalanceLiquidBy::Mass);
@@ -1391,8 +1405,9 @@ void BioGearsEngineTest::TissueCombinedTransportTest(const std::string& rptDirec
 
       for (auto comp : Comps) {
         volumeTrk += comp->GetVolume(VolumeUnit::mL);
-        if ((comp->GetName() == "MuscleExtracellularCompartment") || (comp->GetName() == "MuscleLymphCompartment"))
+        if ((comp->GetName() == "MuscleExtracellularCompartment") || (comp->GetName() == "MuscleLymphCompartment")) {
           continue;
+        }
         vascularVolume_mL += comp->GetVolume(VolumeUnit::mL);
       }
       aortaPressure_mmHg = 90.0 + (1 / pumpCompliance_mL_Per_mmHg) * (vascularVolume_mL - vascularVolumeBaseline_mL);
@@ -1447,8 +1462,9 @@ void BioGearsEngineTest::TissueCombinedTransportTest(const std::string& rptDirec
     vascularVolumeBaseline_mL = 0.0; //Reset this since compliances might have caused them to shift
     muscleExtracellularVolume_mL = cExtraCell.GetVolume(VolumeUnit::mL); //Get stabilized volume to use for lymph relationship
     for (auto comp : Comps) {
-      if ((comp->GetName() == "MuscleExtracellularCompartment") || (comp->GetName() == "MuscleLymphCompartment"))
+      if ((comp->GetName() == "MuscleExtracellularCompartment") || (comp->GetName() == "MuscleLymphCompartment")) {
         continue;
+      }
       vascularVolumeBaseline_mL += comp->GetVolume(VolumeUnit::mL);
     }
     //Set albumin concentrations first
@@ -1509,8 +1525,9 @@ void BioGearsEngineTest::TissueCombinedTransportTest(const std::string& rptDirec
       volumeTrk = 0.0;
       for (auto comp : combinedComps) {
         volumeTrk += comp->GetVolume(VolumeUnit::mL);
-        if ((comp->GetName() == "MuscleExtracellularCompartment") || (comp->GetName() == "MuscleLymphCompartment") || (comp->GetName() == "MuscleIntracellularCompartment"))
+        if ((comp->GetName() == "MuscleExtracellularCompartment") || (comp->GetName() == "MuscleLymphCompartment") || (comp->GetName() == "MuscleIntracellularCompartment")) {
           continue;
+        }
         vascularVolume_mL += comp->GetVolume(VolumeUnit::mL);
       }
 

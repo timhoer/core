@@ -21,8 +21,9 @@ SEScalar0To1::SEScalar0To1()
 
 CDM::Scalar0To1Data* SEScalar0To1::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::Scalar0To1Data* data(new CDM::Scalar0To1Data());
   SEScalar::Unload(*data);
   return data;
@@ -30,8 +31,9 @@ CDM::Scalar0To1Data* SEScalar0To1::Unload() const
 
 void SEScalar0To1::SetValue(double d)
 {
-  if (d > 1 || d < 0)
+  if (d > 1 || d < 0) {
     throw CommonDataModelException("SEScalar0To1 must be between [0,1]");
+  }
   SEScalar::SetValue(d);
 }
 

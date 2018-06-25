@@ -58,8 +58,9 @@ CDM::MaskLeakData* SEMaskLeak::Unload() const
 void SEMaskLeak::Unload(CDM::MaskLeakData& data) const
 {
   SEAnesthesiaMachineAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SEMaskLeak::HasSeverity() const
@@ -68,16 +69,18 @@ bool SEMaskLeak::HasSeverity() const
 }
 SEScalar0To1& SEMaskLeak::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SEMaskLeak::ToString(std::ostream& str) const
 {
   str << "Anesthesia Machine Action : Mask Leak";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity :";
   HasSeverity() ? str << *m_Severity : str << "NaN";
   str << std::flush;

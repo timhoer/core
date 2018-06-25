@@ -59,8 +59,9 @@ CDM::AsthmaAttackData* SEAsthmaAttack::Unload() const
 void SEAsthmaAttack::Unload(CDM::AsthmaAttackData& data) const
 {
   SEPatientAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SEAsthmaAttack::HasSeverity() const
@@ -69,16 +70,18 @@ bool SEAsthmaAttack::HasSeverity() const
 }
 SEScalar0To1& SEAsthmaAttack::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SEAsthmaAttack::ToString(std::ostream& str) const
 {
   str << "Patient Action : AsthmaAttack";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity: ";
   HasSeverity() ? str << *m_Severity : str << "NaN";
   str << std::flush;

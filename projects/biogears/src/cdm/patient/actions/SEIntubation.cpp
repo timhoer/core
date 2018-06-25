@@ -58,8 +58,9 @@ CDM::IntubationData* SEIntubation::Unload() const
 void SEIntubation::Unload(CDM::IntubationData& data) const
 {
   SEPatientAction::Unload(data);
-  if (HasType())
+  if (HasType()) {
     data.Type(m_Type);
+  }
 }
 
 CDM::enumIntubationType::value SEIntubation::GetType() const
@@ -82,8 +83,9 @@ void SEIntubation::InvalidateType()
 void SEIntubation::ToString(std::ostream& str) const
 {
   str << "Patient Action : Intubation";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tType: ";
   HasType() ? str << GetType() : str << "Not Set";
   str << std::flush;

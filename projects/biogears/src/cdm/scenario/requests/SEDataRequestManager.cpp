@@ -39,20 +39,25 @@ void SEDataRequestManager::Clear()
 bool SEDataRequestManager::Load(const CDM::DataRequestsData& in, SESubstanceManager& subMgr)
 {
   Clear();
-  if (in.Filename().present())
+  if (in.Filename().present()) {
     m_ResultsFile = in.Filename().get();
-  if (in.SamplesPerSecond().present())
+  }
+  if (in.SamplesPerSecond().present()) {
     m_SamplesPerSecond = in.SamplesPerSecond().get();
-  if (in.DefaultDecimalFormatting().present())
+  }
+  if (in.DefaultDecimalFormatting().present()) {
     GetDefaultDecimalFormatting().Load(in.DefaultDecimalFormatting().get());
-  if (in.OverrideDecimalFormatting().present())
+  }
+  if (in.OverrideDecimalFormatting().present()) {
     GetOverrideDecimalFormatting().Load(in.OverrideDecimalFormatting().get());
+  }
 
   for (unsigned int i = 0; i < in.DataRequest().size(); i++) {
     SEDataRequest* dr = newFromBind(in.DataRequest()[i], subMgr, m_DefaultDecimalFormatting);
     if (dr != nullptr) {
-      if (HasOverrideDecimalFormatting())
+      if (HasOverrideDecimalFormatting()) {
         ((SEDecimalFormat*)dr)->Set(*m_OverrideDecimalFormatting);
+      }
       m_Requests.push_back(dr);
     }
   }
@@ -69,14 +74,18 @@ CDM::DataRequestsData* SEDataRequestManager::Unload() const
 void SEDataRequestManager::Unload(CDM::DataRequestsData& data) const
 {
   data.SamplesPerSecond(m_SamplesPerSecond);
-  if (HasResultsFilename())
+  if (HasResultsFilename()) {
     data.Filename(m_ResultsFile);
-  if (HasDefaultDecimalFormatting())
+  }
+  if (HasDefaultDecimalFormatting()) {
     data.DefaultDecimalFormatting(std::unique_ptr<CDM::DecimalFormatData>(m_DefaultDecimalFormatting->Unload()));
-  if (HasOverrideDecimalFormatting())
+  }
+  if (HasOverrideDecimalFormatting()) {
     data.OverrideDecimalFormatting(std::unique_ptr<CDM::DecimalFormatData>(m_OverrideDecimalFormatting->Unload()));
-  for (SEDataRequest* dr : m_Requests)
+  }
+  for (SEDataRequest* dr : m_Requests) {
     data.DataRequest().push_back(std::unique_ptr<CDM::DataRequestData>(dr->Unload()));
+  }
 }
 
 bool SEDataRequestManager::HasDefaultDecimalFormatting() const
@@ -85,8 +94,9 @@ bool SEDataRequestManager::HasDefaultDecimalFormatting() const
 }
 SEDecimalFormat& SEDataRequestManager::GetDefaultDecimalFormatting()
 {
-  if (m_DefaultDecimalFormatting == nullptr)
+  if (m_DefaultDecimalFormatting == nullptr) {
     m_DefaultDecimalFormatting = new SEDecimalFormat();
+  }
   return *m_DefaultDecimalFormatting;
 }
 void SEDataRequestManager::RemoveDefaultDecimalFormatting()
@@ -100,8 +110,9 @@ bool SEDataRequestManager::HasOverrideDecimalFormatting() const
 }
 SEDecimalFormat& SEDataRequestManager::GetOverrideDecimalFormatting()
 {
-  if (m_OverrideDecimalFormatting == nullptr)
+  if (m_OverrideDecimalFormatting == nullptr) {
     m_OverrideDecimalFormatting = new SEDecimalFormat();
+  }
   return *m_OverrideDecimalFormatting;
 }
 void SEDataRequestManager::RemoveOverrideDecimalFormatting()
@@ -223,7 +234,8 @@ SEDataRequest* SEDataRequestManager::newFromBind(const CDM::DataRequestData& dat
     return sys;
   }
 
-  if (substances.GetLogger() != nullptr)
+  if (substances.GetLogger() != nullptr) {
     substances.GetLogger()->Error("Unsupported DataRequest Received", "SEDataRequest::newFromBind");
+  }
   return nullptr;
 }

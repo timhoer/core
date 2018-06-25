@@ -58,8 +58,9 @@ CDM::ExpiratoryValveLeakData* SEExpiratoryValveLeak::Unload() const
 void SEExpiratoryValveLeak::Unload(CDM::ExpiratoryValveLeakData& data) const
 {
   SEAnesthesiaMachineAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SEExpiratoryValveLeak::HasSeverity() const
@@ -68,16 +69,18 @@ bool SEExpiratoryValveLeak::HasSeverity() const
 }
 SEScalar0To1& SEExpiratoryValveLeak::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SEExpiratoryValveLeak::ToString(std::ostream& str) const
 {
   str << "Anesthesia Machine Action : Expiratory Valve Leak";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity :";
   HasSeverity() ? str << *m_Severity : str << "NaN";
   str << std::flush;

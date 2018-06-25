@@ -55,7 +55,8 @@ void SEChronicVentricularSystolicDysfunction::Unload(CDM::ChronicVentricularSyst
 void SEChronicVentricularSystolicDysfunction::ToString(std::ostream& str) const
 {
   str << "Patient Condition : Ventricular Systolic Dysfunction Heart Failure";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << std::flush;
 }

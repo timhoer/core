@@ -212,8 +212,9 @@ void Respiratory::Initialize()
 
 bool Respiratory::Load(const CDM::BioGearsRespiratorySystemData& in)
 {
-  if (!SERespiratorySystem::Load(in))
+  if (!SERespiratorySystem::Load(in)) {
     return false;
+  }
 
   m_InitialExpiratoryReserveVolume_L = in.InitialExpiratoryReserveVolume_L();
   m_InitialFunctionalResidualCapacity_L = in.InitialFunctionalResidualCapacity_L();
@@ -513,8 +514,9 @@ void Respiratory::Process()
   SELiquidCompartmentGraph& AerosolGraph = m_data.GetCompartments().GetActiveAerosolGraph();
   // Transport substances
   m_GasTransporter.Transport(RespirationGraph, m_dt_s);
-  if (m_AerosolMouth->HasSubstanceQuantities())
+  if (m_AerosolMouth->HasSubstanceQuantities()) {
     m_AerosolTransporter.Transport(AerosolGraph, m_dt_s);
+  }
   //Update system data
   CalculateVitalSigns();
 }
@@ -577,8 +579,9 @@ void Respiratory::ProcessAerosolSubstances()
   m_AverageLocalTissueBronchodilationEffects = 0.0; //No effect
 
   size_t numAerosols = m_AerosolMouth->GetSubstanceQuantities().size();
-  if (numAerosols == 0)
+  if (numAerosols == 0) {
     return;
+  }
 
   double inflammationCoefficient;
 
@@ -626,8 +629,9 @@ void Respiratory::ProcessAerosolSubstances()
     if (mouthDepositied_ug > subQ->GetMass(MassUnit::ug)) {
       mouthDepositied_ug = subQ->GetMass(MassUnit::ug);
       subQ->GetMass().SetValue(0, MassUnit::ug);
-    } else
+    } else {
       subQ->GetMass().IncrementValue(-mouthDepositied_ug, MassUnit::ug);
+    }
     subQ->Balance(BalanceLiquidBy::Mass);
     mouthTotalDepositied_ug = subQ->GetMassDeposited().IncrementValue(mouthDepositied_ug, MassUnit::ug);
     mouthResistanceModifier += mouthTotalDepositied_ug * inflammationCoefficient;
@@ -637,8 +641,9 @@ void Respiratory::ProcessAerosolSubstances()
     if (carinaDepositied_ug > subQ->GetMass(MassUnit::ug)) {
       carinaDepositied_ug = subQ->GetMass(MassUnit::ug);
       subQ->GetMass().SetValue(0, MassUnit::ug);
-    } else
+    } else {
       subQ->GetMass().IncrementValue(-carinaDepositied_ug, MassUnit::ug);
+    }
     subQ->Balance(BalanceLiquidBy::Mass);
     carinaTotalDepositied_ug = subQ->GetMassDeposited().IncrementValue(carinaDepositied_ug, MassUnit::ug);
     carinaResistanceModifier += carinaTotalDepositied_ug * inflammationCoefficient;
@@ -648,8 +653,9 @@ void Respiratory::ProcessAerosolSubstances()
     if (leftDeadSpaceDepositied_ug > subQ->GetMass(MassUnit::ug)) {
       leftDeadSpaceDepositied_ug = subQ->GetMass(MassUnit::ug);
       subQ->GetMass().SetValue(0, MassUnit::ug);
-    } else
+    } else {
       subQ->GetMass().IncrementValue(-leftDeadSpaceDepositied_ug, MassUnit::ug);
+    }
     subQ->Balance(BalanceLiquidBy::Mass);
     leftDeadSpaceTotalDepositied_ug = subQ->GetMassDeposited().IncrementValue(leftDeadSpaceDepositied_ug, MassUnit::ug);
     leftDeadSpaceResistanceModifier += leftDeadSpaceTotalDepositied_ug * inflammationCoefficient;
@@ -681,8 +687,9 @@ void Respiratory::ProcessAerosolSubstances()
     if (rightAlveoliDepositied_ug > subQ->GetMass(MassUnit::ug)) {
       rightAlveoliDepositied_ug = subQ->GetMass(MassUnit::ug);
       subQ->GetMass().SetValue(0, MassUnit::ug);
-    } else
+    } else {
       subQ->GetMass().IncrementValue(-rightAlveoliDepositied_ug, MassUnit::ug);
+    }
     subQ->Balance(BalanceLiquidBy::Mass);
     rightAlveoliTotalDepositied_ug = subQ->GetMassDeposited().IncrementValue(rightAlveoliDepositied_ug, MassUnit::ug);
     rightAlveoliResistanceModifier += rightAlveoliTotalDepositied_ug * inflammationCoefficient;
@@ -756,8 +763,9 @@ void Respiratory::MechanicalVentilation()
     std::vector<SESubstanceFraction*> gasFractions = mv->GetGasFractions();
 
     //Reset the substance quantities at the connection
-    for (SEGasSubstanceQuantity* subQ : m_MechanicalVentilatorConnection->GetSubstanceQuantities())
+    for (SEGasSubstanceQuantity* subQ : m_MechanicalVentilatorConnection->GetSubstanceQuantities()) {
       subQ->SetToZero();
+    }
 
     //If no gas fractions specified, assume ambient
     if (gasFractions.empty()) {
@@ -1004,11 +1012,13 @@ void Respiratory::RespiratoryDriver()
         m_bNotBreathing = false;
       }
 
-      if (m_VentilationFrequency_Per_min > dMaximumPulmonaryVentilationRate / dHalfVitalCapacity_L)
+      if (m_VentilationFrequency_Per_min > dMaximumPulmonaryVentilationRate / dHalfVitalCapacity_L) {
         m_VentilationFrequency_Per_min = dMaximumPulmonaryVentilationRate / dHalfVitalCapacity_L;
+      }
 
-      if (m_VentilationFrequency_Per_min < 0.0)
+      if (m_VentilationFrequency_Per_min < 0.0) {
         m_VentilationFrequency_Per_min = 0.0;
+      }
 
       //Patient Definition *************************************************************************
       //We need to hit the patient's defined Respiration Rate Baseline, no matter what,
@@ -1074,8 +1084,9 @@ void Respiratory::RespiratoryDriver()
 //--------------------------------------------------------------------------------------------------
 void Respiratory::AirwayObstruction()
 {
-  if (!m_PatientActions->HasAirwayObstruction())
+  if (!m_PatientActions->HasAirwayObstruction()) {
     return;
+  }
 
   double Severity = m_PatientActions->GetAirwayObstruction()->GetSeverity().GetValue();
   double AirwayResistance = m_MouthToCarina->GetNextResistance().GetValue(FlowResistanceUnit::cmH2O_s_Per_L);
@@ -1096,8 +1107,9 @@ void Respiratory::AirwayObstruction()
 //--------------------------------------------------------------------------------------------------
 void Respiratory::BronchoConstriction()
 {
-  if (!m_PatientActions->HasBronchoconstriction())
+  if (!m_PatientActions->HasBronchoconstriction()) {
     return;
+  }
 
   double LeftBronchiResistance = m_CarinaToLeftAnatomicDeadSpace->GetNextResistance().GetValue(FlowResistanceUnit::cmH2O_s_Per_L);
   double RightBronchiResistance = m_CarinaToRightAnatomicDeadSpace->GetNextResistance().GetValue(FlowResistanceUnit::cmH2O_s_Per_L);
@@ -1646,10 +1658,12 @@ void Respiratory::CalculateVitalSigns()
   GetAlveolarArterialGradient().SetValue(avgAlveoliO2PP_mmHg - m_AortaO2->GetPartialPressure(PressureUnit::mmHg), PressureUnit::mmHg);
 
   /// \event Patient: Start of exhale/inhale
-  if (m_Patient->IsEventActive(CDM::enumPatientEvent::StartOfExhale))
+  if (m_Patient->IsEventActive(CDM::enumPatientEvent::StartOfExhale)) {
     m_Patient->SetEvent(CDM::enumPatientEvent::StartOfExhale, false, m_data.GetSimulationTime());
-  if (m_Patient->IsEventActive(CDM::enumPatientEvent::StartOfInhale))
+  }
+  if (m_Patient->IsEventActive(CDM::enumPatientEvent::StartOfInhale)) {
     m_Patient->SetEvent(CDM::enumPatientEvent::StartOfInhale, false, m_data.GetSimulationTime());
+  }
 
   //Record values at the breathing inflection points (i.e. switch between inhale and exhale)
   // Temporal tolerance to avoid accidental entry in the the inhalation and exhalation code blocks
@@ -2135,7 +2149,8 @@ void Respiratory::TuneCircuit()
   //Keep the same volume fraction originally initialized
   SEGasCompartmentGraph* RespiratoryGraph = &m_data.GetCompartments().GetRespiratoryGraph();
   for (SEGasCompartment* compartment : RespiratoryGraph->GetCompartments()) {
-    if (compartment->HasVolume())
+    if (compartment->HasVolume()) {
       compartment->Balance(BalanceGasBy::VolumeFraction);
+    }
   }
 }

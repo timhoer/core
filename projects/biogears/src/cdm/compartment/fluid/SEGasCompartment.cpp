@@ -26,8 +26,9 @@ SEGasCompartment::~SEGasCompartment()
 
 bool SEGasCompartment::Load(const CDM::GasCompartmentData& in, SESubstanceManager& subMgr, SECircuitManager* circuits)
 {
-  if (!SEFluidCompartment::Load(in, circuits))
+  if (!SEFluidCompartment::Load(in, circuits)) {
     return false;
+  }
   if (in.Child().empty()) {
     for (const CDM::GasSubstanceQuantityData& d : in.SubstanceQuantity()) {
       SESubstance* sub = subMgr.GetSubstance(d.Substance());
@@ -50,8 +51,9 @@ CDM::GasCompartmentData* SEGasCompartment::Unload()
 void SEGasCompartment::Unload(CDM::GasCompartmentData& data)
 {
   SEFluidCompartment::Unload(data);
-  for (SEGasSubstanceQuantity* subQ : m_SubstanceQuantities)
+  for (SEGasSubstanceQuantity* subQ : m_SubstanceQuantities) {
     data.SubstanceQuantity().push_back(std::unique_ptr<CDM::GasSubstanceQuantityData>(subQ->Unload()));
+  }
 }
 
 void SEGasCompartment::StateChange()
@@ -63,15 +65,17 @@ void SEGasCompartment::StateChange()
 
 void SEGasCompartment::Balance(BalanceGasBy by)
 {
-  if (!m_FluidChildren.empty())
+  if (!m_FluidChildren.empty()) {
     Fatal("You cannot balance a quantity with children", "SEGasCompartment::Balance");
+  }
   switch (by) {
   case BalanceGasBy::Volume: {
     //Note: We won't modify the compartment volume, just the fractions
     double totalVolume_mL = 0;
     for (SEGasSubstanceQuantity* subQ : GetSubstanceQuantities()) {
-      if (subQ->HasVolume())
+      if (subQ->HasVolume()) {
         totalVolume_mL += subQ->GetVolume(VolumeUnit::mL);
+      }
     }
     for (SEGasSubstanceQuantity* subQ : GetSubstanceQuantities()) {
       if (!subQ->HasVolume()) {
@@ -80,8 +84,9 @@ void SEGasCompartment::Balance(BalanceGasBy by)
       } else {
         subQ->GetVolumeFraction().SetValue(subQ->GetVolume(VolumeUnit::mL) / totalVolume_mL);
         subQ->GetVolume().SetValue(subQ->GetVolumeFraction().GetValue() * GetVolume(VolumeUnit::mL), VolumeUnit::mL);
-        if (HasPressure())
+        if (HasPressure()) {
           GeneralMath::CalculatePartialPressureInGas(subQ->GetVolumeFraction(), GetPressure(), subQ->GetPartialPressure(), m_Logger);
+        }
       }
     }
     break;
@@ -90,32 +95,36 @@ void SEGasCompartment::Balance(BalanceGasBy by)
     if (!HasVolume()) {
       for (SEGasSubstanceQuantity* subQ : GetSubstanceQuantities()) {
         subQ->Invalidate();
-        if (HasPressure())
+        if (HasPressure()) {
           GeneralMath::CalculatePartialPressureInGas(subQ->GetVolumeFraction(), GetPressure(), subQ->GetPartialPressure(), m_Logger);
+        }
       }
       return;
     }
     if (GetVolume().IsInfinity()) {
       for (SEGasSubstanceQuantity* subQ : GetSubstanceQuantities()) {
         subQ->GetVolume().SetValue(std::numeric_limits<double>::infinity(), VolumeUnit::mL);
-        if (HasPressure())
+        if (HasPressure()) {
           GeneralMath::CalculatePartialPressureInGas(subQ->GetVolumeFraction(), GetPressure(), subQ->GetPartialPressure(), m_Logger);
+        }
       }
     } else {
       double totalFraction = 0;
       double totalVolume_mL = GetVolume(VolumeUnit::mL);
       for (SEGasSubstanceQuantity* subQ : GetSubstanceQuantities()) {
-        if (!subQ->HasVolumeFraction())
+        if (!subQ->HasVolumeFraction()) {
           subQ->Invalidate();
-        else {
+        } else {
           totalFraction += subQ->GetVolumeFraction().GetValue();
           subQ->GetVolume().SetValue(subQ->GetVolumeFraction().GetValue() * totalVolume_mL, VolumeUnit::mL);
         }
-        if (HasPressure())
+        if (HasPressure()) {
           GeneralMath::CalculatePartialPressureInGas(subQ->GetVolumeFraction(), GetPressure(), subQ->GetPartialPressure(), m_Logger);
+        }
       }
-      if (!SEScalar::IsZero(1 - totalFraction, ZERO_APPROX))
+      if (!SEScalar::IsZero(1 - totalFraction, ZERO_APPROX)) {
         Fatal(GetName() + " Compartment's volume fractions do not sum up to 1");
+      }
     }
     break;
   }
@@ -128,12 +137,14 @@ void SEGasCompartment::AddChild(SEGasCompartment& child)
     Fatal("You cannont add a child compartment to a compartment mapped to nodes");
     return;
   }
-  if (HasChild(child.GetName()))
+  if (HasChild(child.GetName())) {
     return;
+  }
   m_FluidChildren.push_back(&child);
   m_Children.push_back(&child);
-  for (SEGasSubstanceQuantity* subQ : m_SubstanceQuantities)
+  for (SEGasSubstanceQuantity* subQ : m_SubstanceQuantities) {
     subQ->AddChild(child.CreateSubstanceQuantity(subQ->GetSubstance()));
+  }
 }
 
 SEGasSubstanceQuantity& SEGasCompartment::CreateSubstanceQuantity(SESubstance& substance)
@@ -146,8 +157,9 @@ SEGasSubstanceQuantity& SEGasCompartment::CreateSubstanceQuantity(SESubstance& s
     m_TransportSubstances.push_back(subQ);
   }
   if (!m_FluidChildren.empty()) {
-    for (SEGasCompartment* child : m_Children)
+    for (SEGasCompartment* child : m_Children) {
       subQ->AddChild(child->CreateSubstanceQuantity(substance));
+    }
   }
   return *subQ;
 }

@@ -18,8 +18,9 @@ const PressureTimePerAreaUnit PressureTimePerAreaUnit::cmH2O_Per_mL_m2("cmH2O/mL
 
 CDM::ScalarPressureTimePerAreaData* SEScalarPressureTimePerArea::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarPressureTimePerAreaData* data(new CDM::ScalarPressureTimePerAreaData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,19 +28,23 @@ CDM::ScalarPressureTimePerAreaData* SEScalarPressureTimePerArea::Unload() const
 
 bool PressureTimePerAreaUnit::IsValidUnit(const std::string& unit)
 {
-  if (mmHg_Per_mL_m2.GetString().compare(unit) == 0)
+  if (mmHg_Per_mL_m2.GetString().compare(unit) == 0) {
     return true;
-  if (cmH2O_Per_mL_m2.GetString().compare(unit) == 0)
+  }
+  if (cmH2O_Per_mL_m2.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const PressureTimePerAreaUnit& PressureTimePerAreaUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (mmHg_Per_mL_m2.GetString().compare(unit) == 0)
+  if (mmHg_Per_mL_m2.GetString().compare(unit) == 0) {
     return mmHg_Per_mL_m2;
-  if (cmH2O_Per_mL_m2.GetString().compare(unit) == 0)
+  }
+  if (cmH2O_Per_mL_m2.GetString().compare(unit) == 0) {
     return cmH2O_Per_mL_m2;
+  }
   std::stringstream err;
   err << unit << " is not a valid PressureTimePerArea unit";
   throw CommonDataModelException(err.str());

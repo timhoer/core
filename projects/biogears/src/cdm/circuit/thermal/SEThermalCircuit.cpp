@@ -27,26 +27,31 @@ SEThermalCircuit::~SEThermalCircuit()
 SEThermalCircuitNode& SEThermalCircuit::CreateNode(const std::string& name)
 {
   SEThermalCircuitNode* node = m_Mgr.GetThermalNode(name);
-  if (node == nullptr)
+  if (node == nullptr) {
     node = &m_Mgr.CreateThermalNode(name);
+  }
   AddNode(*node);
   return *node;
 }
 SEThermalCircuitPath& SEThermalCircuit::CreatePath(SEThermalCircuitNode& src, SEThermalCircuitNode& tgt, const std::string& name)
 {
   SEThermalCircuitPath* path = m_Mgr.GetThermalPath(name);
-  if (path == nullptr)
+  if (path == nullptr) {
     path = &m_Mgr.CreateThermalPath(src, tgt, name);
+  }
   AddPath(*path);
   return *path;
 }
 
 void SEThermalCircuit::AddCircuit(SEThermalCircuit& circuit)
 {
-  for (SEThermalCircuitNode* node : circuit.GetNodes())
+  for (SEThermalCircuitNode* node : circuit.GetNodes()) {
     AddNode(*node);
-  for (SEThermalCircuitPath* path : circuit.GetPaths())
+  }
+  for (SEThermalCircuitPath* path : circuit.GetPaths()) {
     AddPath(*path);
-  for (SEThermalCircuitNode* node : circuit.GetReferenceNodes())
+  }
+  for (SEThermalCircuitNode* node : circuit.GetReferenceNodes()) {
     AddReferenceNode(*node);
+  }
 }

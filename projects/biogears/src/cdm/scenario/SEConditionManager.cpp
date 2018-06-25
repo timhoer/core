@@ -86,8 +86,9 @@ void SEConditionManager::Clear()
 
 void SEConditionManager::Unload(std::vector<CDM::ConditionData*>& to)
 {
-  for (SECondition* c : m_Conditions)
+  for (SECondition* c : m_Conditions) {
     to.push_back(c->Unload());
+  }
 }
 
 bool SEConditionManager::ProcessCondition(const SECondition& condition)

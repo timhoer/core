@@ -20,8 +20,9 @@ const HeatCapacitanceUnit HeatCapacitanceUnit::kcal_Per_C("kcal/degC");
 
 CDM::ScalarHeatCapacitanceData* SEScalarHeatCapacitance::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarHeatCapacitanceData* data(new CDM::ScalarHeatCapacitanceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarHeatCapacitanceData* SEScalarHeatCapacitance::Unload() const
 
 bool HeatCapacitanceUnit::IsValidUnit(const std::string& unit)
 {
-  if (J_Per_K.GetString().compare(unit) == 0)
+  if (J_Per_K.GetString().compare(unit) == 0) {
     return true;
-  if (kJ_Per_K.GetString().compare(unit) == 0)
+  }
+  if (kJ_Per_K.GetString().compare(unit) == 0) {
     return true;
-  if (kcal_Per_K.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_K.GetString().compare(unit) == 0) {
     return true;
-  if (kcal_Per_C.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_C.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const HeatCapacitanceUnit& HeatCapacitanceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (J_Per_K.GetString().compare(unit) == 0)
+  if (J_Per_K.GetString().compare(unit) == 0) {
     return J_Per_K;
-  if (kJ_Per_K.GetString().compare(unit) == 0)
+  }
+  if (kJ_Per_K.GetString().compare(unit) == 0) {
     return kJ_Per_K;
-  if (kcal_Per_K.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_K.GetString().compare(unit) == 0) {
     return kcal_Per_K;
-  if (kcal_Per_C.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_C.GetString().compare(unit) == 0) {
     return kcal_Per_C;
+  }
   std::stringstream err;
   err << unit << " is not a valid HeatCapacitance unit";
   throw CommonDataModelException(err.str());

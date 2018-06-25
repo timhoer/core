@@ -59,7 +59,8 @@ void SEUrinate::Unload(CDM::UrinateData& data) const
 void SEUrinate::ToString(std::ostream& str) const
 {
   str << "Patient Action : Urinate";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << std::flush;
 }

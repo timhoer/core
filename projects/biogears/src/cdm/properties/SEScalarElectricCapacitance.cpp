@@ -17,8 +17,9 @@ const ElectricCapacitanceUnit ElectricCapacitanceUnit::F("F");
 
 CDM::ScalarElectricCapacitanceData* SEScalarElectricCapacitance::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarElectricCapacitanceData* data(new CDM::ScalarElectricCapacitanceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -26,15 +27,17 @@ CDM::ScalarElectricCapacitanceData* SEScalarElectricCapacitance::Unload() const
 
 bool ElectricCapacitanceUnit::IsValidUnit(const std::string& unit)
 {
-  if (F.GetString().compare(unit) == 0)
+  if (F.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const ElectricCapacitanceUnit& ElectricCapacitanceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (F.GetString().compare(unit) == 0)
+  if (F.GetString().compare(unit) == 0) {
     return F;
+  }
   std::stringstream err;
   err << unit << " is not a valid ElectricCapacitance unit";
   throw CommonDataModelException(err.str());

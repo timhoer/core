@@ -52,10 +52,12 @@ bool SEAnesthesiaMachineConfiguration::IsValid() const
 bool SEAnesthesiaMachineConfiguration::Load(const CDM::AnesthesiaMachineConfigurationData& in)
 {
   SEAnesthesiaMachineAction::Load(in);
-  if (in.ConfigurationFile().present())
+  if (in.ConfigurationFile().present()) {
     SetConfigurationFile(in.ConfigurationFile().get());
-  if (in.Configuration().present())
+  }
+  if (in.Configuration().present()) {
     GetConfiguration().Load(in.Configuration().get());
+  }
   return true;
 }
 
@@ -68,10 +70,11 @@ CDM::AnesthesiaMachineConfigurationData* SEAnesthesiaMachineConfiguration::Unloa
 void SEAnesthesiaMachineConfiguration::Unload(CDM::AnesthesiaMachineConfigurationData& data) const
 {
   SEAnesthesiaMachineAction::Unload(data);
-  if (HasConfiguration())
+  if (HasConfiguration()) {
     data.Configuration(std::unique_ptr<CDM::AnesthesiaMachineData>(m_Configuration->Unload()));
-  else if (HasConfigurationFile())
+  } else if (HasConfigurationFile()) {
     data.ConfigurationFile(m_ConfigurationFile);
+  }
 }
 
 bool SEAnesthesiaMachineConfiguration::HasConfiguration() const
@@ -81,8 +84,9 @@ bool SEAnesthesiaMachineConfiguration::HasConfiguration() const
 SEAnesthesiaMachine& SEAnesthesiaMachineConfiguration::GetConfiguration()
 {
   m_ConfigurationFile = "";
-  if (m_Configuration == nullptr)
+  if (m_Configuration == nullptr) {
     m_Configuration = new SEAnesthesiaMachine(m_Substances);
+  }
   return *m_Configuration;
 }
 const SEAnesthesiaMachine* SEAnesthesiaMachineConfiguration::GetConfiguration() const
@@ -112,10 +116,12 @@ void SEAnesthesiaMachineConfiguration::InvalidateConfigurationFile()
 void SEAnesthesiaMachineConfiguration::ToString(std::ostream& str) const
 {
   str << "Anesthesia Machine Configuration";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
-  if (HasConfigurationFile())
+  }
+  if (HasConfigurationFile()) {
     str << "\n\tConfiguration File: ";
+  }
   str << m_ConfigurationFile;
   if (HasConfiguration()) {
     str << "\n\tConnection: ";

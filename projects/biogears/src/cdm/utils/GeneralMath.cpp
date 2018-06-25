@@ -52,10 +52,11 @@ void GeneralMath::CalculateConcentration(const SEScalarMass& mass, const SEScala
     logger->Error(ss);
     volume_mL = 0.0;
   }
-  if (volume_mL == 0.0)
+  if (volume_mL == 0.0) {
     concentration.SetValue(0.0, MassPerVolumeUnit::ug_Per_mL);
-  else
+  } else {
     concentration.SetValue(mass_ug / volume_mL, MassPerVolumeUnit::ug_Per_mL);
+  }
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -89,8 +90,9 @@ void GeneralMath::CalculateMass(const SEScalarVolume& volume, const SEScalarMass
 void GeneralMath::CalculateHenrysLawConcentration(const SESubstance& substance, const SEScalarPressure& partialPressure, SEScalarMassPerVolume& concentration, Logger* logger)
 {
   double pp_mmHg = partialPressure.GetValue(PressureUnit::mmHg);
-  if (substance.GetState() != CDM::enumSubstanceState::Gas)
+  if (substance.GetState() != CDM::enumSubstanceState::Gas) {
     throw CommonDataModelException("Cannot calculate a molarity by Henry's law from partial pressure of a non gaseous substance in a liquid");
+  }
   if (pp_mmHg < 0.0) {
     std::stringstream ss;
     ss << "GeneralMath::CalculateHenrysLawConcentration: Pressure is negative:" << pp_mmHg << " mmHg. Setting it to 0.";
@@ -145,8 +147,9 @@ void GeneralMath::CalculatePartialPressureInGas(const SEScalarFraction& volumeFr
 //--------------------------------------------------------------------------------------------------
 void GeneralMath::CalculatePartialPressureInLiquid(const SESubstance& substance, const SEScalarMassPerVolume& concentration, SEScalarPressure& partialPressure, Logger* logger)
 {
-  if (substance.GetState() != CDM::enumSubstanceState::Gas)
+  if (substance.GetState() != CDM::enumSubstanceState::Gas) {
     throw CommonDataModelException("Cannot calculate a partial pressure of a non gaseous substance in a liquid");
+  }
   double concentration_ug_Per_mL = concentration.GetValue(MassPerVolumeUnit::ug_Per_mL);
   if (concentration_ug_Per_mL < 0.0) {
     std::stringstream ss;
@@ -184,10 +187,11 @@ void GeneralMath::CalculateSpecificGravity(const SEScalarMass& mass, const SESca
     logger->Error(ss);
     volume_mL = 0.0;
   }
-  if (volume_mL == 0.0)
+  if (volume_mL == 0.0) {
     specificGravity.SetValue(0.0);
-  else
+  } else {
     specificGravity.SetValue((totalmass_g / volume_mL) / waterDensity_g_mL);
+  }
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -210,8 +214,9 @@ void GeneralMath::CalculateWaterDensity(const SEScalarTemperature& temp, SEScala
 
 double GeneralMath::PercentDifference(double expected, double calculated)
 {
-  if (calculated == 0.0 && expected == 0.0)
+  if (calculated == 0.0 && expected == 0.0) {
     return 0.0;
+  }
 
   double difference = (calculated - expected);
   double average = (calculated + expected) / 2.0;
@@ -225,21 +230,24 @@ double GeneralMath::PercentDifference(double expected, double calculated)
 double GeneralMath::PercentTolerance(double expected, double calculated, double epsilon)
 {
   if (expected == 0.0) {
-    if (calculated == 0.0)
+    if (calculated == 0.0) {
       return 0.0;
-    else {
-      if (std::abs(calculated) > epsilon)
+    } else {
+      if (std::abs(calculated) > epsilon) {
         throw CommonDataModelException("Percent Tolerance is NaN");
-      else
+      } else {
         return 0.0;
+      }
     }
   }
   double err = std::abs(calculated - expected) / expected * 100.0;
   if (std::isnan(err)) {
-    if (std::isnan(expected))
+    if (std::isnan(expected)) {
       throw CommonDataModelException("Provided Expected value is NaN");
-    if (std::isnan(calculated))
+    }
+    if (std::isnan(calculated)) {
       throw CommonDataModelException("Provided Calculated value is NaN");
+    }
     throw CommonDataModelException("Percent Tolerance is NaN");
   }
   return err;
@@ -252,8 +260,9 @@ void GeneralMath::Combinations(std::vector<int> maxValues, std::vector<std::vect
   int Olength = maxValues.size();
   std::vector<int>*current, *next;
 
-  for (int i = 0; i < Olength; i++)
+  for (int i = 0; i < Olength; i++) {
     numVals *= maxValues[Oidx] + 1;
+  }
   permutations.clear();
   permutations.resize(numVals);
   // First is all zeros
@@ -386,10 +395,12 @@ double GeneralMath::CalculateNernstPotential(SELiquidCompartment& extra, SELiqui
   double intraIon_M = intra.GetSubstanceQuantity(*ion)->GetMolarity(AmountPerVolumeUnit::mol_Per_L);
   double extraIon_M = extra.GetSubstanceQuantity(*ion)->GetMolarity(AmountPerVolumeUnit::mol_Per_L);
   double z = 1.0;
-  if (ion->GetName() == "Chloride")
+  if (ion->GetName() == "Chloride") {
     z = -1.0;
-  if (ion->GetName() == "Calcium")
+  }
+  if (ion->GetName() == "Calcium") {
     z = 2.0;
+  }
 
   double nernst_V = (gasConstant_J_Per_mol * coreTemp_K) / (faradaysConstant_C_Per_mol * z) * log(extraIon_M / intraIon_M);
   return nernst_V;

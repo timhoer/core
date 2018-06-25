@@ -38,8 +38,9 @@ SEConsciousRespiration::~SEConsciousRespiration()
 void SEConsciousRespiration::Clear()
 {
   SEPatientAction::Clear();
-  if (m_ClearCommands)
+  if (m_ClearCommands) {
     DELETE_VECTOR(m_Commands);
+  }
 }
 
 bool SEConsciousRespiration::IsValid() const
@@ -100,14 +101,16 @@ void SEConsciousRespiration::Unload(CDM::ConsciousRespirationData& data) const
 {
   SEPatientAction::Unload(data);
   data.AppendToPrevious(false);
-  for (SEConsciousRespirationCommand* cmd : m_Commands)
+  for (SEConsciousRespirationCommand* cmd : m_Commands) {
     data.Command().push_back(std::unique_ptr<CDM::ConsciousRespirationCommandData>(cmd->Unload()));
+  }
 }
 
 SEConsciousRespirationCommand* SEConsciousRespiration::GetActiveCommand()
 {
-  if (!m_Commands.empty())
+  if (!m_Commands.empty()) {
     return m_Commands[0];
+  }
   return nullptr;
 }
 void SEConsciousRespiration::RemoveActiveCommand()
@@ -150,8 +153,9 @@ SEUseInhaler& SEConsciousRespiration::AddUseInhaler()
 void SEConsciousRespiration::ToString(std::ostream& str) const
 {
   str << "Patient Action : Conscious Respiration";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   for (SEConsciousRespirationCommand* c : m_Commands) {
     str << "\n\t";
     c->ToString(str);

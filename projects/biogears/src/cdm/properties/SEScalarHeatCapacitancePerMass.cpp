@@ -20,8 +20,9 @@ const HeatCapacitancePerMassUnit HeatCapacitancePerMassUnit::kcal_Per_C_kg("kcal
 
 CDM::ScalarHeatCapacitancePerMassData* SEScalarHeatCapacitancePerMass::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarHeatCapacitancePerMassData* data(new CDM::ScalarHeatCapacitancePerMassData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarHeatCapacitancePerMassData* SEScalarHeatCapacitancePerMass::Unload() 
 
 bool HeatCapacitancePerMassUnit::IsValidUnit(const std::string& unit)
 {
-  if (J_Per_K_kg.GetString().compare(unit) == 0)
+  if (J_Per_K_kg.GetString().compare(unit) == 0) {
     return true;
-  if (kJ_Per_K_kg.GetString().compare(unit) == 0)
+  }
+  if (kJ_Per_K_kg.GetString().compare(unit) == 0) {
     return true;
-  if (kcal_Per_K_kg.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_K_kg.GetString().compare(unit) == 0) {
     return true;
-  if (kcal_Per_C_kg.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_C_kg.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const HeatCapacitancePerMassUnit& HeatCapacitancePerMassUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (J_Per_K_kg.GetString().compare(unit) == 0)
+  if (J_Per_K_kg.GetString().compare(unit) == 0) {
     return J_Per_K_kg;
-  if (kJ_Per_K_kg.GetString().compare(unit) == 0)
+  }
+  if (kJ_Per_K_kg.GetString().compare(unit) == 0) {
     return kJ_Per_K_kg;
-  if (kcal_Per_K_kg.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_K_kg.GetString().compare(unit) == 0) {
     return kcal_Per_K_kg;
-  if (kcal_Per_C_kg.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_C_kg.GetString().compare(unit) == 0) {
     return kcal_Per_C_kg;
+  }
   std::stringstream err;
   err << unit << " is not a valid HeatCapacitancePerMass unit";
   throw CommonDataModelException(err.str());

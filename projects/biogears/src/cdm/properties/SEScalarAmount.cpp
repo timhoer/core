@@ -19,8 +19,9 @@ const AmountUnit AmountUnit::pmol("pmol");
 
 CDM::ScalarAmountData* SEScalarAmount::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarAmountData* data(new CDM::ScalarAmountData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -28,18 +29,22 @@ CDM::ScalarAmountData* SEScalarAmount::Unload() const
 
 bool AmountUnit::IsValidUnit(const std::string& unit)
 {
-  if (mol.GetString().compare(unit) == 0)
+  if (mol.GetString().compare(unit) == 0) {
     return true;
-  if (pmol.GetString().compare(unit) == 0)
+  }
+  if (pmol.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 const AmountUnit& AmountUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (mol.GetString().compare(unit) == 0)
+  if (mol.GetString().compare(unit) == 0) {
     return mol;
-  if (pmol.GetString().compare(unit) == 0)
+  }
+  if (pmol.GetString().compare(unit) == 0) {
     return pmol;
+  }
   std::stringstream err;
   err << unit << " is not a valid Amount unit";
   throw CommonDataModelException(err.str());

@@ -45,22 +45,27 @@ CDM::LiquidCompartmentGraphData* SELiquidCompartmentGraph::Unload()
 void SELiquidCompartmentGraph::Unload(CDM::LiquidCompartmentGraphData& data)
 {
   data.Name(m_Name);
-  for (SELiquidCompartment* cmpt : m_Compartments)
+  for (SELiquidCompartment* cmpt : m_Compartments) {
     data.Compartment().push_back(cmpt->GetName());
-  for (SELiquidCompartmentLink* link : m_CompartmentLinks)
+  }
+  for (SELiquidCompartmentLink* link : m_CompartmentLinks) {
     data.Link().push_back(link->GetName());
+  }
 }
 
 void SELiquidCompartmentGraph::BalanceByIntensive()
 {
-  for (auto cmpt : GetCompartments())
+  for (auto cmpt : GetCompartments()) {
     cmpt->Balance(BalanceLiquidBy::Concentration);
+  }
 }
 
 void SELiquidCompartmentGraph::AddGraph(SELiquidCompartmentGraph& graph)
 {
-  for (SELiquidCompartment* cmpt : graph.GetCompartments())
+  for (SELiquidCompartment* cmpt : graph.GetCompartments()) {
     AddCompartment(*cmpt);
-  for (SELiquidCompartmentLink* lnk : graph.GetLinks())
+  }
+  for (SELiquidCompartmentLink* lnk : graph.GetLinks()) {
     AddLink(*lnk);
+  }
 }

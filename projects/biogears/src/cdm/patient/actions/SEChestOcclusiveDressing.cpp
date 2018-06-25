@@ -66,8 +66,9 @@ void SEChestOcclusiveDressing::Unload(CDM::ChestOcclusiveDressingData& data) con
 {
   SEPatientAction::Unload(data);
   data.State(m_State);
-  if (HasSide())
+  if (HasSide()) {
     data.Side(m_Side);
+  }
 }
 
 CDM::enumSide::value SEChestOcclusiveDressing::GetSide() const
@@ -90,8 +91,9 @@ void SEChestOcclusiveDressing::InvalidateSide()
 void SEChestOcclusiveDressing::ToString(std::ostream& str) const
 {
   str << "Patient Action : Chest Occlusive Dressing";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tState: " << IsActive();
   str << "\n\tSide: ";
   HasSide() ? str << GetSide() : str << "Not Set";

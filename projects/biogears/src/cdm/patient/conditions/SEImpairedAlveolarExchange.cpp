@@ -42,10 +42,12 @@ bool SEImpairedAlveolarExchange::IsValid() const
 
 bool SEImpairedAlveolarExchange::Load(const CDM::ImpairedAlveolarExchangeData& in)
 {
-  if (in.ImpairedSurfaceArea().present())
+  if (in.ImpairedSurfaceArea().present()) {
     GetImpairedSurfaceArea().Load(in.ImpairedSurfaceArea().get());
-  if (in.ImpairedFraction().present())
+  }
+  if (in.ImpairedFraction().present()) {
     GetImpairedFraction().Load(in.ImpairedFraction().get());
+  }
   return true;
 }
 
@@ -57,10 +59,12 @@ CDM::ImpairedAlveolarExchangeData* SEImpairedAlveolarExchange::Unload() const
 }
 void SEImpairedAlveolarExchange::Unload(CDM::ImpairedAlveolarExchangeData& data) const
 {
-  if (HasImpairedSurfaceArea())
+  if (HasImpairedSurfaceArea()) {
     data.ImpairedSurfaceArea(std::unique_ptr<CDM::ScalarAreaData>(m_ImpairedSurfaceArea->Unload()));
-  if (HasImpairedFraction())
+  }
+  if (HasImpairedFraction()) {
     data.ImpairedFraction(std::unique_ptr<CDM::Scalar0To1Data>(m_ImpairedFraction->Unload()));
+  }
 }
 
 bool SEImpairedAlveolarExchange::HasImpairedSurfaceArea() const
@@ -69,14 +73,16 @@ bool SEImpairedAlveolarExchange::HasImpairedSurfaceArea() const
 }
 SEScalarArea& SEImpairedAlveolarExchange::GetImpairedSurfaceArea()
 {
-  if (m_ImpairedSurfaceArea == nullptr)
+  if (m_ImpairedSurfaceArea == nullptr) {
     m_ImpairedSurfaceArea = new SEScalarArea();
+  }
   return *m_ImpairedSurfaceArea;
 }
 double SEImpairedAlveolarExchange::GetImpairedSurfaceArea(const AreaUnit& unit) const
 {
-  if (m_ImpairedSurfaceArea == nullptr)
+  if (m_ImpairedSurfaceArea == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ImpairedSurfaceArea->GetValue(unit);
 }
 
@@ -86,14 +92,16 @@ bool SEImpairedAlveolarExchange::HasImpairedFraction() const
 }
 SEScalar0To1& SEImpairedAlveolarExchange::GetImpairedFraction()
 {
-  if (m_ImpairedFraction == nullptr)
+  if (m_ImpairedFraction == nullptr) {
     m_ImpairedFraction = new SEScalar0To1();
+  }
   return *m_ImpairedFraction;
 }
 double SEImpairedAlveolarExchange::GetImpairedFraction() const
 {
-  if (m_ImpairedFraction == nullptr)
+  if (m_ImpairedFraction == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ImpairedFraction->GetValue();
 }
 

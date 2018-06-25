@@ -20,8 +20,9 @@ const AreaPerTimePressureUnit AreaPerTimePressureUnit::cm2_Per_min_mmHg("cm^2/mi
 
 CDM::ScalarAreaPerTimePressureData* SEScalarAreaPerTimePressure::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarAreaPerTimePressureData* data(new CDM::ScalarAreaPerTimePressureData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarAreaPerTimePressureData* SEScalarAreaPerTimePressure::Unload() const
 
 bool AreaPerTimePressureUnit::IsValidUnit(const std::string& unit)
 {
-  if (m2_Per_s_mmHg.GetString().compare(unit) == 0)
+  if (m2_Per_s_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (cm2_Per_s_mmHg.GetString().compare(unit) == 0)
+  }
+  if (cm2_Per_s_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (m2_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (m2_Per_min_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (cm2_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (cm2_Per_min_mmHg.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const AreaPerTimePressureUnit& AreaPerTimePressureUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (m2_Per_s_mmHg.GetString().compare(unit) == 0)
+  if (m2_Per_s_mmHg.GetString().compare(unit) == 0) {
     return m2_Per_s_mmHg;
-  if (cm2_Per_s_mmHg.GetString().compare(unit) == 0)
+  }
+  if (cm2_Per_s_mmHg.GetString().compare(unit) == 0) {
     return cm2_Per_s_mmHg;
-  if (m2_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (m2_Per_min_mmHg.GetString().compare(unit) == 0) {
     return m2_Per_min_mmHg;
-  if (cm2_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (cm2_Per_min_mmHg.GetString().compare(unit) == 0) {
     return cm2_Per_min_mmHg;
+  }
   std::stringstream err;
   err << unit << " is not a valid AreaPerTimePressure unit";
   throw CommonDataModelException(err.str());

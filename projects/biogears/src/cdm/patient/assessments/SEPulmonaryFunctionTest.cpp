@@ -108,34 +108,48 @@ CDM::PulmonaryFunctionTestData* SEPulmonaryFunctionTest::Unload()
 void SEPulmonaryFunctionTest::Unload(CDM::PulmonaryFunctionTestData& data)
 {
   SEPatientAssessment::Unload(data);
-  if (m_ExpiratoryReserveVolume != nullptr)
+  if (m_ExpiratoryReserveVolume != nullptr) {
     data.ExpiratoryReserveVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_ExpiratoryReserveVolume->Unload()));
-  if (m_ForcedVitalCapacity != nullptr)
+  }
+  if (m_ForcedVitalCapacity != nullptr) {
     data.ForcedVitalCapacity(std::unique_ptr<CDM::ScalarVolumeData>(m_ForcedVitalCapacity->Unload()));
-  if (m_ForcedExpiratoryVolume != nullptr)
+  }
+  if (m_ForcedExpiratoryVolume != nullptr) {
     data.ForcedExpiratoryVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_ForcedExpiratoryVolume->Unload()));
-  if (m_ForcedExpiratoryFlow != nullptr)
+  }
+  if (m_ForcedExpiratoryFlow != nullptr) {
     data.ForcedExpiratoryFlow(std::unique_ptr<CDM::ScalarVolumePerTimeData>(m_ForcedExpiratoryFlow->Unload()));
-  if (m_FunctionalResidualCapacity != nullptr)
+  }
+  if (m_FunctionalResidualCapacity != nullptr) {
     data.FunctionalResidualCapacity(std::unique_ptr<CDM::ScalarVolumeData>(m_FunctionalResidualCapacity->Unload()));
-  if (m_InspiratoryCapacity != nullptr)
+  }
+  if (m_InspiratoryCapacity != nullptr) {
     data.InspiratoryCapacity(std::unique_ptr<CDM::ScalarVolumeData>(m_InspiratoryCapacity->Unload()));
-  if (m_InspiratoryReserveVolume != nullptr)
+  }
+  if (m_InspiratoryReserveVolume != nullptr) {
     data.InspiratoryReserveVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_InspiratoryReserveVolume->Unload()));
-  if (m_MaximumVoluntaryVentilation != nullptr)
+  }
+  if (m_MaximumVoluntaryVentilation != nullptr) {
     data.MaximumVoluntaryVentilation(std::unique_ptr<CDM::ScalarVolumeData>(m_MaximumVoluntaryVentilation->Unload()));
-  if (m_PeakExpiratoryFlow != nullptr)
+  }
+  if (m_PeakExpiratoryFlow != nullptr) {
     data.PeakExpiratoryFlow(std::unique_ptr<CDM::ScalarVolumePerTimeData>(m_PeakExpiratoryFlow->Unload()));
-  if (m_ResidualVolume != nullptr)
+  }
+  if (m_ResidualVolume != nullptr) {
     data.ResidualVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_ResidualVolume->Unload()));
-  if (m_SlowVitalCapacity != nullptr)
+  }
+  if (m_SlowVitalCapacity != nullptr) {
     data.SlowVitalCapacity(std::unique_ptr<CDM::ScalarVolumeData>(m_SlowVitalCapacity->Unload()));
-  if (m_TotalLungCapacity != nullptr)
+  }
+  if (m_TotalLungCapacity != nullptr) {
     data.TotalLungCapacity(std::unique_ptr<CDM::ScalarVolumeData>(m_TotalLungCapacity->Unload()));
-  if (m_VitalCapacity != nullptr)
+  }
+  if (m_VitalCapacity != nullptr) {
     data.VitalCapacity(std::unique_ptr<CDM::ScalarVolumeData>(m_VitalCapacity->Unload()));
-  if (m_LungVolumePlot != nullptr)
+  }
+  if (m_LungVolumePlot != nullptr) {
     data.LungVolumePlot(std::unique_ptr<CDM::FunctionVolumeVsTimeData>(m_LungVolumePlot->Unload()));
+  }
 }
 
 bool SEPulmonaryFunctionTest::HasExpiratoryReserveVolume()
@@ -144,8 +158,9 @@ bool SEPulmonaryFunctionTest::HasExpiratoryReserveVolume()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetExpiratoryReserveVolume()
 {
-  if (m_ExpiratoryReserveVolume == nullptr)
+  if (m_ExpiratoryReserveVolume == nullptr) {
     m_ExpiratoryReserveVolume = new SEScalarVolume();
+  }
   return *m_ExpiratoryReserveVolume;
 }
 
@@ -155,8 +170,9 @@ bool SEPulmonaryFunctionTest::HasForcedVitalCapacity()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetForcedVitalCapacity()
 {
-  if (m_ForcedVitalCapacity == nullptr)
+  if (m_ForcedVitalCapacity == nullptr) {
     m_ForcedVitalCapacity = new SEScalarVolume();
+  }
   return *m_ForcedVitalCapacity;
 }
 
@@ -166,8 +182,9 @@ bool SEPulmonaryFunctionTest::HasForcedExpiratoryVolume()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetForcedExpiratoryVolume()
 {
-  if (m_ForcedExpiratoryVolume == nullptr)
+  if (m_ForcedExpiratoryVolume == nullptr) {
     m_ForcedExpiratoryVolume = new SEScalarVolume();
+  }
   return *m_ForcedExpiratoryVolume;
 }
 
@@ -177,8 +194,9 @@ bool SEPulmonaryFunctionTest::HasForcedExpiratoryFlow()
 }
 SEScalarVolumePerTime& SEPulmonaryFunctionTest::GetForcedExpiratoryFlow()
 {
-  if (m_ForcedExpiratoryFlow == nullptr)
+  if (m_ForcedExpiratoryFlow == nullptr) {
     m_ForcedExpiratoryFlow = new SEScalarVolumePerTime();
+  }
   return *m_ForcedExpiratoryFlow;
 }
 
@@ -188,8 +206,9 @@ bool SEPulmonaryFunctionTest::HasInspiratoryCapacity()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetInspiratoryCapacity()
 {
-  if (m_InspiratoryCapacity == nullptr)
+  if (m_InspiratoryCapacity == nullptr) {
     m_InspiratoryCapacity = new SEScalarVolume();
+  }
   return *m_InspiratoryCapacity;
 }
 
@@ -199,8 +218,9 @@ bool SEPulmonaryFunctionTest::HasInspiratoryReserveVolume()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetInspiratoryReserveVolume()
 {
-  if (m_InspiratoryReserveVolume == nullptr)
+  if (m_InspiratoryReserveVolume == nullptr) {
     m_InspiratoryReserveVolume = new SEScalarVolume();
+  }
   return *m_InspiratoryReserveVolume;
 }
 
@@ -210,8 +230,9 @@ bool SEPulmonaryFunctionTest::HasPeakExpiratoryFlow()
 }
 SEScalarVolumePerTime& SEPulmonaryFunctionTest::GetPeakExpiratoryFlow()
 {
-  if (m_PeakExpiratoryFlow == nullptr)
+  if (m_PeakExpiratoryFlow == nullptr) {
     m_PeakExpiratoryFlow = new SEScalarVolumePerTime();
+  }
   return *m_PeakExpiratoryFlow;
 }
 
@@ -221,8 +242,9 @@ bool SEPulmonaryFunctionTest::HasMaximumVoluntaryVentilation()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetMaximumVoluntaryVentilation()
 {
-  if (m_MaximumVoluntaryVentilation == nullptr)
+  if (m_MaximumVoluntaryVentilation == nullptr) {
     m_MaximumVoluntaryVentilation = new SEScalarVolume();
+  }
   return *m_MaximumVoluntaryVentilation;
 }
 
@@ -232,8 +254,9 @@ bool SEPulmonaryFunctionTest::HasSlowVitalCapacity()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetSlowVitalCapacity()
 {
-  if (m_SlowVitalCapacity == nullptr)
+  if (m_SlowVitalCapacity == nullptr) {
     m_SlowVitalCapacity = new SEScalarVolume();
+  }
   return *m_SlowVitalCapacity;
 }
 
@@ -243,8 +266,9 @@ bool SEPulmonaryFunctionTest::HasTotalLungCapacity()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetTotalLungCapacity()
 {
-  if (m_TotalLungCapacity == nullptr)
+  if (m_TotalLungCapacity == nullptr) {
     m_TotalLungCapacity = new SEScalarVolume();
+  }
   return *m_TotalLungCapacity;
 }
 
@@ -254,8 +278,9 @@ bool SEPulmonaryFunctionTest::HasFunctionalResidualCapacity()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetFunctionalResidualCapacity()
 {
-  if (m_FunctionalResidualCapacity == nullptr)
+  if (m_FunctionalResidualCapacity == nullptr) {
     m_FunctionalResidualCapacity = new SEScalarVolume();
+  }
   return *m_FunctionalResidualCapacity;
 }
 
@@ -265,8 +290,9 @@ bool SEPulmonaryFunctionTest::HasResidualVolume()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetResidualVolume()
 {
-  if (m_ResidualVolume == nullptr)
+  if (m_ResidualVolume == nullptr) {
     m_ResidualVolume = new SEScalarVolume();
+  }
   return *m_ResidualVolume;
 }
 
@@ -276,8 +302,9 @@ bool SEPulmonaryFunctionTest::HasVitalCapacity()
 }
 SEScalarVolume& SEPulmonaryFunctionTest::GetVitalCapacity()
 {
-  if (m_VitalCapacity == nullptr)
+  if (m_VitalCapacity == nullptr) {
     m_VitalCapacity = new SEScalarVolume();
+  }
   return *m_VitalCapacity;
 }
 
@@ -287,7 +314,8 @@ bool SEPulmonaryFunctionTest::HasLungVolumePlot()
 }
 SEFunctionVolumeVsTime& SEPulmonaryFunctionTest::GetLungVolumePlot()
 {
-  if (m_LungVolumePlot == nullptr)
+  if (m_LungVolumePlot == nullptr) {
     m_LungVolumePlot = new SEFunctionVolumeVsTime();
+  }
   return *m_LungVolumePlot;
 }

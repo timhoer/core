@@ -49,8 +49,9 @@ CDM::SubstanceFractionData* SESubstanceFraction::Unload() const
 void SESubstanceFraction::Unload(CDM::SubstanceFractionData& data) const
 {
   data.Name(m_Substance.GetName());
-  if (HasFractionAmount())
+  if (HasFractionAmount()) {
     data.FractionAmount(std::unique_ptr<CDM::ScalarFractionData>(m_FractionAmount->Unload()));
+  }
 }
 
 bool SESubstanceFraction::HasFractionAmount() const
@@ -59,14 +60,16 @@ bool SESubstanceFraction::HasFractionAmount() const
 }
 SEScalarFraction& SESubstanceFraction::GetFractionAmount()
 {
-  if (m_FractionAmount == nullptr)
+  if (m_FractionAmount == nullptr) {
     m_FractionAmount = new SEScalarFraction();
+  }
   return *m_FractionAmount;
 }
 double SESubstanceFraction::GetFractionAmount() const
 {
-  if (m_FractionAmount == nullptr)
+  if (m_FractionAmount == nullptr) {
     SEScalar::dNaN();
+  }
   return m_FractionAmount->GetValue();
 }
 

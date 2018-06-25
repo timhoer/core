@@ -43,10 +43,12 @@ bool SEChronicRenalStenosis::IsValid() const
 bool SEChronicRenalStenosis::Load(const CDM::ChronicRenalStenosisData& in)
 {
   SEPatientCondition::Load(in);
-  if (in.LeftKidneySeverity().present())
+  if (in.LeftKidneySeverity().present()) {
     GetLeftKidneySeverity().Load(in.LeftKidneySeverity().get());
-  if (in.RightKidneySeverity().present())
+  }
+  if (in.RightKidneySeverity().present()) {
     GetRightKidneySeverity().Load(in.RightKidneySeverity().get());
+  }
   return true;
 }
 
@@ -60,10 +62,12 @@ CDM::ChronicRenalStenosisData* SEChronicRenalStenosis::Unload() const
 void SEChronicRenalStenosis::Unload(CDM::ChronicRenalStenosisData& data) const
 {
   SEPatientCondition::Unload(data);
-  if (HasLeftKidneySeverity())
+  if (HasLeftKidneySeverity()) {
     data.LeftKidneySeverity(std::unique_ptr<CDM::Scalar0To1Data>(m_LeftKidneySeverity->Unload()));
-  if (HasRightKidneySeverity())
+  }
+  if (HasRightKidneySeverity()) {
     data.RightKidneySeverity(std::unique_ptr<CDM::Scalar0To1Data>(m_RightKidneySeverity->Unload()));
+  }
 }
 
 bool SEChronicRenalStenosis::HasLeftKidneySeverity() const
@@ -72,8 +76,9 @@ bool SEChronicRenalStenosis::HasLeftKidneySeverity() const
 }
 SEScalar0To1& SEChronicRenalStenosis::GetLeftKidneySeverity()
 {
-  if (m_LeftKidneySeverity == nullptr)
+  if (m_LeftKidneySeverity == nullptr) {
     m_LeftKidneySeverity = new SEScalar0To1();
+  }
   return *m_LeftKidneySeverity;
 }
 
@@ -83,16 +88,18 @@ bool SEChronicRenalStenosis::HasRightKidneySeverity() const
 }
 SEScalar0To1& SEChronicRenalStenosis::GetRightKidneySeverity()
 {
-  if (m_RightKidneySeverity == nullptr)
+  if (m_RightKidneySeverity == nullptr) {
     m_RightKidneySeverity = new SEScalar0To1();
+  }
   return *m_RightKidneySeverity;
 }
 
 void SEChronicRenalStenosis::ToString(std::ostream& str) const
 {
   str << "Patient Condition : Chronic Renal Stenosis";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tLeft Kidney Occlusion 0To1: ";
   HasLeftKidneySeverity() ? str << *m_LeftKidneySeverity : str << "NaN";
   str << "\n\tRight Kidney Occlusion 0To1: ";

@@ -39,18 +39,21 @@ void SESubstanceDataRequest::Clear()
 size_t SESubstanceDataRequest::HashCode() const
 {
   size_t h = SEDataRequest::HashCode();
-  if (HasSubstance())
+  if (HasSubstance()) {
     h += std::hash<std::string>()(m_Substance->GetName());
-  if (HasCompartment())
+  }
+  if (HasCompartment()) {
     h += std::hash<std::string>()(m_Compartment);
+  }
   return h;
 }
 
 bool SESubstanceDataRequest::Load(const CDM::SubstanceDataRequestData& in, const SESubstanceManager& substances)
 {
   SEDataRequest::Load(in);
-  if (in.Compartment().present())
+  if (in.Compartment().present()) {
     SetCompartment(in.Compartment().get());
+  }
   SetSubstance(substances.GetSubstance(in.Substance()));
   return true;
 }
@@ -65,10 +68,12 @@ CDM::SubstanceDataRequestData* SESubstanceDataRequest::Unload() const
 void SESubstanceDataRequest::Unload(CDM::SubstanceDataRequestData& data) const
 {
   SEDataRequest::Unload(data);
-  if (HasCompartment())
+  if (HasCompartment()) {
     data.Compartment(m_Compartment);
-  if (HasSubstance())
+  }
+  if (HasSubstance()) {
     data.Substance(m_Substance->GetName());
+  }
 }
 
 std::string SESubstanceDataRequest::GetCompartment() const

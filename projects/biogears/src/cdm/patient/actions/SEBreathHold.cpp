@@ -61,8 +61,9 @@ CDM::BreathHoldData* SEBreathHold::Unload() const
 void SEBreathHold::Unload(CDM::BreathHoldData& data) const
 {
   SEConsciousRespirationCommand::Unload(data);
-  if (m_Period != nullptr)
+  if (m_Period != nullptr) {
     data.Period(std::unique_ptr<CDM::ScalarTimeData>(m_Period->Unload()));
+  }
 }
 
 bool SEBreathHold::HasPeriod() const
@@ -71,16 +72,18 @@ bool SEBreathHold::HasPeriod() const
 }
 SEScalarTime& SEBreathHold::GetPeriod()
 {
-  if (m_Period == nullptr)
+  if (m_Period == nullptr) {
     m_Period = new SEScalarTime();
+  }
   return *m_Period;
 }
 
 void SEBreathHold::ToString(std::ostream& str) const
 {
   str << "Breath Hold";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tPeriod: ";
   HasPeriod() ? str << *m_Period : str << "NaN";
   str << std::flush;

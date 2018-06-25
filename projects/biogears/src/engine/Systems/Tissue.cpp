@@ -369,17 +369,21 @@ void Tissue::SetUp()
   // If by some chance, some other system added a new tissue compartment we don't know about
   // this will put out a warning
   for (SETissueCompartment* tissue : m_data.GetCompartments().GetTissueLeafCompartments()) {
-    if (m_TissueToVascular.find(tissue) == m_TissueToVascular.end() || m_TissueToVascular[tissue] == nullptr)
+    if (m_TissueToVascular.find(tissue) == m_TissueToVascular.end() || m_TissueToVascular[tissue] == nullptr) {
       Warning("Tissue found a tissue compartment that is not mapped to a vascular compartment  : " + tissue->GetName());
+    }
     /*if (m_VascularCopPaths.find(tissue) == m_VascularCopPaths.end() || m_VascularCopPaths[tissue] == nullptr)
       Warning("Tissue found a tissue compartment that does not have a vascular colloid oncotic pressure path  : " + tissue->GetName());*/
-    if (m_InterstitialCopPaths.find(tissue) == m_InterstitialCopPaths.end() || m_InterstitialCopPaths[tissue] == nullptr)
+    if (m_InterstitialCopPaths.find(tissue) == m_InterstitialCopPaths.end() || m_InterstitialCopPaths[tissue] == nullptr) {
       Warning("Tissue found a tissue compartment that does not have an interstitial colloid oncotic pressure path  : " + tissue->GetName());
-    if (m_ExtraToIntraPaths.find(tissue) == m_ExtraToIntraPaths.end() || m_ExtraToIntraPaths[tissue] == nullptr)
+    }
+    if (m_ExtraToIntraPaths.find(tissue) == m_ExtraToIntraPaths.end() || m_ExtraToIntraPaths[tissue] == nullptr) {
       Warning("Tissue found a tissue compartment that does not an extracellular to intracellular path  : " + tissue->GetName());
+    }
     if (m_LeftLungTissue != tissue && m_RightLungTissue != tissue) { // We don't use the lungs in the consumption/production methodology
-      if (!Contains(m_ConsumptionProdutionTissues, (*tissue)))
+      if (!Contains(m_ConsumptionProdutionTissues, (*tissue))) {
         Warning("Tissue found a tissue compartment that it is not using in Consumption/Production : " + tissue->GetName());
+      }
     }
   }
 }
@@ -390,10 +394,12 @@ void Tissue::AtSteadyState()
 
   if (m_data.GetState() == EngineState::AtInitialStableState) {
     // Apply our conditions
-    if (m_data.GetConditions().HasStarvation())
+    if (m_data.GetConditions().HasStarvation()) {
       SetStarvationState();
-    if (m_data.GetConditions().HasDehydration())
+    }
+    if (m_data.GetConditions().HasDehydration()) {
       Dehydrate();
+    }
   }
 
   if (m_data.GetState() == EngineState::AtSecondaryStableState && !m_data.GetConditions().HasStarvation()) {
@@ -554,8 +560,9 @@ void Tissue::CalculateDiffusion()
     for (const SESubstance* sub : m_data.GetCompartments().GetLiquidCompartmentSubstances()) {
       double moved_ug; //used only for possible debugging output
       tissueKinetics = nullptr;
-      if (sub->HasPK())
+      if (sub->HasPK()) {
         tissueKinetics = sub->GetPK()->GetTissueKinetics(tissue->GetName());
+      }
       //Check to see if substance is a drug with the appropriate parameters to calculate PK diffusion
       // If the substance is a PBPK drug, then diffusion is computed by perfusion limited diffusion, as described in \cite huisinga2012modeling
       if (tissueKinetics != nullptr) {
@@ -597,8 +604,9 @@ void Tissue::CalculateDiffusion()
             /// \todo I believe we can optimize with a cache of these values. Also, we can cache permeabilityCoefficient_mL_Per_s_g which is not a function of the tissue properties
             double molecularRadius_nm = 0.0348 * pow(molarMass_g_Per_mol, 0.4175);
             double vToECpermeabilityCoefficient_mL_Per_s_g = 0.0287 * pow(molecularRadius_nm, -2.920) / 100.0; // This is only valid if the molecular radius is > 1.0 nm.
-            if (molecularRadius_nm < 1.0)
+            if (molecularRadius_nm < 1.0) {
               vToECpermeabilityCoefficient_mL_Per_s_g = 0.0184 * pow(molecularRadius_nm, -1.223) / 100.0;
+            }
 
             // Multiply by tissue mass to get the tissue-dependent coefficient.
             double vToECpermeabilityCoefficient_mL_Per_s = vToECpermeabilityCoefficient_mL_Per_s_g * tissue->GetTotalMass(MassUnit::g);
@@ -826,11 +834,13 @@ void Tissue::CalculateMetabolicConsumptionAndProduction(double time_s)
   // First sum the vascular flow into all of the vascular compartments that are associated with the tissue compartments.
   // We do not use the cardiac output as total flow rate because all of the fractions must sum to one at each time slice.
   for (SETissueCompartment* tissue : m_ConsumptionProdutionTissues) {
-    if (tissue == m_BrainTissue)
+    if (tissue == m_BrainTissue) {
       continue;
+    }
     vascular = m_TissueToVascular[tissue];
-    if (vascular->HasInFlow())
+    if (vascular->HasInFlow()) {
       totalFlowRate_mL_Per_min += vascular->GetInFlow(VolumePerTimeUnit::mL_Per_min);
+    }
   }
 
   for (SETissueCompartment* tissue : m_ConsumptionProdutionTissues) {
@@ -1258,8 +1268,10 @@ void Tissue::CalculateMetabolicConsumptionAndProduction(double time_s)
       nonbrainNeededEnergy_kcal -= glucoseToConsume_mol * anaerobic_ATP_Per_Glucose * energyPerMolATP_kcal;
       tissueNeededEnergy_kcal = 0;
       lactateProductionRate_mol_Per_s += glucoseToConsume_mol * lactate_Per_Glucose / time_s;
-      if (m_AnaerobicTissues.find(tissue->GetName()) == std::string::npos) //for tracking only
+      if (m_AnaerobicTissues.find(tissue->GetName()) == std::string::npos) {
+        //for tracking only
         m_AnaerobicTissues.append(tissue->GetName() + " ");
+      }
     }
     //If we'll use up all the glucose
     else if (tissueNeededEnergy_kcal > 0) {
@@ -1269,8 +1281,10 @@ void Tissue::CalculateMetabolicConsumptionAndProduction(double time_s)
       nonbrainNeededEnergy_kcal -= glucoseToConsume_mol * anaerobic_ATP_Per_Glucose * energyPerMolATP_kcal;
       tissueNeededEnergy_kcal -= glucoseToConsume_mol * anaerobic_ATP_Per_Glucose * energyPerMolATP_kcal;
       lactateProductionRate_mol_Per_s += glucoseToConsume_mol * lactate_Per_Glucose / time_s;
-      if (m_AnaerobicTissues.find(tissue->GetName()) == std::string::npos) //for tracking only
+      if (m_AnaerobicTissues.find(tissue->GetName()) == std::string::npos) {
+        //for tracking only
         m_AnaerobicTissues.append(tissue->GetName() + " ");
+      }
     }
 
     //Muscles can convert glycogen anaerobically, too
@@ -1286,8 +1300,10 @@ void Tissue::CalculateMetabolicConsumptionAndProduction(double time_s)
         TissueLactate->GetMass().IncrementValue(glycogenConsumed_mol * lactate_Per_Glycogen * m_Lactate->GetMolarMass(MassPerAmountUnit::g_Per_mol), MassUnit::g);
         nonbrainNeededEnergy_kcal -= glycogenConsumed_mol * anaerobic_ATP_Per_Glycogen * energyPerMolATP_kcal;
         lactateProductionRate_mol_Per_s += glycogenConsumed_mol * lactate_Per_Glycogen / time_s;
-        if (m_AnaerobicTissues.find(tissue->GetName()) == std::string::npos && tissueNeededEnergy_kcal != 0) //for tracking only
+        if (m_AnaerobicTissues.find(tissue->GetName()) == std::string::npos && tissueNeededEnergy_kcal != 0) {
+          //for tracking only
           m_AnaerobicTissues.append(tissue->GetName() + " ");
+        }
         muscleMandatoryAnaerobicNeededEnergy_kcal = 0;
         tissueNeededEnergy_kcal = 0;
       }
@@ -1853,14 +1869,16 @@ double Tissue::PerfusionLimitedDiffusion(SETissueCompartment& tissue, SELiquidCo
 
   //Calculate Diffusion
   SELiquidSubstanceQuantity* vSubQ = vascular.GetSubstanceQuantity(sub);
-  if (vSubQ == nullptr)
+  if (vSubQ == nullptr) {
     throw CommonDataModelException("No Vascular Substance Quantity found for substance " + sub.GetName());
+  }
   double VascularFlow_m_LPer_s = vascular.GetInFlow(VolumePerTimeUnit::mL_Per_s);
   double VascularConcentration_ug_Per_mL = vSubQ->GetConcentration(MassPerVolumeUnit::ug_Per_mL);
 
   SELiquidSubstanceQuantity* tSubQ = intracellular.GetSubstanceQuantity(sub);
-  if (tSubQ == nullptr)
+  if (tSubQ == nullptr) {
     throw CommonDataModelException("No Tissue-Intracellular Substance Quantity found for substance " + sub.GetName());
+  }
   SEScalarMassPerVolume tissueConcentration;
   GeneralMath::CalculateConcentration(tSubQ->GetMass(), tissue.GetMatrixVolume(), tissueConcentration, m_Logger);
   double TissueConcentration_ug_Per_mL = tissueConcentration.GetValue(MassPerVolumeUnit::ug_Per_mL);
@@ -1877,13 +1895,15 @@ double Tissue::PerfusionLimitedDiffusion(SETissueCompartment& tissue, SELiquidCo
     // If it's coming out, distribute by mass
     // If mass is exactly zero then going in by mass weighted won't work.
     if (MassIncrement_ug > 0.) {
-      if (MassIncrement_ug > vSubQ->GetMass(MassUnit::ug))
+      if (MassIncrement_ug > vSubQ->GetMass(MassUnit::ug)) {
         MassIncrement_ug = vSubQ->GetMass(MassUnit::ug);
+      }
       DistributeMassbyMassWeighted(vascular, sub, -MassIncrement_ug, MassUnit::ug);
       DistributeMassbyVolumeWeighted(intracellular, sub, MassIncrement_ug, MassUnit::ug);
     } else {
-      if (-MassIncrement_ug > tSubQ->GetMass(MassUnit::ug))
+      if (-MassIncrement_ug > tSubQ->GetMass(MassUnit::ug)) {
         MassIncrement_ug = -tSubQ->GetMass(MassUnit::ug);
+      }
       DistributeMassbyVolumeWeighted(vascular, sub, -MassIncrement_ug, MassUnit::ug);
       DistributeMassbyMassWeighted(intracellular, sub, MassIncrement_ug, MassUnit::ug);
     }
@@ -2427,12 +2447,15 @@ void Tissue::CalculateOncoticPressure()
   for (auto tissueVascular : m_TissueToVascular) {
     tissue = tissueVascular.first;
     vascular = tissueVascular.second;
-    if (tissue->GetName() == BGE::TissueCompartment::Brain)
+    if (tissue->GetName() == BGE::TissueCompartment::Brain) {
       continue;
-    if (vascular->GetName() == BGE::VascularCompartment::LeftKidney)
+    }
+    if (vascular->GetName() == BGE::VascularCompartment::LeftKidney) {
       vascular = m_data.GetCompartments().GetLiquidCompartment(BGE::VascularCompartment::LeftRenalArtery);
-    if (vascular->GetName() == BGE::VascularCompartment::RightKidney)
+    }
+    if (vascular->GetName() == BGE::VascularCompartment::RightKidney) {
       vascular = m_data.GetCompartments().GetLiquidCompartment(BGE::VascularCompartment::RightRenalArtery);
+    }
 
     reflectionCoefficient = m_data.GetCompartments().GetTissueCompartment(tissue->GetName())->GetReflectionCoefficient().GetValue();
     LLIM(reflectionCoefficient, 0.05);

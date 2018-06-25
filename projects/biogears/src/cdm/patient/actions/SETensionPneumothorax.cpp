@@ -55,12 +55,15 @@ CDM::TensionPneumothoraxData* SETensionPneumothorax::Unload() const
 void SETensionPneumothorax::Unload(CDM::TensionPneumothoraxData& data) const
 {
   SEPatientAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
-  if (HasType())
+  }
+  if (HasType()) {
     data.Type(m_Type);
-  if (HasSide())
+  }
+  if (HasSide()) {
     data.Side(m_Side);
+  }
 }
 
 bool SETensionPneumothorax::IsValid() const
@@ -113,16 +116,18 @@ bool SETensionPneumothorax::HasSeverity() const
 }
 SEScalar0To1& SETensionPneumothorax::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SETensionPneumothorax::ToString(std::ostream& str) const
 {
   str << "Patient Action : Tension Pneumothorax";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity: ";
   HasSeverity() ? str << *m_Severity : str << "NaN";
   str << "\n\tType: ";

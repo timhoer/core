@@ -20,8 +20,9 @@ SEScalarFraction::SEScalarFraction()
 
 CDM::ScalarFractionData* SEScalarFraction::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarFractionData* data(new CDM::ScalarFractionData());
   SEScalar::Unload(*data);
   return data;

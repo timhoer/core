@@ -328,8 +328,9 @@ void BioGearsEngineTest::DepositionFractionTest(SETestSuite& suite, SESubstance&
     //Execute the substance transport function
     gtxpt.Transport(*rGraph, deltaT_s);
     // Do it again for aerosols
-    if (aGraph != nullptr)
+    if (aGraph != nullptr) {
       ltxpt.Transport(*aGraph, deltaT_s);
+    }
     //convert 'Next' values to current
     calc.PostProcess(*rCircuit);
 
@@ -441,8 +442,9 @@ void BioGearsEngineTest::DepositionFractionTest(SETestSuite& suite, SESubstance&
     trk.Track("RightAlveoliParticulate_ug", time, rightAlveoliParticulate == nullptr ? 0 : rightAlveoliParticulate->GetMass(MassUnit::ug));
     trk.Track("RightAlveoliParticulateDeposited_ug", time, rightAlveoliParticulate == nullptr ? 0 : rightAlveoliParticulate->GetMassDeposited(MassUnit::ug));
 
-    if (i == 0)
+    if (i == 0) {
       trk.CreateFile(std::string("./UnitTests/BioGearsTests/" + substance.GetName() + "DepositionFraction.csv").c_str(), file);
+    }
     trk.StreamTrackToFile(file);
 
     time += deltaT_s;

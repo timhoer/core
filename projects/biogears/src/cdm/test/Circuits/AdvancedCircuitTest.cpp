@@ -1179,10 +1179,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked VolumeBaseline");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked VolumeBaseline");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1194,10 +1196,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked Volume");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked Volume");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1209,10 +1213,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked NextVolume");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked Volume");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     // I SHOULD BE ALBE TO CHANGE THIS, AS THERE IS NO COMPLIANCE ON THE PATH
@@ -1225,8 +1231,9 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (caught)
+    if (caught) {
       testCase->AddFailure("I should be able to modify a node Volume that has no compliance on any of its connected paths");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1238,10 +1245,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked Pressure");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked Pressure");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1253,10 +1262,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked NextPressure");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked NextPressure");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1268,10 +1279,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked Flow");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked Flow");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1283,10 +1296,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked NextFlow");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked NextFlow");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1298,10 +1313,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked FlowSource");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked FlowSource");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1313,10 +1330,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked Resistance");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked Resistance");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1328,10 +1347,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked Capacitance");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked Capacitance");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1343,10 +1364,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked Inductance");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked Inductance");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     caught = false;
@@ -1358,10 +1381,12 @@ void CommonDataModelTest::CircuitLockingTest(const std::string& sOutputDirectory
     } catch (...) {
       caught = true;
     }
-    if (i != 2 && !caught)
+    if (i != 2 && !caught) {
       testCase->AddFailure("I should not be able to modify a locked PotentialSource");
-    if (i == 2 && caught)
+    }
+    if (i == 2 && caught) {
       testCase->AddFailure("I should be able to modify an unlocked PotentialSource");
+    }
     testCase->GetDuration().SetValue(pTimer.GetElapsedTime_s("Test"), TimeUnit::s);
 
     if (i == 0) {

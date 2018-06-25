@@ -103,34 +103,48 @@ CDM::ComprehensiveMetabolicPanelData* SEComprehensiveMetabolicPanel::Unload()
 void SEComprehensiveMetabolicPanel::Unload(CDM::ComprehensiveMetabolicPanelData& data)
 {
   SEPatientAssessment::Unload(data);
-  if (HasAlbumin())
+  if (HasAlbumin()) {
     data.Albumin(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_Albumin->Unload()));
-  if (HasALP())
+  }
+  if (HasALP()) {
     data.ALP(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_ALP->Unload()));
-  if (HasALT())
+  }
+  if (HasALT()) {
     data.ALT(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_ALT->Unload()));
-  if (HasAST())
+  }
+  if (HasAST()) {
     data.AST(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_AST->Unload()));
-  if (HasBUN())
+  }
+  if (HasBUN()) {
     data.BUN(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_BUN->Unload()));
-  if (HasCalcium())
+  }
+  if (HasCalcium()) {
     data.Calcium(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_Calcium->Unload()));
-  if (HasChloride())
+  }
+  if (HasChloride()) {
     data.Chloride(std::unique_ptr<CDM::ScalarAmountPerVolumeData>(m_Chloride->Unload()));
-  if (HasCO2())
+  }
+  if (HasCO2()) {
     data.CO2(std::unique_ptr<CDM::ScalarAmountPerVolumeData>(m_CO2->Unload()));
-  if (HasCreatinine())
+  }
+  if (HasCreatinine()) {
     data.Creatinine(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_Creatinine->Unload()));
-  if (HasGlucose())
+  }
+  if (HasGlucose()) {
     data.Glucose(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_Glucose->Unload()));
-  if (HasPotassium())
+  }
+  if (HasPotassium()) {
     data.Potassium(std::unique_ptr<CDM::ScalarAmountPerVolumeData>(m_Potassium->Unload()));
-  if (HasSodium())
+  }
+  if (HasSodium()) {
     data.Sodium(std::unique_ptr<CDM::ScalarAmountPerVolumeData>(m_Sodium->Unload()));
-  if (HasTotalBilirubin())
+  }
+  if (HasTotalBilirubin()) {
     data.TotalBilirubin(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_TotalBilirubin->Unload()));
-  if (HasTotalProtein())
+  }
+  if (HasTotalProtein()) {
     data.TotalProtein(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_TotalProtein->Unload()));
+  }
 }
 
 bool SEComprehensiveMetabolicPanel::HasAlbumin()
@@ -139,8 +153,9 @@ bool SEComprehensiveMetabolicPanel::HasAlbumin()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetAlbumin()
 {
-  if (m_Albumin == nullptr)
+  if (m_Albumin == nullptr) {
     m_Albumin = new SEScalarMassPerVolume();
+  }
   return *m_Albumin;
 }
 
@@ -150,8 +165,9 @@ bool SEComprehensiveMetabolicPanel::HasALP()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetALP()
 {
-  if (m_ALP == nullptr)
+  if (m_ALP == nullptr) {
     m_ALP = new SEScalarMassPerVolume();
+  }
   return *m_ALP;
 }
 
@@ -161,8 +177,9 @@ bool SEComprehensiveMetabolicPanel::HasALT()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetALT()
 {
-  if (m_ALT == nullptr)
+  if (m_ALT == nullptr) {
     m_ALT = new SEScalarMassPerVolume();
+  }
   return *m_ALT;
 }
 
@@ -172,8 +189,9 @@ bool SEComprehensiveMetabolicPanel::HasAST()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetAST()
 {
-  if (m_AST == nullptr)
+  if (m_AST == nullptr) {
     m_AST = new SEScalarMassPerVolume();
+  }
   return *m_AST;
 }
 
@@ -183,8 +201,9 @@ bool SEComprehensiveMetabolicPanel::HasBUN()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetBUN()
 {
-  if (m_BUN == nullptr)
+  if (m_BUN == nullptr) {
     m_BUN = new SEScalarMassPerVolume();
+  }
   return *m_BUN;
 }
 
@@ -194,8 +213,9 @@ bool SEComprehensiveMetabolicPanel::HasCalcium()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetCalcium()
 {
-  if (m_Calcium == nullptr)
+  if (m_Calcium == nullptr) {
     m_Calcium = new SEScalarMassPerVolume();
+  }
   return *m_Calcium;
 }
 
@@ -205,8 +225,9 @@ bool SEComprehensiveMetabolicPanel::HasChloride()
 }
 SEScalarAmountPerVolume& SEComprehensiveMetabolicPanel::GetChloride()
 {
-  if (m_Chloride == nullptr)
+  if (m_Chloride == nullptr) {
     m_Chloride = new SEScalarAmountPerVolume();
+  }
   return *m_Chloride;
 }
 
@@ -216,8 +237,9 @@ bool SEComprehensiveMetabolicPanel::HasCO2()
 }
 SEScalarAmountPerVolume& SEComprehensiveMetabolicPanel::GetCO2()
 {
-  if (m_CO2 == nullptr)
+  if (m_CO2 == nullptr) {
     m_CO2 = new SEScalarAmountPerVolume();
+  }
   return *m_CO2;
 }
 
@@ -227,8 +249,9 @@ bool SEComprehensiveMetabolicPanel::HasCreatinine()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetCreatinine()
 {
-  if (m_Creatinine == nullptr)
+  if (m_Creatinine == nullptr) {
     m_Creatinine = new SEScalarMassPerVolume();
+  }
   return *m_Creatinine;
 }
 
@@ -238,8 +261,9 @@ bool SEComprehensiveMetabolicPanel::HasGlucose()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetGlucose()
 {
-  if (m_Glucose == nullptr)
+  if (m_Glucose == nullptr) {
     m_Glucose = new SEScalarMassPerVolume();
+  }
   return *m_Glucose;
 }
 
@@ -249,8 +273,9 @@ bool SEComprehensiveMetabolicPanel::HasPotassium()
 }
 SEScalarAmountPerVolume& SEComprehensiveMetabolicPanel::GetPotassium()
 {
-  if (m_Potassium == nullptr)
+  if (m_Potassium == nullptr) {
     m_Potassium = new SEScalarAmountPerVolume();
+  }
   return *m_Potassium;
 }
 
@@ -260,8 +285,9 @@ bool SEComprehensiveMetabolicPanel::HasSodium()
 }
 SEScalarAmountPerVolume& SEComprehensiveMetabolicPanel::GetSodium()
 {
-  if (m_Sodium == nullptr)
+  if (m_Sodium == nullptr) {
     m_Sodium = new SEScalarAmountPerVolume();
+  }
   return *m_Sodium;
 }
 
@@ -271,8 +297,9 @@ bool SEComprehensiveMetabolicPanel::HasTotalBilirubin()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetTotalBilirubin()
 {
-  if (m_TotalBilirubin == nullptr)
+  if (m_TotalBilirubin == nullptr) {
     m_TotalBilirubin = new SEScalarMassPerVolume();
+  }
   return *m_TotalBilirubin;
 }
 
@@ -282,7 +309,8 @@ bool SEComprehensiveMetabolicPanel::HasTotalProtein()
 }
 SEScalarMassPerVolume& SEComprehensiveMetabolicPanel::GetTotalProtein()
 {
-  if (m_TotalProtein == nullptr)
+  if (m_TotalProtein == nullptr) {
     m_TotalProtein = new SEScalarMassPerVolume();
+  }
   return *m_TotalProtein;
 }

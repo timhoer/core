@@ -21,8 +21,9 @@ const FlowInertanceUnit FlowInertanceUnit::Pa_s2_Per_m3("Pa s^2/m^3");
 
 CDM::ScalarFlowInertanceData* SEScalarFlowInertance::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarFlowInertanceData* data(new CDM::ScalarFlowInertanceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -30,14 +31,18 @@ CDM::ScalarFlowInertanceData* SEScalarFlowInertance::Unload() const
 
 bool FlowInertanceUnit::IsValidUnit(const std::string& unit)
 {
-  if (mmHg_s2_Per_mL.GetString().compare(unit) == 0)
+  if (mmHg_s2_Per_mL.GetString().compare(unit) == 0) {
     return true;
-  if (mmHg_s2_Per_L.GetString().compare(unit) == 0)
+  }
+  if (mmHg_s2_Per_L.GetString().compare(unit) == 0) {
     return true;
-  if (cmH2O_s2_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (cmH2O_s2_Per_mL.GetString().compare(unit) == 0) {
     return true;
-  if (cmH2O_s2_Per_L.GetString().compare(unit) == 0)
+  }
+  if (cmH2O_s2_Per_L.GetString().compare(unit) == 0) {
     return true;
+  }
   if (Pa_s2_Per_m3.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -45,16 +50,21 @@ bool FlowInertanceUnit::IsValidUnit(const std::string& unit)
 
 const FlowInertanceUnit& FlowInertanceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (mmHg_s2_Per_mL.GetString().compare(unit) == 0)
+  if (mmHg_s2_Per_mL.GetString().compare(unit) == 0) {
     return mmHg_s2_Per_mL;
-  if (mmHg_s2_Per_L.GetString().compare(unit) == 0)
+  }
+  if (mmHg_s2_Per_L.GetString().compare(unit) == 0) {
     return mmHg_s2_Per_L;
-  if (cmH2O_s2_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (cmH2O_s2_Per_mL.GetString().compare(unit) == 0) {
     return cmH2O_s2_Per_mL;
-  if (cmH2O_s2_Per_L.GetString().compare(unit) == 0)
+  }
+  if (cmH2O_s2_Per_L.GetString().compare(unit) == 0) {
     return cmH2O_s2_Per_L;
-  if (Pa_s2_Per_m3.GetString().compare(unit) == 0)
+  }
+  if (Pa_s2_Per_m3.GetString().compare(unit) == 0) {
     return Pa_s2_Per_m3;
+  }
   std::stringstream err;
   err << unit << " is not a valid FlowInertance unit";
   throw CommonDataModelException(err.str());

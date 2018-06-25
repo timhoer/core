@@ -34,14 +34,16 @@ void SEInhalerActionCollection::Clear()
 
 void SEInhalerActionCollection::Unload(std::vector<CDM::ActionData*>& to)
 {
-  if (HasConfiguration())
+  if (HasConfiguration()) {
     to.push_back(GetConfiguration()->Unload());
+  }
 }
 
 bool SEInhalerActionCollection::ProcessAction(const SEInhalerAction& action)
 {
-  if (!IsValid(action))
+  if (!IsValid(action)) {
     return false;
+  }
   CDM::InhalerActionData* bind = action.Unload();
   bool b = ProcessAction(*bind);
   delete bind;
@@ -52,8 +54,9 @@ bool SEInhalerActionCollection::ProcessAction(const CDM::InhalerActionData& acti
 {
   const CDM::InhalerConfigurationData* config = dynamic_cast<const CDM::InhalerConfigurationData*>(&action);
   if (config != nullptr) {
-    if (m_Configuration == nullptr)
+    if (m_Configuration == nullptr) {
       m_Configuration = new SEInhalerConfiguration(m_Substances);
+    }
     m_Configuration->Load(*config);
     return IsValid(*m_Configuration);
   }

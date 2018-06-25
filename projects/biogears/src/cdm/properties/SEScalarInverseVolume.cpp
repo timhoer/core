@@ -18,8 +18,9 @@ const InverseVolumeUnit InverseVolumeUnit::Inverse_mL("1/mL");
 
 CDM::ScalarInverseVolumeData* SEScalarInverseVolume::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarInverseVolumeData* data(new CDM::ScalarInverseVolumeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,19 +28,23 @@ CDM::ScalarInverseVolumeData* SEScalarInverseVolume::Unload() const
 
 bool InverseVolumeUnit::IsValidUnit(const std::string& unit)
 {
-  if (Inverse_L.GetString().compare(unit) == 0)
+  if (Inverse_L.GetString().compare(unit) == 0) {
     return true;
-  if (Inverse_mL.GetString().compare(unit) == 0)
+  }
+  if (Inverse_mL.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const InverseVolumeUnit& InverseVolumeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (Inverse_L.GetString().compare(unit) == 0)
+  if (Inverse_L.GetString().compare(unit) == 0) {
     return Inverse_L;
-  if (Inverse_mL.GetString().compare(unit) == 0)
+  }
+  if (Inverse_mL.GetString().compare(unit) == 0) {
     return Inverse_mL;
+  }
   std::stringstream err;
   err << unit << " is not a valid Volume unit";
   throw CommonDataModelException(err.str());

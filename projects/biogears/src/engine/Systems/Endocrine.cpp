@@ -60,8 +60,9 @@ void Endocrine::Initialize()
 
 bool Endocrine::Load(const CDM::BioGearsEndocrineSystemData& in)
 {
-  if (!SEEndocrineSystem::Load(in))
+  if (!SEEndocrineSystem::Load(in)) {
     return false;
+  }
   BioGearsSystem::LoadState();
   return true;
 }
@@ -99,8 +100,9 @@ void Endocrine::AtSteadyState()
   if (m_data.GetState() == EngineState::AtInitialStableState) {
     double diabetesScale = 1;
     if (m_data.GetConditions().HasDiabetesType1()) {
-      if (m_data.GetConditions().GetDiabetesType1()->HasInsulinProductionSeverity())
+      if (m_data.GetConditions().GetDiabetesType1()->HasInsulinProductionSeverity()) {
         diabetesScale = 1 - m_data.GetConditions().GetDiabetesType1()->GetInsulinProductionSeverity().GetValue();
+      }
 
       const std::vector<SELiquidCompartment*>& vascular = m_data.GetCompartments().GetVascularLeafCompartments();
       SESubstance& insulin = m_data.GetSubstances().GetInsulin();
@@ -171,8 +173,9 @@ void Endocrine::SynthesizeInsulin()
 
   //In type 1 diabetes, the ability to produce insulin is lessened
   if (m_data.GetConditions().HasDiabetesType1()) {
-    if (m_data.GetConditions().GetDiabetesType1()->HasInsulinProductionSeverity())
+    if (m_data.GetConditions().GetDiabetesType1()->HasInsulinProductionSeverity()) {
       diabetesScale = 1 - m_data.GetConditions().GetDiabetesType1()->GetInsulinProductionSeverity().GetValue();
+    }
   }
 
   //In type 2 diabetes, the beta cells can have impaired production like in type 1,
@@ -180,8 +183,9 @@ void Endocrine::SynthesizeInsulin()
   //Since our normal production curve tops out at a lower glucose concentration, we use a multiplier
   //based on the plot in Guyton p 991 to up our production maximum
   else if (m_data.GetConditions().HasDiabetesType2()) {
-    if (m_data.GetConditions().GetDiabetesType2()->HasInsulinProductionSeverity())
+    if (m_data.GetConditions().GetDiabetesType2()->HasInsulinProductionSeverity()) {
       diabetesScale = 1 - m_data.GetConditions().GetDiabetesType2()->GetInsulinProductionSeverity().GetValue();
+    }
 
     //Non-symmetric sigmoid roughly fit to Guyton curve
     //https://www.wolframalpha.com/input/?i=y+%3D+20.61421+%2B+(0.5089411+-+20.61421)%2F(1+%2B+(x%2F1.349053)%5E6.362276)%5E0.32948+from+0%3Cy%3C25+and+0%3Cx%3C7
@@ -233,16 +237,19 @@ void Endocrine::SynthesizeGlucagon()
   //of ~40 ng/L, so we need to make sure glucagon is being produced even if blood sugar gets very high \cite brown2008too
   if (m_data.GetConditions().HasDiabetesType1()) {
     double minimumGlucagonRate_pmol_Per_min = 0;
-    if (m_data.GetConditions().GetDiabetesType1()->HasInsulinProductionSeverity())
+    if (m_data.GetConditions().GetDiabetesType1()->HasInsulinProductionSeverity()) {
       minimumGlucagonRate_pmol_Per_min = GeneralMath::LinearInterpolator(0, 1, 0, .57 * 14.07, m_data.GetConditions().GetDiabetesType1()->GetInsulinProductionSeverity().GetValue());
+    }
     glucagonSynthesisRate_pmol_Per_min = std::max(glucagonSynthesisRate_pmol_Per_min, minimumGlucagonRate_pmol_Per_min);
   } else if (m_data.GetConditions().HasDiabetesType2()) {
     double minimumGlucagonRate_pmol_Per_min = 0;
     double totalEffect = 0;
-    if (m_data.GetConditions().GetDiabetesType2()->HasInsulinProductionSeverity())
+    if (m_data.GetConditions().GetDiabetesType2()->HasInsulinProductionSeverity()) {
       totalEffect += m_data.GetConditions().GetDiabetesType2()->GetInsulinProductionSeverity().GetValue();
-    if (m_data.GetConditions().GetDiabetesType2()->HasInsulinResistanceSeverity())
+    }
+    if (m_data.GetConditions().GetDiabetesType2()->HasInsulinResistanceSeverity()) {
       totalEffect += m_data.GetConditions().GetDiabetesType2()->GetInsulinResistanceSeverity().GetValue();
+    }
 
     BLIM(totalEffect, 0, 1);
 

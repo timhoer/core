@@ -83,44 +83,62 @@ void SETissueSystem::Clear()
 
 const SEScalar* SETissueSystem::GetScalar(const std::string& name)
 {
-  if (name.compare("CarbonDioxideProductionRate") == 0)
+  if (name.compare("CarbonDioxideProductionRate") == 0) {
     return &GetCarbonDioxideProductionRate();
-  if (name.compare("DehydrationFraction") == 0)
+  }
+  if (name.compare("DehydrationFraction") == 0) {
     return &GetDehydrationFraction();
-  if (name.compare("ExtracellularFluidVolume") == 0)
+  }
+  if (name.compare("ExtracellularFluidVolume") == 0) {
     return &GetExtracellularFluidVolume();
-  if (name.compare("ExtravascularFluidVolume") == 0)
+  }
+  if (name.compare("ExtravascularFluidVolume") == 0) {
     return &GetExtravascularFluidVolume();
-  if (name.compare("IntracellularFluidPH") == 0)
+  }
+  if (name.compare("IntracellularFluidPH") == 0) {
     return &GetIntracellularFluidPH();
-  if (name.compare("IntracellularFluidVolume") == 0)
+  }
+  if (name.compare("IntracellularFluidVolume") == 0) {
     return &GetIntracellularFluidVolume();
-  if (name.compare("TotalBodyFluidVolume") == 0)
+  }
+  if (name.compare("TotalBodyFluidVolume") == 0) {
     return &GetTotalBodyFluidVolume();
-  if (name.compare("OxygenConsumptionRate") == 0)
+  }
+  if (name.compare("OxygenConsumptionRate") == 0) {
     return &GetOxygenConsumptionRate();
-  if (name.compare("RespiratoryExchangeRatio") == 0)
+  }
+  if (name.compare("RespiratoryExchangeRatio") == 0) {
     return &GetRespiratoryExchangeRatio();
-  if (name.compare("LiverInsulinSetPoint") == 0)
+  }
+  if (name.compare("LiverInsulinSetPoint") == 0) {
     return &GetLiverInsulinSetPoint();
-  if (name.compare("LiverGlucagonSetPoint") == 0)
+  }
+  if (name.compare("LiverGlucagonSetPoint") == 0) {
     return &GetLiverGlucagonSetPoint();
-  if (name.compare("MuscleInsulinSetPoint") == 0)
+  }
+  if (name.compare("MuscleInsulinSetPoint") == 0) {
     return &GetMuscleInsulinSetPoint();
-  if (name.compare("MuscleGlucagonSetPoint") == 0)
+  }
+  if (name.compare("MuscleGlucagonSetPoint") == 0) {
     return &GetMuscleGlucagonSetPoint();
-  if (name.compare("FatInsulinSetPoint") == 0)
+  }
+  if (name.compare("FatInsulinSetPoint") == 0) {
     return &GetFatInsulinSetPoint();
-  if (name.compare("FatGlucagonSetPoint") == 0)
+  }
+  if (name.compare("FatGlucagonSetPoint") == 0) {
     return &GetFatGlucagonSetPoint();
-  if (name.compare("LiverGlycogen") == 0)
+  }
+  if (name.compare("LiverGlycogen") == 0) {
     return &GetLiverGlycogen();
-  if (name.compare("MuscleGlycogen") == 0)
+  }
+  if (name.compare("MuscleGlycogen") == 0) {
     return &GetMuscleGlycogen();
+  }
   if (name.compare("StoredProtein") == 0)
     return &GetStoredProtein();
-  if (name.compare("StoredFat") == 0)
+  if (name.compare("StoredFat") == 0) {
     return &GetStoredFat();
+  }
 
   return nullptr;
 }
@@ -128,44 +146,63 @@ const SEScalar* SETissueSystem::GetScalar(const std::string& name)
 bool SETissueSystem::Load(const CDM::TissueSystemData& in)
 {
   SESystem::Load(in);
-  if (in.CarbonDioxideProductionRate().present())
+  if (in.CarbonDioxideProductionRate().present()) {
     GetCarbonDioxideProductionRate().Load(in.CarbonDioxideProductionRate().get());
-  if (in.DehydrationFraction().present())
+  }
+  if (in.DehydrationFraction().present()) {
     GetDehydrationFraction().Load(in.DehydrationFraction().get());
-  if (in.ExtracellularFluidVolume().present())
+  }
+  if (in.ExtracellularFluidVolume().present()) {
     GetExtracellularFluidVolume().Load(in.ExtracellularFluidVolume().get());
-  if (in.ExtravascularFluidVolume().present())
+  }
+  if (in.ExtravascularFluidVolume().present()) {
     GetExtravascularFluidVolume().Load(in.ExtravascularFluidVolume().get());
-  if (in.IntracellularFluidPH().present())
+  }
+  if (in.IntracellularFluidPH().present()) {
     GetIntracellularFluidPH().Load(in.IntracellularFluidPH().get());
-  if (in.IntracellularFluidVolume().present())
+  }
+  if (in.IntracellularFluidVolume().present()) {
     GetIntracellularFluidVolume().Load(in.IntracellularFluidVolume().get());
-  if (in.TotalBodyFluidVolume().present())
+  }
+  if (in.TotalBodyFluidVolume().present()) {
     GetTotalBodyFluidVolume().Load(in.TotalBodyFluidVolume().get());
-  if (in.OxygenConsumptionRate().present())
+  }
+  if (in.OxygenConsumptionRate().present()) {
     GetOxygenConsumptionRate().Load(in.OxygenConsumptionRate().get());
-  if (in.RespiratoryExchangeRatio().present())
+  }
+  if (in.RespiratoryExchangeRatio().present()) {
     GetRespiratoryExchangeRatio().Load(in.RespiratoryExchangeRatio().get());
-  if (in.LiverInsulinSetPoint().present())
+  }
+  if (in.LiverInsulinSetPoint().present()) {
     GetLiverInsulinSetPoint().Load(in.LiverInsulinSetPoint().get());
-  if (in.LiverGlucagonSetPoint().present())
+  }
+  if (in.LiverGlucagonSetPoint().present()) {
     GetLiverGlucagonSetPoint().Load(in.LiverGlucagonSetPoint().get());
-  if (in.MuscleInsulinSetPoint().present())
+  }
+  if (in.MuscleInsulinSetPoint().present()) {
     GetMuscleInsulinSetPoint().Load(in.MuscleInsulinSetPoint().get());
-  if (in.MuscleGlucagonSetPoint().present())
+  }
+  if (in.MuscleGlucagonSetPoint().present()) {
     GetMuscleGlucagonSetPoint().Load(in.MuscleGlucagonSetPoint().get());
-  if (in.FatInsulinSetPoint().present())
+  }
+  if (in.FatInsulinSetPoint().present()) {
     GetFatInsulinSetPoint().Load(in.FatInsulinSetPoint().get());
-  if (in.FatGlucagonSetPoint().present())
+  }
+  if (in.FatGlucagonSetPoint().present()) {
     GetFatGlucagonSetPoint().Load(in.FatGlucagonSetPoint().get());
-  if (in.LiverGlycogen().present())
+  }
+  if (in.LiverGlycogen().present()) {
     GetLiverGlycogen().Load(in.LiverGlycogen().get());
-  if (in.MuscleGlycogen().present())
+  }
+  if (in.MuscleGlycogen().present()) {
     GetMuscleGlycogen().Load(in.MuscleGlycogen().get());
-  if (in.StoredProtein().present())
+  }
+  if (in.StoredProtein().present()) {
     GetStoredProtein().Load(in.StoredProtein().get());
-  if (in.StoredFat().present())
+  }
+  if (in.StoredFat().present()) {
     GetStoredFat().Load(in.StoredFat().get());
+  }
 
   return true;
 }
@@ -179,44 +216,63 @@ CDM::TissueSystemData* SETissueSystem::Unload() const
 
 void SETissueSystem::Unload(CDM::TissueSystemData& data) const
 {
-  if (m_CarbonDioxideProductionRate != nullptr)
+  if (m_CarbonDioxideProductionRate != nullptr) {
     data.CarbonDioxideProductionRate(std::unique_ptr<CDM::ScalarVolumePerTimeData>(m_CarbonDioxideProductionRate->Unload()));
-  if (m_DehydrationFraction != nullptr)
+  }
+  if (m_DehydrationFraction != nullptr) {
     data.DehydrationFraction(std::unique_ptr<CDM::Scalar0To1Data>(m_DehydrationFraction->Unload()));
-  if (m_ExtracellularFluidVolume != nullptr)
+  }
+  if (m_ExtracellularFluidVolume != nullptr) {
     data.ExtracellularFluidVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_ExtracellularFluidVolume->Unload()));
-  if (m_ExtravascularFluidVolume != nullptr)
+  }
+  if (m_ExtravascularFluidVolume != nullptr) {
     data.ExtravascularFluidVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_ExtravascularFluidVolume->Unload()));
-  if (m_IntracellularFluidPH != nullptr)
+  }
+  if (m_IntracellularFluidPH != nullptr) {
     data.IntracellularFluidPH(std::unique_ptr<CDM::ScalarData>(m_IntracellularFluidPH->Unload()));
-  if (m_IntracellularFluidVolume != nullptr)
+  }
+  if (m_IntracellularFluidVolume != nullptr) {
     data.IntracellularFluidVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_IntracellularFluidVolume->Unload()));
-  if (m_TotalBodyFluidVolume != nullptr)
+  }
+  if (m_TotalBodyFluidVolume != nullptr) {
     data.TotalBodyFluidVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_TotalBodyFluidVolume->Unload()));
-  if (m_OxygenConsumptionRate != nullptr)
+  }
+  if (m_OxygenConsumptionRate != nullptr) {
     data.OxygenConsumptionRate(std::unique_ptr<CDM::ScalarVolumePerTimeData>(m_OxygenConsumptionRate->Unload()));
-  if (m_RespiratoryExchangeRatio != nullptr)
+  }
+  if (m_RespiratoryExchangeRatio != nullptr) {
     data.RespiratoryExchangeRatio(std::unique_ptr<CDM::ScalarData>(m_RespiratoryExchangeRatio->Unload()));
-  if (m_LiverInsulinSetPoint != nullptr)
+  }
+  if (m_LiverInsulinSetPoint != nullptr) {
     data.LiverInsulinSetPoint(std::unique_ptr<CDM::ScalarAmountPerVolumeData>(m_LiverInsulinSetPoint->Unload()));
-  if (m_LiverGlucagonSetPoint != nullptr)
+  }
+  if (m_LiverGlucagonSetPoint != nullptr) {
     data.LiverGlucagonSetPoint(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_LiverGlucagonSetPoint->Unload()));
-  if (m_MuscleInsulinSetPoint != nullptr)
+  }
+  if (m_MuscleInsulinSetPoint != nullptr) {
     data.MuscleInsulinSetPoint(std::unique_ptr<CDM::ScalarAmountPerVolumeData>(m_MuscleInsulinSetPoint->Unload()));
-  if (m_MuscleGlucagonSetPoint != nullptr)
+  }
+  if (m_MuscleGlucagonSetPoint != nullptr) {
     data.MuscleGlucagonSetPoint(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_MuscleGlucagonSetPoint->Unload()));
-  if (m_FatInsulinSetPoint != nullptr)
+  }
+  if (m_FatInsulinSetPoint != nullptr) {
     data.FatInsulinSetPoint(std::unique_ptr<CDM::ScalarAmountPerVolumeData>(m_FatInsulinSetPoint->Unload()));
-  if (m_FatGlucagonSetPoint != nullptr)
+  }
+  if (m_FatGlucagonSetPoint != nullptr) {
     data.FatGlucagonSetPoint(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_FatGlucagonSetPoint->Unload()));
-  if (m_LiverGlycogen != nullptr)
+  }
+  if (m_LiverGlycogen != nullptr) {
     data.LiverGlycogen(std::unique_ptr<CDM::ScalarMassData>(m_LiverGlycogen->Unload()));
-  if (m_MuscleGlycogen != nullptr)
+  }
+  if (m_MuscleGlycogen != nullptr) {
     data.MuscleGlycogen(std::unique_ptr<CDM::ScalarMassData>(m_MuscleGlycogen->Unload()));
-  if (m_StoredProtein != nullptr)
+  }
+  if (m_StoredProtein != nullptr) {
     data.StoredProtein(std::unique_ptr<CDM::ScalarMassData>(m_StoredProtein->Unload()));
-  if (m_StoredFat != nullptr)
+  }
+  if (m_StoredFat != nullptr) {
     data.StoredFat(std::unique_ptr<CDM::ScalarMassData>(m_StoredFat->Unload()));
+  }
 
   SESystem::Unload(data);
 }
@@ -227,14 +283,16 @@ bool SETissueSystem::HasCarbonDioxideProductionRate() const
 }
 SEScalarVolumePerTime& SETissueSystem::GetCarbonDioxideProductionRate()
 {
-  if (m_CarbonDioxideProductionRate == nullptr)
+  if (m_CarbonDioxideProductionRate == nullptr) {
     m_CarbonDioxideProductionRate = new SEScalarVolumePerTime();
+  }
   return *m_CarbonDioxideProductionRate;
 }
 double SETissueSystem::GetCarbonDioxideProductionRate(const VolumePerTimeUnit& unit) const
 {
-  if (m_CarbonDioxideProductionRate == nullptr)
+  if (m_CarbonDioxideProductionRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_CarbonDioxideProductionRate->GetValue(unit);
 }
 
@@ -244,14 +302,16 @@ bool SETissueSystem::HasDehydrationFraction() const
 }
 SEScalar0To1& SETissueSystem::GetDehydrationFraction()
 {
-  if (m_DehydrationFraction == nullptr)
+  if (m_DehydrationFraction == nullptr) {
     m_DehydrationFraction = new SEScalar0To1();
+  }
   return *m_DehydrationFraction;
 }
 double SETissueSystem::GetDehydrationFraction() const
 {
-  if (m_DehydrationFraction == nullptr)
+  if (m_DehydrationFraction == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_DehydrationFraction->GetValue();
 }
 
@@ -261,14 +321,16 @@ bool SETissueSystem::HasExtracellularFluidVolume() const
 }
 SEScalarVolume& SETissueSystem::GetExtracellularFluidVolume()
 {
-  if (m_ExtracellularFluidVolume == nullptr)
+  if (m_ExtracellularFluidVolume == nullptr) {
     m_ExtracellularFluidVolume = new SEScalarVolume();
+  }
   return *m_ExtracellularFluidVolume;
 }
 double SETissueSystem::GetExtracellularFluidVolume(const VolumeUnit& unit) const
 {
-  if (m_ExtracellularFluidVolume == nullptr)
+  if (m_ExtracellularFluidVolume == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ExtracellularFluidVolume->GetValue(unit);
 }
 
@@ -278,14 +340,16 @@ bool SETissueSystem::HasExtravascularFluidVolume() const
 }
 SEScalarVolume& SETissueSystem::GetExtravascularFluidVolume()
 {
-  if (m_ExtravascularFluidVolume == nullptr)
+  if (m_ExtravascularFluidVolume == nullptr) {
     m_ExtravascularFluidVolume = new SEScalarVolume();
+  }
   return *m_ExtravascularFluidVolume;
 }
 double SETissueSystem::GetExtravascularFluidVolume(const VolumeUnit& unit) const
 {
-  if (m_ExtravascularFluidVolume == nullptr)
+  if (m_ExtravascularFluidVolume == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ExtravascularFluidVolume->GetValue(unit);
 }
 
@@ -295,14 +359,16 @@ bool SETissueSystem::HasIntracellularFluidVolume() const
 }
 SEScalarVolume& SETissueSystem::GetIntracellularFluidVolume()
 {
-  if (m_IntracellularFluidVolume == nullptr)
+  if (m_IntracellularFluidVolume == nullptr) {
     m_IntracellularFluidVolume = new SEScalarVolume();
+  }
   return *m_IntracellularFluidVolume;
 }
 double SETissueSystem::GetIntracellularFluidVolume(const VolumeUnit& unit) const
 {
-  if (m_IntracellularFluidVolume == nullptr)
+  if (m_IntracellularFluidVolume == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_IntracellularFluidVolume->GetValue(unit);
 }
 
@@ -312,14 +378,16 @@ bool SETissueSystem::HasTotalBodyFluidVolume() const
 }
 SEScalarVolume& SETissueSystem::GetTotalBodyFluidVolume()
 {
-  if (m_TotalBodyFluidVolume == nullptr)
+  if (m_TotalBodyFluidVolume == nullptr) {
     m_TotalBodyFluidVolume = new SEScalarVolume();
+  }
   return *m_TotalBodyFluidVolume;
 }
 double SETissueSystem::GetTotalBodyFluidVolume(const VolumeUnit& unit) const
 {
-  if (m_TotalBodyFluidVolume == nullptr)
+  if (m_TotalBodyFluidVolume == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_TotalBodyFluidVolume->GetValue(unit);
 }
 
@@ -329,14 +397,16 @@ bool SETissueSystem::HasIntracellularFluidPH() const
 }
 SEScalar& SETissueSystem::GetIntracellularFluidPH()
 {
-  if (m_IntracellularFluidPH == nullptr)
+  if (m_IntracellularFluidPH == nullptr) {
     m_IntracellularFluidPH = new SEScalar();
+  }
   return *m_IntracellularFluidPH;
 }
 double SETissueSystem::GetIntracellularFluidPH() const
 {
-  if (m_IntracellularFluidPH == nullptr)
+  if (m_IntracellularFluidPH == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_IntracellularFluidPH->GetValue();
 }
 
@@ -346,14 +416,16 @@ bool SETissueSystem::HasOxygenConsumptionRate() const
 }
 SEScalarVolumePerTime& SETissueSystem::GetOxygenConsumptionRate()
 {
-  if (m_OxygenConsumptionRate == nullptr)
+  if (m_OxygenConsumptionRate == nullptr) {
     m_OxygenConsumptionRate = new SEScalarVolumePerTime();
+  }
   return *m_OxygenConsumptionRate;
 }
 double SETissueSystem::GetOxygenConsumptionRate(const VolumePerTimeUnit& unit) const
 {
-  if (m_OxygenConsumptionRate == nullptr)
+  if (m_OxygenConsumptionRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_OxygenConsumptionRate->GetValue(unit);
 }
 
@@ -363,14 +435,16 @@ bool SETissueSystem::HasRespiratoryExchangeRatio() const
 }
 SEScalar& SETissueSystem::GetRespiratoryExchangeRatio()
 {
-  if (m_RespiratoryExchangeRatio == nullptr)
+  if (m_RespiratoryExchangeRatio == nullptr) {
     m_RespiratoryExchangeRatio = new SEScalar();
+  }
   return *m_RespiratoryExchangeRatio;
 }
 double SETissueSystem::GetRespiratoryExchangeRatio() const
 {
-  if (m_RespiratoryExchangeRatio == nullptr)
+  if (m_RespiratoryExchangeRatio == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_RespiratoryExchangeRatio->GetValue();
 }
 
@@ -380,14 +454,16 @@ bool SETissueSystem::HasLiverInsulinSetPoint() const
 }
 SEScalarAmountPerVolume& SETissueSystem::GetLiverInsulinSetPoint()
 {
-  if (m_LiverInsulinSetPoint == nullptr)
+  if (m_LiverInsulinSetPoint == nullptr) {
     m_LiverInsulinSetPoint = new SEScalarAmountPerVolume();
+  }
   return *m_LiverInsulinSetPoint;
 }
 double SETissueSystem::GetLiverInsulinSetPoint(const AmountPerVolumeUnit& unit) const
 {
-  if (m_LiverInsulinSetPoint == nullptr)
+  if (m_LiverInsulinSetPoint == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_LiverInsulinSetPoint->GetValue(unit);
 }
 
@@ -397,14 +473,16 @@ bool SETissueSystem::HasLiverGlucagonSetPoint() const
 }
 SEScalarMassPerVolume& SETissueSystem::GetLiverGlucagonSetPoint()
 {
-  if (m_LiverGlucagonSetPoint == nullptr)
+  if (m_LiverGlucagonSetPoint == nullptr) {
     m_LiverGlucagonSetPoint = new SEScalarMassPerVolume();
+  }
   return *m_LiverGlucagonSetPoint;
 }
 double SETissueSystem::GetLiverGlucagonSetPoint(const MassPerVolumeUnit& unit) const
 {
-  if (m_LiverGlucagonSetPoint == nullptr)
+  if (m_LiverGlucagonSetPoint == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_LiverGlucagonSetPoint->GetValue(unit);
 }
 
@@ -414,14 +492,16 @@ bool SETissueSystem::HasMuscleInsulinSetPoint() const
 }
 SEScalarAmountPerVolume& SETissueSystem::GetMuscleInsulinSetPoint()
 {
-  if (m_MuscleInsulinSetPoint == nullptr)
+  if (m_MuscleInsulinSetPoint == nullptr) {
     m_MuscleInsulinSetPoint = new SEScalarAmountPerVolume();
+  }
   return *m_MuscleInsulinSetPoint;
 }
 double SETissueSystem::GetMuscleInsulinSetPoint(const AmountPerVolumeUnit& unit) const
 {
-  if (m_MuscleInsulinSetPoint == nullptr)
+  if (m_MuscleInsulinSetPoint == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_MuscleInsulinSetPoint->GetValue(unit);
 }
 
@@ -431,14 +511,16 @@ bool SETissueSystem::HasMuscleGlucagonSetPoint() const
 }
 SEScalarMassPerVolume& SETissueSystem::GetMuscleGlucagonSetPoint()
 {
-  if (m_MuscleGlucagonSetPoint == nullptr)
+  if (m_MuscleGlucagonSetPoint == nullptr) {
     m_MuscleGlucagonSetPoint = new SEScalarMassPerVolume();
+  }
   return *m_MuscleGlucagonSetPoint;
 }
 double SETissueSystem::GetMuscleGlucagonSetPoint(const MassPerVolumeUnit& unit) const
 {
-  if (m_MuscleGlucagonSetPoint == nullptr)
+  if (m_MuscleGlucagonSetPoint == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_MuscleGlucagonSetPoint->GetValue(unit);
 }
 
@@ -448,14 +530,16 @@ bool SETissueSystem::HasFatInsulinSetPoint() const
 }
 SEScalarAmountPerVolume& SETissueSystem::GetFatInsulinSetPoint()
 {
-  if (m_FatInsulinSetPoint == nullptr)
+  if (m_FatInsulinSetPoint == nullptr) {
     m_FatInsulinSetPoint = new SEScalarAmountPerVolume();
+  }
   return *m_FatInsulinSetPoint;
 }
 double SETissueSystem::GetFatInsulinSetPoint(const AmountPerVolumeUnit& unit) const
 {
-  if (m_FatInsulinSetPoint == nullptr)
+  if (m_FatInsulinSetPoint == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FatInsulinSetPoint->GetValue(unit);
 }
 
@@ -465,14 +549,16 @@ bool SETissueSystem::HasFatGlucagonSetPoint() const
 }
 SEScalarMassPerVolume& SETissueSystem::GetFatGlucagonSetPoint()
 {
-  if (m_FatGlucagonSetPoint == nullptr)
+  if (m_FatGlucagonSetPoint == nullptr) {
     m_FatGlucagonSetPoint = new SEScalarMassPerVolume();
+  }
   return *m_FatGlucagonSetPoint;
 }
 double SETissueSystem::GetFatGlucagonSetPoint(const MassPerVolumeUnit& unit) const
 {
-  if (m_FatGlucagonSetPoint == nullptr)
+  if (m_FatGlucagonSetPoint == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FatGlucagonSetPoint->GetValue(unit);
 }
 
@@ -482,14 +568,16 @@ bool SETissueSystem::HasLiverGlycogen() const
 }
 SEScalarMass& SETissueSystem::GetLiverGlycogen()
 {
-  if (m_LiverGlycogen == nullptr)
+  if (m_LiverGlycogen == nullptr) {
     m_LiverGlycogen = new SEScalarMass();
+  }
   return *m_LiverGlycogen;
 }
 double SETissueSystem::GetLiverGlycogen(const MassUnit& unit) const
 {
-  if (m_LiverGlycogen == nullptr)
+  if (m_LiverGlycogen == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_LiverGlycogen->GetValue(unit);
 }
 
@@ -499,14 +587,16 @@ bool SETissueSystem::HasMuscleGlycogen() const
 }
 SEScalarMass& SETissueSystem::GetMuscleGlycogen()
 {
-  if (m_MuscleGlycogen == nullptr)
+  if (m_MuscleGlycogen == nullptr) {
     m_MuscleGlycogen = new SEScalarMass();
+  }
   return *m_MuscleGlycogen;
 }
 double SETissueSystem::GetMuscleGlycogen(const MassUnit& unit) const
 {
-  if (m_MuscleGlycogen == nullptr)
+  if (m_MuscleGlycogen == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_MuscleGlycogen->GetValue(unit);
 }
 
@@ -516,14 +606,16 @@ bool SETissueSystem::HasStoredProtein() const
 }
 SEScalarMass& SETissueSystem::GetStoredProtein()
 {
-  if (m_StoredProtein == nullptr)
+  if (m_StoredProtein == nullptr) {
     m_StoredProtein = new SEScalarMass();
+  }
   return *m_StoredProtein;
 }
 double SETissueSystem::GetStoredProtein(const MassUnit& unit) const
 {
-  if (m_StoredProtein == nullptr)
+  if (m_StoredProtein == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_StoredProtein->GetValue(unit);
 }
 
@@ -533,13 +625,15 @@ bool SETissueSystem::HasStoredFat() const
 }
 SEScalarMass& SETissueSystem::GetStoredFat()
 {
-  if (m_StoredFat == nullptr)
+  if (m_StoredFat == nullptr) {
     m_StoredFat = new SEScalarMass();
+  }
   return *m_StoredFat;
 }
 double SETissueSystem::GetStoredFat(const MassUnit& unit) const
 {
-  if (m_StoredFat == nullptr)
+  if (m_StoredFat == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_StoredFat->GetValue(unit);
 }

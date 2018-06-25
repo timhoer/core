@@ -17,8 +17,9 @@ const ElectricChargeUnit ElectricChargeUnit::C("C");
 
 CDM::ScalarElectricChargeData* SEScalarElectricCharge::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarElectricChargeData* data(new CDM::ScalarElectricChargeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -26,15 +27,17 @@ CDM::ScalarElectricChargeData* SEScalarElectricCharge::Unload() const
 
 bool ElectricChargeUnit::IsValidUnit(const std::string& unit)
 {
-  if (C.GetString().compare(unit) == 0)
+  if (C.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const ElectricChargeUnit& ElectricChargeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (C.GetString().compare(unit) == 0)
+  if (C.GetString().compare(unit) == 0) {
     return C;
+  }
   std::stringstream err;
   err << unit << " is not a valid ElectricCharge unit";
   throw CommonDataModelException(err.str());

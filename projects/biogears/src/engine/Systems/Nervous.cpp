@@ -75,8 +75,9 @@ void Nervous::Initialize()
 
 bool Nervous::Load(const CDM::BioGearsNervousSystemData& in)
 {
-  if (!SENervousSystem::Load(in))
+  if (!SENervousSystem::Load(in)) {
     return false;
+  }
   BioGearsSystem::LoadState();
   // We assume state have to be after all stabilization
   m_FeedbackActive = true;
@@ -126,8 +127,9 @@ void Nervous::SetUp()
 
 void Nervous::AtSteadyState()
 {
-  if (m_data.GetState() == EngineState::AtInitialStableState)
+  if (m_data.GetState() == EngineState::AtInitialStableState) {
     m_FeedbackActive = true;
+  }
 
   // The set-points (Baselines) get reset at the end of each stabilization period.
   m_ArterialOxygenSetPoint_mmHg = m_data.GetBloodChemistry().GetArterialOxygenPressure(PressureUnit::mmHg);
@@ -190,8 +192,9 @@ void Nervous::PostProcess()
 /// \todo Add decompensation. Perhaps a reduction in the effect that is a function of blood volume below a threshold... and maybe time.
 void Nervous::BaroreceptorFeedback()
 {
-  if (!m_FeedbackActive)
+  if (!m_FeedbackActive) {
     return;
+  }
   //First calculate the sympathetic and parasympathetic firing rates:
   double nu = m_data.GetConfiguration().GetResponseSlope();
   double meanArterialPressure_mmHg = m_data.GetCardiovascular().GetMeanArterialPressure(PressureUnit::mmHg);
@@ -201,8 +204,9 @@ void Nervous::BaroreceptorFeedback()
 
   //Adjust the MAP set-point for baroreceptors for anesthetics, opioids, and sedatives.  Other drugs should leave set-point as is.
   for (SESubstance* sub : m_data.GetCompartments().GetLiquidCompartmentSubstances()) {
-    if (!sub->HasPD())
+    if (!sub->HasPD()) {
       continue;
+    }
     if ((sub->GetClassification() == CDM::enumSubstanceClass::Anesthetic) || (sub->GetClassification() == CDM::enumSubstanceClass::Sedative) || (sub->GetClassification() == CDM::enumSubstanceClass::Opioid)) {
       meanArterialPressureSetPoint_mmHg += m_data.GetDrugs().GetMeanBloodPressureChange(PressureUnit::mmHg);
       break;
@@ -310,9 +314,9 @@ void Nervous::CheckNervousStatus()
     //80% of Rbc-Ache was inhibited.  This was relaxed to 70% because BioGears is calibrated to throw an irreversible state at
     //100% inhibition when, in actuality, a patient with 100% rbc-ache inhibition will likely survive (rbc-ache thought to act as a buffer
     //for neuromuscular ache)
-    if (RbcFractionInhibited > 0.7)
+    if (RbcFractionInhibited > 0.7) {
       m_data.GetPatient().SetEvent(CDM::enumPatientEvent::Fasciculation, true, m_data.GetSimulationTime());
-    else if ((m_data.GetSubstances().IsActive(*m_Sarin)) && (RbcFractionInhibited < 0.68)) {
+    } else if ((m_data.GetSubstances().IsActive(*m_Sarin)) && (RbcFractionInhibited < 0.68)) {
       //Oscillations around 70% rbc-ache inhibition are highly unlikely but give some leeway for reversal just in case
       m_data.GetPatient().SetEvent(CDM::enumPatientEvent::Fasciculation, false, m_data.GetSimulationTime());
     }
@@ -327,9 +331,9 @@ void Nervous::CheckNervousStatus()
   /// \cite @appiah2004pharmacology, @cite mcloughlin1994influence
   double neuromuscularBlockLevel = m_data.GetDrugs().GetNeuromuscularBlockLevel().GetValue();
   if (m_data.GetSubstances().IsActive(*m_Succinylcholine) && (neuromuscularBlockLevel > 0.0)) {
-    if ((neuromuscularBlockLevel < 0.9) && (!m_blockActive))
+    if ((neuromuscularBlockLevel < 0.9) && (!m_blockActive)) {
       m_data.GetPatient().SetEvent(CDM::enumPatientEvent::Fasciculation, true, m_data.GetSimulationTime());
-    else {
+    } else {
       m_data.GetPatient().SetEvent(CDM::enumPatientEvent::Fasciculation, false, m_data.GetSimulationTime());
       m_blockActive = true;
     }
@@ -349,8 +353,9 @@ void Nervous::CheckNervousStatus()
 void Nervous::ChemoreceptorFeedback()
 {
 
-  if (!m_FeedbackActive)
+  if (!m_FeedbackActive) {
     return;
+  }
 
   double normalized_pO2 = m_data.GetBloodChemistry().GetArterialOxygenPressure(PressureUnit::mmHg) / m_ArterialOxygenSetPoint_mmHg;
   double normalized_pCO2 = m_data.GetBloodChemistry().GetArterialCarbonDioxidePressure(PressureUnit::mmHg) / m_ArterialCarbonDioxideSetPoint_mmHg;
@@ -383,12 +388,14 @@ void Nervous::ChemoreceptorFeedback()
   //Apply central nervous depressant effects (currently only applies to morphine)
   SEDrugSystem& Drugs = m_data.GetDrugs();
   double CNSChange = Drugs.GetCentralNervousResponse().GetValue();
-  if (CNSChange >= 0.25)
+  if (CNSChange >= 0.25) {
     modifier = 0.0;
+  }
 
   //set to zero if below .1 percent
-  if (modifier < 0.001)
+  if (modifier < 0.001) {
     modifier = 0.0;
+  }
 
   GetChemoreceptorHeartRateScale().SetValue(maxHeartRateDelta * modifier);
 

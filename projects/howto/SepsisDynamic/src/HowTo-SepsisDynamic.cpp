@@ -66,10 +66,11 @@ void HowToDynamicSepsis()
       if (sev < 0 || sev > 1.0) {
         out = "Severity out of bounds, default to 0.5";
         sev = 0.5;
-      } else if (sev <= ZERO_APPROX)
+      } else if (sev <= ZERO_APPROX) {
         out = "Sepsis action disabled in  " + location;
-      else
+      } else {
         out = "Sepsis in " + location + " with severity = " + std::to_string(sev);
+      }
       sepThread.GetLogger()->Info(out);
       sepThread.SetSepsis(location, sev);
       break;

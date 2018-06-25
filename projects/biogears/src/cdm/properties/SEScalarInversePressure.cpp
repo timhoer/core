@@ -20,8 +20,9 @@ const InversePressureUnit InversePressureUnit::Inverse_atm("1/atm");
 
 CDM::ScalarInversePressureData* SEScalarInversePressure::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarInversePressureData* data(new CDM::ScalarInversePressureData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarInversePressureData* SEScalarInversePressure::Unload() const
 
 bool InversePressureUnit::IsValidUnit(const std::string& unit)
 {
-  if (Inverse_Pa.GetString().compare(unit) == 0)
+  if (Inverse_Pa.GetString().compare(unit) == 0) {
     return true;
-  if (Inverse_mmHg.GetString().compare(unit) == 0)
+  }
+  if (Inverse_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (Inverse_cmH2O.GetString().compare(unit) == 0)
+  }
+  if (Inverse_cmH2O.GetString().compare(unit) == 0) {
     return true;
-  if (Inverse_atm.GetString().compare(unit) == 0)
+  }
+  if (Inverse_atm.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const InversePressureUnit& InversePressureUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (Inverse_Pa.GetString().compare(unit) == 0)
+  if (Inverse_Pa.GetString().compare(unit) == 0) {
     return Inverse_Pa;
-  if (Inverse_mmHg.GetString().compare(unit) == 0)
+  }
+  if (Inverse_mmHg.GetString().compare(unit) == 0) {
     return Inverse_mmHg;
-  if (Inverse_cmH2O.GetString().compare(unit) == 0)
+  }
+  if (Inverse_cmH2O.GetString().compare(unit) == 0) {
     return Inverse_cmH2O;
-  if (Inverse_atm.GetString().compare(unit) == 0)
+  }
+  if (Inverse_atm.GetString().compare(unit) == 0) {
     return Inverse_atm;
+  }
   std::stringstream err;
   err << unit << " is not a valid InversePressure unit";
   throw CommonDataModelException(err.str());

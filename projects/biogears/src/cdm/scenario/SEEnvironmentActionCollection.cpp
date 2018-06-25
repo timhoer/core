@@ -42,16 +42,19 @@ void SEEnvironmentActionCollection::Clear()
 
 void SEEnvironmentActionCollection::Unload(std::vector<CDM::ActionData*>& to)
 {
-  if (HasChange())
+  if (HasChange()) {
     to.push_back(GetChange()->Unload());
-  if (HasThermalApplication())
+  }
+  if (HasThermalApplication()) {
     to.push_back(GetThermalApplication()->Unload());
+  }
 }
 
 bool SEEnvironmentActionCollection::ProcessAction(const SEEnvironmentAction& action)
 {
-  if (!IsValid(action))
+  if (!IsValid(action)) {
     return false;
+  }
   CDM::EnvironmentActionData* bind = action.Unload();
   bool b = ProcessAction(*bind);
   delete bind;
@@ -62,16 +65,18 @@ bool SEEnvironmentActionCollection::ProcessAction(const CDM::EnvironmentActionDa
 {
   const CDM::EnvironmentChangeData* change = dynamic_cast<const CDM::EnvironmentChangeData*>(&action);
   if (change != nullptr) {
-    if (m_Change == nullptr)
+    if (m_Change == nullptr) {
       m_Change = new SEEnvironmentChange(m_Substances);
+    }
     m_Change->Load(*change);
     return IsValid(*m_Change);
   }
 
   const CDM::ThermalApplicationData* thermal = dynamic_cast<const CDM::ThermalApplicationData*>(&action);
   if (thermal != nullptr) {
-    if (m_ThermalApplication == nullptr)
+    if (m_ThermalApplication == nullptr) {
       m_ThermalApplication = new SEThermalApplication();
+    }
     m_ThermalApplication->Load(*thermal);
     if (!m_ThermalApplication->IsActive()) {
       RemoveThermalApplication();

@@ -57,8 +57,9 @@ CDM::PatientAssessmentRequestData* SEPatientAssessmentRequest::Unload() const
 void SEPatientAssessmentRequest::Unload(CDM::PatientAssessmentRequestData& data) const
 {
   SEPatientAction::Unload(data);
-  if (HasType())
+  if (HasType()) {
     data.Type(m_Type);
+  }
 }
 
 CDM::enumPatientAssessment::value SEPatientAssessmentRequest::GetType() const
@@ -81,8 +82,9 @@ void SEPatientAssessmentRequest::InvalidateType()
 void SEPatientAssessmentRequest::ToString(std::ostream& str) const
 {
   str << "Patient Action : Assessment Request";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tType: ";
   HasType() ? str << GetType() : str << "Not Set";
   str << std::flush;

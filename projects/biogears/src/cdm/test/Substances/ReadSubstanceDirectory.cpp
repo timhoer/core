@@ -36,8 +36,9 @@ void CommonDataModelTest::ReadSubstanceDirectory(const std::string& rptDirectory
   SETestCase& testCase = testSuite.CreateTestCase();
   pTimer.Start("Case");
   SESubstanceManager subMgr(m_Logger);
-  if (!subMgr.LoadSubstanceDirectory())
+  if (!subMgr.LoadSubstanceDirectory()) {
     testCase.AddFailure("Unable to load substances");
+  }
   testCase.GetDuration().SetValue(pTimer.GetElapsedTime_s("Case"), TimeUnit::s);
   testCase.SetName(obj.GetName());
   // TODO would be nice to listen to errors on the logger and add them to the testCase failures...

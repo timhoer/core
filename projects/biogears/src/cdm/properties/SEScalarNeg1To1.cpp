@@ -20,8 +20,9 @@ SEScalarNeg1To1::SEScalarNeg1To1()
 
 CDM::ScalarNeg1To1Data* SEScalarNeg1To1::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarNeg1To1Data* data(new CDM::ScalarNeg1To1Data());
   SEScalar::Unload(*data);
   return data;
@@ -34,8 +35,9 @@ double SEScalarNeg1To1::GetValue(const NoUnit& unitless) const
 
 void SEScalarNeg1To1::SetValue(double d)
 {
-  if (d > 1 || d < -1)
+  if (d > 1 || d < -1) {
     throw CommonDataModelException("SEScalarNeg1To1 must be between [-1,1]");
+  }
   SEScalar::SetValue(d);
 }
 

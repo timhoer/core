@@ -30,8 +30,9 @@ SEThermalCompartmentLink::~SEThermalCompartmentLink()
 
 bool SEThermalCompartmentLink::Load(const CDM::ThermalCompartmentLinkData& in, SECircuitManager* circuits)
 {
-  if (!SECompartmentLink::Load(in, circuits))
+  if (!SECompartmentLink::Load(in, circuits)) {
     return false;
+  }
   if (in.Path().present()) {
     if (circuits == nullptr) {
       Error("Link is mapped to circuit path, " + in.Path().get() + ", but no circuit manager was provided, cannot load");
@@ -44,8 +45,9 @@ bool SEThermalCompartmentLink::Load(const CDM::ThermalCompartmentLinkData& in, S
     }
     MapPath(*path);
   } else {
-    if (in.HeatTransferRate().present())
+    if (in.HeatTransferRate().present()) {
       const_cast<SEScalarPower&>(GetHeatTransferRate()).Load(in.HeatTransferRate().get());
+    }
   }
   return true;
 }
@@ -60,11 +62,13 @@ void SEThermalCompartmentLink::Unload(CDM::ThermalCompartmentLinkData& data)
   SECompartmentLink::Unload(data);
   data.SourceCompartment(m_SourceCmpt.GetName());
   data.TargetCompartment(m_TargetCmpt.GetName());
-  if (m_Path != nullptr)
+  if (m_Path != nullptr) {
     data.Path(m_Path->GetName());
+  }
   // Even if you have a path, I am unloading everything, this makes the xml actually usefull...
-  if (HasHeatTransferRate())
+  if (HasHeatTransferRate()) {
     data.HeatTransferRate(std::unique_ptr<CDM::ScalarPowerData>(GetHeatTransferRate().Unload()));
+  }
 }
 
 void SEThermalCompartmentLink::Clear()
@@ -75,30 +79,36 @@ void SEThermalCompartmentLink::Clear()
 
 const SEScalar* SEThermalCompartmentLink::GetScalar(const std::string& name)
 {
-  if (name.compare("HeatTransferRate") == 0)
+  if (name.compare("HeatTransferRate") == 0) {
     return &GetHeatTransferRate();
+  }
   return nullptr;
 }
 
 bool SEThermalCompartmentLink::HasHeatTransferRate() const
 {
-  if (m_Path != nullptr)
+  if (m_Path != nullptr) {
     return m_Path->HasNextHeatTransferRate();
+  }
   return m_HeatTransferRate == nullptr ? false : m_HeatTransferRate->IsValid();
 }
 SEScalarPower& SEThermalCompartmentLink::GetHeatTransferRate()
 {
-  if (m_Path != nullptr)
+  if (m_Path != nullptr) {
     return m_Path->GetNextHeatTransferRate();
-  if (m_HeatTransferRate == nullptr)
+  }
+  if (m_HeatTransferRate == nullptr) {
     m_HeatTransferRate = new SEScalarPower();
+  }
   return *m_HeatTransferRate;
 }
 double SEThermalCompartmentLink::GetHeatTransferRate(const PowerUnit& unit) const
 {
-  if (m_Path != nullptr)
+  if (m_Path != nullptr) {
     return m_Path->GetNextHeatTransferRate(unit);
-  if (m_HeatTransferRate == nullptr)
+  }
+  if (m_HeatTransferRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_HeatTransferRate->GetValue(unit);
 }

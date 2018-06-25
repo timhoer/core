@@ -96,36 +96,48 @@ void SENutrition::Increment(const SENutrition& from)
     }
     GetProtein().Increment(*from.m_Protein);
   }
-  if (from.HasCalcium())
+  if (from.HasCalcium()) {
     GetCalcium().Increment(*from.m_Calcium);
-  if (from.HasSodium())
+  }
+  if (from.HasSodium()) {
     GetSodium().Increment(*from.m_Sodium);
-  if (from.HasWater())
+  }
+  if (from.HasWater()) {
     GetWater().Increment(*from.m_Water);
+  }
 }
 
 bool SENutrition::Load(const CDM::NutritionData& in)
 {
   Clear();
 
-  if (in.Carbohydrate().present())
+  if (in.Carbohydrate().present()) {
     GetCarbohydrate().Load(in.Carbohydrate().get());
-  if (in.CarbohydrateDigestionRate().present())
+  }
+  if (in.CarbohydrateDigestionRate().present()) {
     GetCarbohydrateDigestionRate().Load(in.CarbohydrateDigestionRate().get());
-  if (in.Fat().present())
+  }
+  if (in.Fat().present()) {
     GetFat().Load(in.Fat().get());
-  if (in.FatDigestionRate().present())
+  }
+  if (in.FatDigestionRate().present()) {
     GetFatDigestionRate().Load(in.FatDigestionRate().get());
-  if (in.Protein().present())
+  }
+  if (in.Protein().present()) {
     GetProtein().Load(in.Protein().get());
-  if (in.ProteinDigestionRate().present())
+  }
+  if (in.ProteinDigestionRate().present()) {
     GetProteinDigestionRate().Load(in.ProteinDigestionRate().get());
-  if (in.Calcium().present())
+  }
+  if (in.Calcium().present()) {
     GetCalcium().Load(in.Calcium().get());
-  if (in.Sodium().present())
+  }
+  if (in.Sodium().present()) {
     GetSodium().Load(in.Sodium().get());
-  if (in.Water().present())
+  }
+  if (in.Water().present()) {
     GetWater().Load(in.Water().get());
+  }
   return true;
 }
 
@@ -138,46 +150,63 @@ CDM::NutritionData* SENutrition::Unload() const
 
 void SENutrition::Unload(CDM::NutritionData& data) const
 {
-  if (m_Carbohydrate != nullptr)
+  if (m_Carbohydrate != nullptr) {
     data.Carbohydrate(std::unique_ptr<CDM::ScalarMassData>(m_Carbohydrate->Unload()));
-  if (m_CarbohydrateDigestionRate != nullptr)
+  }
+  if (m_CarbohydrateDigestionRate != nullptr) {
     data.CarbohydrateDigestionRate(std::unique_ptr<CDM::ScalarMassPerTimeData>(m_CarbohydrateDigestionRate->Unload()));
-  if (m_Fat != nullptr)
+  }
+  if (m_Fat != nullptr) {
     data.Fat(std::unique_ptr<CDM::ScalarMassData>(m_Fat->Unload()));
-  if (m_FatDigestionRate != nullptr)
+  }
+  if (m_FatDigestionRate != nullptr) {
     data.FatDigestionRate(std::unique_ptr<CDM::ScalarMassPerTimeData>(m_FatDigestionRate->Unload()));
-  if (m_Protein != nullptr)
+  }
+  if (m_Protein != nullptr) {
     data.Protein(std::unique_ptr<CDM::ScalarMassData>(m_Protein->Unload()));
-  if (m_ProteinDigestionRate != nullptr)
+  }
+  if (m_ProteinDigestionRate != nullptr) {
     data.ProteinDigestionRate(std::unique_ptr<CDM::ScalarMassPerTimeData>(m_ProteinDigestionRate->Unload()));
-  if (m_Calcium != nullptr)
+  }
+  if (m_Calcium != nullptr) {
     data.Calcium(std::unique_ptr<CDM::ScalarMassData>(m_Calcium->Unload()));
-  if (m_Sodium != nullptr)
+  }
+  if (m_Sodium != nullptr) {
     data.Sodium(std::unique_ptr<CDM::ScalarMassData>(m_Sodium->Unload()));
-  if (m_Water != nullptr)
+  }
+  if (m_Water != nullptr) {
     data.Water(std::unique_ptr<CDM::ScalarVolumeData>(m_Water->Unload()));
+  }
 }
 
 const SEScalar* SENutrition::GetScalar(const std::string& name)
 {
-  if (name.compare("Carbohydrate") == 0)
+  if (name.compare("Carbohydrate") == 0) {
     return &GetCarbohydrate();
-  if (name.compare("CarbohydrateDigestionRate") == 0)
+  }
+  if (name.compare("CarbohydrateDigestionRate") == 0) {
     return &GetCarbohydrateDigestionRate();
-  if (name.compare("Fat") == 0)
+  }
+  if (name.compare("Fat") == 0) {
     return &GetFat();
-  if (name.compare("FatDigestionRate") == 0)
+  }
+  if (name.compare("FatDigestionRate") == 0) {
     return &GetFatDigestionRate();
-  if (name.compare("Protein") == 0)
+  }
+  if (name.compare("Protein") == 0) {
     return &GetProtein();
+  }
   if (name.compare("ProteinDigestionRate") == 0)
     return &GetProteinDigestionRate();
-  if (name.compare("Calcium") == 0)
+  if (name.compare("Calcium") == 0) {
     return &GetCalcium();
-  if (name.compare("Sodium") == 0)
+  }
+  if (name.compare("Sodium") == 0) {
     return &GetSodium();
-  if (name.compare("Water") == 0)
+  }
+  if (name.compare("Water") == 0) {
     return &GetWater();
+  }
   return nullptr;
 }
 
@@ -209,14 +238,16 @@ bool SENutrition::HasCarbohydrate() const
 }
 SEScalarMass& SENutrition::GetCarbohydrate()
 {
-  if (m_Carbohydrate == nullptr)
+  if (m_Carbohydrate == nullptr) {
     m_Carbohydrate = new SEScalarMass();
+  }
   return *m_Carbohydrate;
 }
 double SENutrition::GetCarbohydrate(const MassUnit& unit) const
 {
-  if (m_Carbohydrate == nullptr)
+  if (m_Carbohydrate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Carbohydrate->GetValue(unit);
 }
 
@@ -226,14 +257,16 @@ bool SENutrition::HasCarbohydrateDigestionRate() const
 }
 SEScalarMassPerTime& SENutrition::GetCarbohydrateDigestionRate()
 {
-  if (m_CarbohydrateDigestionRate == nullptr)
+  if (m_CarbohydrateDigestionRate == nullptr) {
     m_CarbohydrateDigestionRate = new SEScalarMassPerTime();
+  }
   return *m_CarbohydrateDigestionRate;
 }
 double SENutrition::GetCarbohydrateDigestionRate(const MassPerTimeUnit& unit) const
 {
-  if (m_CarbohydrateDigestionRate == nullptr)
+  if (m_CarbohydrateDigestionRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_CarbohydrateDigestionRate->GetValue(unit);
 }
 
@@ -243,14 +276,16 @@ bool SENutrition::HasFat() const
 }
 SEScalarMass& SENutrition::GetFat()
 {
-  if (m_Fat == nullptr)
+  if (m_Fat == nullptr) {
     m_Fat = new SEScalarMass();
+  }
   return *m_Fat;
 }
 double SENutrition::GetFat(const MassUnit& unit) const
 {
-  if (m_Fat == nullptr)
+  if (m_Fat == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Fat->GetValue(unit);
 }
 
@@ -260,14 +295,16 @@ bool SENutrition::HasFatDigestionRate() const
 }
 SEScalarMassPerTime& SENutrition::GetFatDigestionRate()
 {
-  if (m_FatDigestionRate == nullptr)
+  if (m_FatDigestionRate == nullptr) {
     m_FatDigestionRate = new SEScalarMassPerTime();
+  }
   return *m_FatDigestionRate;
 }
 double SENutrition::GetFatDigestionRate(const MassPerTimeUnit& unit) const
 {
-  if (m_FatDigestionRate == nullptr)
+  if (m_FatDigestionRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FatDigestionRate->GetValue(unit);
 }
 
@@ -277,14 +314,16 @@ bool SENutrition::HasProtein() const
 }
 SEScalarMass& SENutrition::GetProtein()
 {
-  if (m_Protein == nullptr)
+  if (m_Protein == nullptr) {
     m_Protein = new SEScalarMass();
+  }
   return *m_Protein;
 }
 double SENutrition::GetProtein(const MassUnit& unit) const
 {
-  if (m_Protein == nullptr)
+  if (m_Protein == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Protein->GetValue(unit);
 }
 
@@ -294,14 +333,16 @@ bool SENutrition::HasProteinDigestionRate() const
 }
 SEScalarMassPerTime& SENutrition::GetProteinDigestionRate()
 {
-  if (m_ProteinDigestionRate == nullptr)
+  if (m_ProteinDigestionRate == nullptr) {
     m_ProteinDigestionRate = new SEScalarMassPerTime();
+  }
   return *m_ProteinDigestionRate;
 }
 double SENutrition::GetProteinDigestionRate(const MassPerTimeUnit& unit) const
 {
-  if (m_ProteinDigestionRate == nullptr)
+  if (m_ProteinDigestionRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ProteinDigestionRate->GetValue(unit);
 }
 
@@ -311,14 +352,16 @@ bool SENutrition::HasCalcium() const
 }
 SEScalarMass& SENutrition::GetCalcium()
 {
-  if (m_Calcium == nullptr)
+  if (m_Calcium == nullptr) {
     m_Calcium = new SEScalarMass();
+  }
   return *m_Calcium;
 }
 double SENutrition::GetCalcium(const MassUnit& unit) const
 {
-  if (m_Calcium == nullptr)
+  if (m_Calcium == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Calcium->GetValue(unit);
 }
 
@@ -328,14 +371,16 @@ bool SENutrition::HasSodium() const
 }
 SEScalarMass& SENutrition::GetSodium()
 {
-  if (m_Sodium == nullptr)
+  if (m_Sodium == nullptr) {
     m_Sodium = new SEScalarMass();
+  }
   return *m_Sodium;
 }
 double SENutrition::GetSodium(const MassUnit& unit) const
 {
-  if (m_Sodium == nullptr)
+  if (m_Sodium == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Sodium->GetValue(unit);
 }
 
@@ -345,32 +390,40 @@ bool SENutrition::HasWater() const
 }
 SEScalarVolume& SENutrition::GetWater()
 {
-  if (m_Water == nullptr)
+  if (m_Water == nullptr) {
     m_Water = new SEScalarVolume();
+  }
   return *m_Water;
 }
 double SENutrition::GetWater(const VolumeUnit& unit) const
 {
-  if (m_Water == nullptr)
+  if (m_Water == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Water->GetValue(unit);
 }
 
 double SENutrition::GetWeight(const MassUnit& unit) const
 {
   double w = 0;
-  if (HasCarbohydrate())
+  if (HasCarbohydrate()) {
     w += GetCarbohydrate(unit);
-  if (HasFat())
+  }
+  if (HasFat()) {
     w += GetFat(unit);
-  if (HasProtein())
+  }
+  if (HasProtein()) {
     w += GetProtein(unit);
-  if (HasCalcium())
+  }
+  if (HasCalcium()) {
     w += GetCalcium(unit);
-  if (HasSodium())
+  }
+  if (HasSodium()) {
     w += GetSodium(unit);
-  if (HasWater())
+  }
+  if (HasWater()) {
     w += Convert(GetWater(VolumeUnit::mL), MassUnit::g, unit);
+  }
   return w;
 }
 

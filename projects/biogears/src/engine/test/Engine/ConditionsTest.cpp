@@ -28,8 +28,9 @@ void BioGearsEngineTest::ConditionCombinations(const std::string& rptDirectory)
   testConditions.push_back(&cAnem);
 
   std::vector<int> conditionSwitches;
-  for (unsigned int i = 0; i < testConditions.size(); i++)
+  for (unsigned int i = 0; i < testConditions.size(); i++) {
     conditionSwitches.push_back(1);
+  }
   // Conditions will either be on or off when we run
   // Now calculate all the permutations with our conditions
   std::vector<std::vector<int>> permutations;
@@ -53,8 +54,9 @@ void BioGearsEngineTest::ConditionCombinations(const std::string& rptDirectory)
           ss << testConditions[c]->GetName() << "-";
         }
       }
-      if (ss.str().empty())
+      if (ss.str().empty()) {
         ss << "NoConditions";
+      }
       SETestCase& testCase = testSuite.CreateTestCase();
       log.Info(ss);
       std::unique_ptr<PhysiologyEngine> physEng = CreateBioGearsEngine(&log);

@@ -58,10 +58,12 @@ CDM::DiabetesType2Data* SEDiabetesType2::Unload() const
 void SEDiabetesType2::Unload(CDM::DiabetesType2Data& data) const
 {
   SEPatientCondition::Unload(data);
-  if (m_InsulinProductionSeverity != nullptr)
+  if (m_InsulinProductionSeverity != nullptr) {
     data.InsulinProductionSeverity(std::unique_ptr<CDM::Scalar0To1Data>(m_InsulinProductionSeverity->Unload()));
-  if (m_InsulinResistanceSeverity != nullptr)
+  }
+  if (m_InsulinResistanceSeverity != nullptr) {
     data.InsulinResistanceSeverity(std::unique_ptr<CDM::Scalar0To1Data>(m_InsulinResistanceSeverity->Unload()));
+  }
 }
 
 bool SEDiabetesType2::HasInsulinProductionSeverity() const
@@ -71,8 +73,9 @@ bool SEDiabetesType2::HasInsulinProductionSeverity() const
 
 SEScalar0To1& SEDiabetesType2::GetInsulinProductionSeverity()
 {
-  if (m_InsulinProductionSeverity == nullptr)
+  if (m_InsulinProductionSeverity == nullptr) {
     m_InsulinProductionSeverity = new SEScalar0To1();
+  }
   return *m_InsulinProductionSeverity;
 }
 
@@ -83,16 +86,18 @@ bool SEDiabetesType2::HasInsulinResistanceSeverity() const
 
 SEScalar0To1& SEDiabetesType2::GetInsulinResistanceSeverity()
 {
-  if (m_InsulinResistanceSeverity == nullptr)
+  if (m_InsulinResistanceSeverity == nullptr) {
     m_InsulinResistanceSeverity = new SEScalar0To1();
+  }
   return *m_InsulinResistanceSeverity;
 }
 
 void SEDiabetesType2::ToString(std::ostream& str) const
 {
   str << "Patient Condition : DiabetesType2";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tDiabetes Type 2 Insulin Production Severity: ";
   HasInsulinProductionSeverity() ? str << m_InsulinProductionSeverity : str << "NaN";
   str << "\n\tDiabetes Type 2 Insulin Resistance Severity: ";

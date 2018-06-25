@@ -55,16 +55,19 @@ CDM::SerializeStateData* SESerializeState::Unload() const
 void SESerializeState::Unload(CDM::SerializeStateData& data) const
 {
   SEAction::Unload(data);
-  if (HasFilename())
+  if (HasFilename()) {
     data.Filename(m_Filename);
-  if (HasType())
+  }
+  if (HasType()) {
     data.Type(m_Type);
+  }
 }
 
 void SESerializeState::ToString(std::ostream& str) const
 {
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment : " << m_Comment;
+  }
   str << "Type : " << m_Type;
   str << "Filename : " << m_Filename;
 }

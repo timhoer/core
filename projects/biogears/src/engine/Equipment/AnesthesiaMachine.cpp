@@ -101,8 +101,9 @@ void AnesthesiaMachine::Initialize()
 
 bool AnesthesiaMachine::Load(const CDM::BioGearsAnesthesiaMachineData& in)
 {
-  if (!SEAnesthesiaMachine::Load(in))
+  if (!SEAnesthesiaMachine::Load(in)) {
     return false;
+  }
   BioGearsSystem::LoadState();
   m_inhaling = in.Inhaling();
   m_currentbreathingCycleTime.Load(in.CurrentBreathingCycleTime());
@@ -176,10 +177,12 @@ void AnesthesiaMachine::SetUp()
 
 void AnesthesiaMachine::StateChange()
 {
-  if (HasLeftChamber() && GetLeftChamber().GetState() == CDM::enumOnOff::On && GetLeftChamber().HasSubstance())
+  if (HasLeftChamber() && GetLeftChamber().GetState() == CDM::enumOnOff::On && GetLeftChamber().HasSubstance()) {
     m_Substances.AddActiveSubstance(*m_LeftChamber->GetSubstance());
-  if (HasRightChamber() && GetRightChamber().GetState() == CDM::enumOnOff::On && GetRightChamber().HasSubstance())
+  }
+  if (HasRightChamber() && GetRightChamber().GetState() == CDM::enumOnOff::On && GetRightChamber().HasSubstance()) {
     m_Substances.AddActiveSubstance(*m_RightChamber->GetSubstance());
+  }
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -196,24 +199,25 @@ void AnesthesiaMachine::StateChange()
 //--------------------------------------------------------------------------------------------------
 void AnesthesiaMachine::SetConnection(CDM::enumAnesthesiaMachineConnection::value c)
 {
-  if (m_Connection == c)
-    return; // No Change
-  // Update the BioGears airway mode when this changes
-  SEAnesthesiaMachine::SetConnection(c);
-  if (c == CDM::enumAnesthesiaMachineConnection::Mask && m_data.GetIntubation() == CDM::enumOnOff::Off) {
-    m_data.SetAirwayMode(CDM::enumBioGearsAirwayMode::AnesthesiaMachine);
-    return;
-  } else if (c == CDM::enumAnesthesiaMachineConnection::Tube && m_data.GetIntubation() == CDM::enumOnOff::On) {
-    m_data.SetAirwayMode(CDM::enumBioGearsAirwayMode::AnesthesiaMachine);
-    return;
-  } else if (c == CDM::enumAnesthesiaMachineConnection::Mask && m_data.GetIntubation() == CDM::enumOnOff::On)
-    Error("Connection failed : Cannot apply anesthesia machine mask if patient is intubated.");
-  else if (c == CDM::enumAnesthesiaMachineConnection::Tube && m_data.GetIntubation() == CDM::enumOnOff::Off)
-    Error("Connection failed : Cannot apply anesthesia machine to tube if patient is not intubated.");
-  // Make sure we are active to make sure we go back to free
-  m_data.SetAirwayMode(CDM::enumBioGearsAirwayMode::Free);
+  if (m_Connection == c) {
+    return; // No Change }
+    // Update the BioGears airway mode when this changes
+    SEAnesthesiaMachine::SetConnection(c);
+    if (c == CDM::enumAnesthesiaMachineConnection::Mask && m_data.GetIntubation() == CDM::enumOnOff::Off) {
+      m_data.SetAirwayMode(CDM::enumBioGearsAirwayMode::AnesthesiaMachine);
+      return;
+    } else if (c == CDM::enumAnesthesiaMachineConnection::Tube && m_data.GetIntubation() == CDM::enumOnOff::On) {
+      m_data.SetAirwayMode(CDM::enumBioGearsAirwayMode::AnesthesiaMachine);
+      return;
+    } else if (c == CDM::enumAnesthesiaMachineConnection::Mask && m_data.GetIntubation() == CDM::enumOnOff::On) {
+      Error("Connection failed : Cannot apply anesthesia machine mask if patient is intubated.");
+    } else if (c == CDM::enumAnesthesiaMachineConnection::Tube && m_data.GetIntubation() == CDM::enumOnOff::Off) {
+      Error("Connection failed : Cannot apply anesthesia machine to tube if patient is not intubated.");
+    }
+    // Make sure we are active to make sure we go back to free
+    m_data.SetAirwayMode(CDM::enumBioGearsAirwayMode::Free);
+  }
 }
-
 //--------------------------------------------------------------------------------------------------
 /// \brief
 /// Removes the connection to the patient

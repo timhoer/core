@@ -80,15 +80,17 @@ bool PhysiologyEngineConfiguration::LoadFile(const std::string& file)
 
 bool PhysiologyEngineConfiguration::Load(const CDM::PhysiologyEngineConfigurationData& in)
 {
-  if (!m_Merge)
-    Clear(); // Reset only if we are not merging
+  if (!m_Merge) {
+    Clear(); // Reset only if we are not merging }
 
-  if (in.TimeStep().present())
-    GetTimeStep().Load(in.TimeStep().get());
-  if (in.WritePatientBaselineFile().present())
-    SetWritePatientBaselineFile(in.WritePatientBaselineFile().get());
+    if (in.TimeStep().present()) {
+      GetTimeStep().Load(in.TimeStep().get());
+    }
+    if (in.WritePatientBaselineFile().present()) {
+      SetWritePatientBaselineFile(in.WritePatientBaselineFile().get());
+    }
 
-  if (in.ElectroCardioGramInterpolatorFile().present()) {
+    if (in.ElectroCardioGramInterpolatorFile().present()) {
     if (!GetECGInterpolator().LoadWaveforms(in.ElectroCardioGramInterpolatorFile().get())) {
       Error("Unable to load ElectroCardioGram Waveforms file");
       return false;
@@ -129,6 +131,7 @@ bool PhysiologyEngineConfiguration::Load(const CDM::PhysiologyEngineConfiguratio
 
   return true;
 }
+  }
 
 CDM::PhysiologyEngineConfigurationData* PhysiologyEngineConfiguration::Unload() const
 {
@@ -139,14 +142,18 @@ CDM::PhysiologyEngineConfigurationData* PhysiologyEngineConfiguration::Unload() 
 
 void PhysiologyEngineConfiguration::Unload(CDM::PhysiologyEngineConfigurationData& data) const
 {
-  if (HasECGInterpolator())
+  if (HasECGInterpolator()) {
     data.ElectroCardioGramInterpolator(std::unique_ptr<CDM::ElectroCardioGramWaveformInterpolatorData>(m_ECGInterpolator->Unload()));
-  if (HasStabilizationCriteria())
+  }
+  if (HasStabilizationCriteria()) {
     data.StabilizationCriteria(std::unique_ptr<CDM::PhysiologyEngineStabilizationData>(m_StabilizationCriteria->Unload()));
-  if (HasTimeStep())
+  }
+  if (HasTimeStep()) {
     data.TimeStep(std::unique_ptr<CDM::ScalarTimeData>(m_TimeStep->Unload()));
-  if (HasWritePatientBaselineFile())
+  }
+  if (HasWritePatientBaselineFile()) {
     data.WritePatientBaselineFile(m_WritePatientBaselineFile);
+  }
 }
 
 bool PhysiologyEngineConfiguration::HasECGInterpolator() const
@@ -155,8 +162,9 @@ bool PhysiologyEngineConfiguration::HasECGInterpolator() const
 }
 SEElectroCardioGramInterpolator& PhysiologyEngineConfiguration::GetECGInterpolator()
 {
-  if (m_ECGInterpolator == nullptr)
+  if (m_ECGInterpolator == nullptr) {
     m_ECGInterpolator = new SEElectroCardioGramInterpolator(GetLogger());
+  }
   return *m_ECGInterpolator;
 }
 const SEElectroCardioGramInterpolator* PhysiologyEngineConfiguration::GetECGInterpolator() const
@@ -201,8 +209,9 @@ const PhysiologyEngineTimedStabilization* PhysiologyEngineConfiguration::GetTime
 }
 void PhysiologyEngineConfiguration::RemoveTimedStabilizationCriteria()
 {
-  if (m_StabilizationCriteria == m_TimedStabilizationCriteria)
+  if (m_StabilizationCriteria == m_TimedStabilizationCriteria) {
     m_StabilizationCriteria = nullptr;
+  }
   SAFE_DELETE(m_TimedStabilizationCriteria);
 }
 bool PhysiologyEngineConfiguration::HasDynamicStabilizationCriteria() const
@@ -224,8 +233,9 @@ const PhysiologyEngineDynamicStabilization* PhysiologyEngineConfiguration::GetDy
 }
 void PhysiologyEngineConfiguration::RemoveDynamicStabilizationCriteria()
 {
-  if (m_StabilizationCriteria == m_DynamicStabilizationCriteria)
+  if (m_StabilizationCriteria == m_DynamicStabilizationCriteria) {
     m_StabilizationCriteria = nullptr;
+  }
   SAFE_DELETE(m_DynamicStabilizationCriteria);
 }
 
@@ -235,13 +245,15 @@ bool PhysiologyEngineConfiguration::HasTimeStep() const
 }
 SEScalarTime& PhysiologyEngineConfiguration::GetTimeStep()
 {
-  if (m_TimeStep == nullptr)
+  if (m_TimeStep == nullptr) {
     m_TimeStep = new SEScalarTime();
+  }
   return *m_TimeStep;
 }
 double PhysiologyEngineConfiguration::GetTimeStep(const TimeUnit& unit) const
 {
-  if (m_TimeStep == nullptr)
+  if (m_TimeStep == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_TimeStep->GetValue(unit);
 }

@@ -22,8 +22,9 @@ const LengthUnit LengthUnit::ft("ft");
 
 CDM::ScalarLengthData* SEScalarLength::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarLengthData* data(new CDM::ScalarLengthData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -31,16 +32,21 @@ CDM::ScalarLengthData* SEScalarLength::Unload() const
 
 bool LengthUnit::IsValidUnit(const std::string& unit)
 {
-  if (m.GetString().compare(unit) == 0)
+  if (m.GetString().compare(unit) == 0) {
     return true;
-  if (cm.GetString().compare(unit) == 0)
+  }
+  if (cm.GetString().compare(unit) == 0) {
     return true;
-  if (mm.GetString().compare(unit) == 0)
+  }
+  if (mm.GetString().compare(unit) == 0) {
     return true;
-  if (um.GetString().compare(unit) == 0)
+  }
+  if (um.GetString().compare(unit) == 0) {
     return true;
-  if (in.GetString().compare(unit) == 0)
+  }
+  if (in.GetString().compare(unit) == 0) {
     return true;
+  }
   if (ft.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -48,18 +54,24 @@ bool LengthUnit::IsValidUnit(const std::string& unit)
 
 const LengthUnit& LengthUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (m.GetString().compare(unit) == 0)
+  if (m.GetString().compare(unit) == 0) {
     return m;
-  if (cm.GetString().compare(unit) == 0)
+  }
+  if (cm.GetString().compare(unit) == 0) {
     return cm;
-  if (mm.GetString().compare(unit) == 0)
+  }
+  if (mm.GetString().compare(unit) == 0) {
     return mm;
-  if (um.GetString().compare(unit) == 0)
+  }
+  if (um.GetString().compare(unit) == 0) {
     return um;
-  if (in.GetString().compare(unit) == 0)
+  }
+  if (in.GetString().compare(unit) == 0) {
     return in;
-  if (ft.GetString().compare(unit) == 0)
+  }
+  if (ft.GetString().compare(unit) == 0) {
     return ft;
+  }
   std::stringstream err;
   err << unit << " is not a valid Length unit";
   throw CommonDataModelException(err.str());

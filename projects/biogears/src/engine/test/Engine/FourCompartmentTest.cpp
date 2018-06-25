@@ -415,10 +415,11 @@ void BioGearsEngineTest::FourCompartmentTest(bool usingAcidBase, bool usingProdu
         totalMass += tisExtra.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
         totalMass += tisIntra.GetSubstanceQuantity(*sub)->GetMass(MassUnit::g);
       }
-      if (sub->GetName() == "Hemoglobin")
+      if (sub->GetName() == "Hemoglobin") {
         trk.Track("Unbound" + sub->GetName() + "_TotalMass_" + "g", time, totalMass);
-      else
+      } else {
         trk.Track(sub->GetName() + "_TotalMass_" + "g", time, totalMass);
+      }
     }
 
     //Total Hb

@@ -40,8 +40,9 @@ bool SEExercise::IsValid() const
 
 bool SEExercise::IsActive() const
 {
-  if (HasIntensity())
+  if (HasIntensity()) {
     return m_Intensity->IsPositive();
+  }
   return false;
 }
 
@@ -62,8 +63,9 @@ CDM::ExerciseData* SEExercise::Unload() const
 void SEExercise::Unload(CDM::ExerciseData& data) const
 {
   SEPatientAction::Unload(data);
-  if (m_Intensity != nullptr)
+  if (m_Intensity != nullptr) {
     data.Intensity(std::unique_ptr<CDM::Scalar0To1Data>(m_Intensity->Unload()));
+  }
 }
 
 bool SEExercise::HasIntensity() const
@@ -72,16 +74,18 @@ bool SEExercise::HasIntensity() const
 }
 SEScalar0To1& SEExercise::GetIntensity()
 {
-  if (m_Intensity == nullptr)
+  if (m_Intensity == nullptr) {
     m_Intensity = new SEScalar0To1();
+  }
   return *m_Intensity;
 }
 
 void SEExercise::ToString(std::ostream& str) const
 {
   str << "Patient Action : Exercise";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tIntensity: ";
   HasIntensity() ? str << *m_Intensity : str << "NaN";
   str << std::flush;

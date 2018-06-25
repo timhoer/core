@@ -20,8 +20,9 @@ const VolumePerTimePressureUnit VolumePerTimePressureUnit::mL_Per_min_mmHg("mL/m
 
 CDM::ScalarVolumePerTimePressureData* SEScalarVolumePerTimePressure::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarVolumePerTimePressureData* data(new CDM::ScalarVolumePerTimePressureData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarVolumePerTimePressureData* SEScalarVolumePerTimePressure::Unload() co
 
 bool VolumePerTimePressureUnit::IsValidUnit(const std::string& unit)
 {
-  if (L_Per_s_mmHg.GetString().compare(unit) == 0)
+  if (L_Per_s_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (mL_Per_s_mmHg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_s_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (L_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (L_Per_min_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (mL_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_min_mmHg.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const VolumePerTimePressureUnit& VolumePerTimePressureUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (L_Per_s_mmHg.GetString().compare(unit) == 0)
+  if (L_Per_s_mmHg.GetString().compare(unit) == 0) {
     return L_Per_s_mmHg;
-  if (mL_Per_s_mmHg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_s_mmHg.GetString().compare(unit) == 0) {
     return mL_Per_s_mmHg;
-  if (L_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (L_Per_min_mmHg.GetString().compare(unit) == 0) {
     return L_Per_min_mmHg;
-  if (mL_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_min_mmHg.GetString().compare(unit) == 0) {
     return mL_Per_min_mmHg;
+  }
   std::stringstream err;
   err << unit << " is not a valid VolumePerTimePressure unit";
   throw CommonDataModelException(err.str());

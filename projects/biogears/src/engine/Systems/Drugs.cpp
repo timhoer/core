@@ -101,8 +101,9 @@ void Drugs::Initialize()
 
 bool Drugs::Load(const CDM::BioGearsDrugSystemData& in)
 {
-  if (!SEDrugSystem::Load(in))
+  if (!SEDrugSystem::Load(in)) {
     return false;
+  }
 
   m_SarinRbcAcetylcholinesteraseComplex_nM = in.SarinRbcAcetylcholinesteraseComplex_nM();
   m_AgedRbcAcetylcholinesterase_nM = in.AgedRbcAcetylcholinesterase_nM();
@@ -137,8 +138,9 @@ void Drugs::Unload(CDM::BioGearsDrugSystemData& data) const
   data.AgedRbcAcetylcholinesterase_nM(m_AgedRbcAcetylcholinesterase_nM);
 
   for (auto itr : m_BolusAdministrations) {
-    if (itr.second != nullptr)
+    if (itr.second != nullptr) {
       data.BolusAdministration().push_back(std::unique_ptr<CDM::SubstanceBolusStateData>(itr.second->Unload()));
+    }
   }
 }
 
@@ -210,8 +212,9 @@ void Drugs::Process()
 
   CalculatePlasmaSubstanceConcentration();
 
-  if (m_data.GetConfiguration().IsPDEnabled())
+  if (m_data.GetConfiguration().IsPDEnabled()) {
     CalculateDrugEffects();
+  }
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -302,8 +305,9 @@ void Drugs::AdministerSubstanceInfusion()
 {
   //Note:  Currently, user removes state by setting the infusion rate of the drug in question to 0.0
   const std::map<const SESubstance*, SESubstanceInfusion*>& infusions = m_data.GetActions().GetPatientActions().GetSubstanceInfusions();
-  if (infusions.empty())
+  if (infusions.empty()) {
     return;
+  }
 
   SESubstanceInfusion* infusion;
   SESubstance* sub;
@@ -422,13 +426,15 @@ void Drugs::AdministerSubstanceCompoundInfusion()
       SEScalarMassPerVolume densityFluid;
       GeneralMath::CalculateWaterDensity(ambientTemp, densityFluid);
       densityFluid_kg_Per_mL = densityFluid.GetValue(MassPerVolumeUnit::kg_Per_mL);
-    } else if (compound->GetName().compare("Blood") == 0)
+    } else if (compound->GetName().compare("Blood") == 0) {
       densityFluid_kg_Per_mL = m_data.GetBloodChemistry().GetBloodDensity(MassPerVolumeUnit::kg_Per_mL);
+    }
     patientMass_kg += volumeToAdminister_mL * densityFluid_kg_Per_mL;
   }
 
-  for (const SESubstanceCompound* c : emptyBags)
+  for (const SESubstanceCompound* c : emptyBags) {
     m_data.GetActions().GetPatientActions().RemoveSubstanceCompoundInfusion(*c);
+  }
 
   m_data.GetPatient().GetWeight().SetValue(patientMass_kg, MassUnit::kg);
   m_IVToVenaCava->GetNextFlowSource().SetValue(totalRate_mL_Per_s, VolumePerTimeUnit::mL_Per_s);
@@ -474,10 +480,12 @@ void Drugs::CalculatePartitionCoefficients()
 
     //Loop over substances
     for (SESubstance* sub : m_data.GetCompartments().GetLiquidCompartmentSubstances()) {
-      if (!sub->HasPK())
+      if (!sub->HasPK()) {
         continue;
-      if (!sub->GetPK().HasPhysicochemicals())
+      }
+      if (!sub->GetPK().HasPhysicochemicals()) {
         continue;
+      }
 
       SESubstancePhysicochemicals& pk = sub->GetPK().GetPhysicochemicals();
       CDM::enumSubstanceIonicState::value IonicState = pk.GetIonicState();
@@ -577,8 +585,9 @@ void Drugs::CalculateDrugEffects()
 
   //Loop over substances
   for (SESubstance* sub : m_data.GetCompartments().GetLiquidCompartmentSubstances()) {
-    if (!sub->HasPD())
+    if (!sub->HasPD()) {
       continue;
+    }
 
     SESubstancePharmacodynamics& pd = sub->GetPD();
     shapeParameter = pd.GetEMaxShapeParameter().GetValue();
@@ -719,8 +728,9 @@ void Drugs::CalculatePlasmaSubstanceConcentration()
       sub->GetEffectSiteConcentration().SetValue(effectConcentration, MassPerVolumeUnit::ug_Per_mL);
     }
 
-    if ((sub->GetName() == "Sarin") && (m_data.GetSubstances().IsActive(*m_Sarin)))
+    if ((sub->GetName() == "Sarin") && (m_data.GetSubstances().IsActive(*m_Sarin))) {
       SarinKinetics();
+    }
   }
 }
 
@@ -746,8 +756,9 @@ void Drugs::CalculateSubstanceClearance()
   double OtherSystemicVolumeCleared_mL = 0;
 
   for (SESubstance* sub : m_data.GetCompartments().GetLiquidCompartmentSubstances()) {
-    if (!sub->HasClearance() || !sub->GetClearance().HasSystemic())
+    if (!sub->HasClearance() || !sub->GetClearance().HasSystemic()) {
       continue;
+    }
     SESubstanceClearance& clearance = sub->GetClearance();
 
     //Renal Volume Cleared - Clearance happens through the renal system
@@ -844,6 +855,7 @@ void Drugs::SarinKinetics()
   m_SarinRbcAcetylcholinesteraseComplex_nM = SarinRbcAche_nM;
   m_AgedRbcAcetylcholinesterase_nM = AgedSarin_nM;
 
-  if (m_data.GetSubstances().IsActive(*m_Pralidoxime))
+  if (m_data.GetSubstances().IsActive(*m_Pralidoxime)) {
     m_Pralidoxime->GetPlasmaConcentration().SetValue(PralidoximeConcentration_nM / 1000 * PralidoximeMolarMass_g_Per_umol, MassPerVolumeUnit::g_Per_L);
+  }
 }

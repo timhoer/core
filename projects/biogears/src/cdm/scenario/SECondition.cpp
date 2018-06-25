@@ -137,16 +137,18 @@ SECondition* SECondition::newFromBind(const CDM::ConditionData& data, SESubstanc
     return cc;
   }
 
-  if (substances.GetLogger() != nullptr)
+  if (substances.GetLogger() != nullptr) {
     substances.GetLogger()->Error("Unsupported Condition Received", "SECondition::newFromBind");
+  }
   return nullptr;
 }
 
 bool SECondition::Load(const CDM::ConditionData& in)
 {
   Clear();
-  if (in.Comment().present())
+  if (in.Comment().present()) {
     m_Comment = in.Comment().get();
+  }
   return true;
 }
 
@@ -159,8 +161,9 @@ CDM::ConditionData* SECondition::Unload() const
 
 void SECondition::Unload(CDM::ConditionData& data) const
 {
-  if (HasComment())
+  if (HasComment()) {
     data.Comment(m_Comment);
+  }
 }
 
 std::string SECondition::GetComment() const

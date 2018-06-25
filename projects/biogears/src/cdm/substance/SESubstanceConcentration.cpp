@@ -52,8 +52,9 @@ CDM::SubstanceConcentrationData* SESubstanceConcentration::Unload() const
 void SESubstanceConcentration::Unload(CDM::SubstanceConcentrationData& data) const
 {
   data.Name(m_Substance.GetName());
-  if (m_Concentration != nullptr)
+  if (m_Concentration != nullptr) {
     data.Concentration(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_Concentration->Unload()));
+  }
 }
 
 bool SESubstanceConcentration::HasConcentration() const
@@ -62,14 +63,16 @@ bool SESubstanceConcentration::HasConcentration() const
 }
 SEScalarMassPerVolume& SESubstanceConcentration::GetConcentration()
 {
-  if (m_Concentration == nullptr)
+  if (m_Concentration == nullptr) {
     m_Concentration = new SEScalarMassPerVolume();
+  }
   return *m_Concentration;
 }
 double SESubstanceConcentration::GetConcentration(const MassPerVolumeUnit& unit) const
 {
-  if (m_Concentration == nullptr)
+  if (m_Concentration == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Concentration->GetValue(unit);
 }
 

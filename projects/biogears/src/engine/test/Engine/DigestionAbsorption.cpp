@@ -35,14 +35,16 @@ void BioGearsEngineTest::DigestionTest(const std::string& rptDirectory, MealType
   DataTrack trk;
   std::string outputName;
 
-  if (mealType == CarbsOnly)
+  if (mealType == CarbsOnly) {
     outputName = "/DigestionTestCarbs";
+  }
   if (mealType == ProteinOnly)
     outputName = "/DigestionTestProtein";
   if (mealType == FatOnly)
     outputName = "/DigestionTestFat";
-  if (mealType == Balanced)
+  if (mealType == Balanced) {
     outputName = "/DigestionTestABalanced";
+  }
 
   m_Logger->ResetLogFile(rptDirectory + outputName + ".log");
   std::ofstream file;
@@ -323,8 +325,9 @@ void BioGearsEngineTest::DigestionTest(const std::string& rptDirectory, MealType
       trk.Track("Glucose_mg_Per_min", timer_s, glucoseProductTemp_mg_Per_min);
     }
 
-    if (j == 0)
+    if (j == 0) {
       trk.CreateFile(std::string(rptDirectory + outputName + ".csv").c_str(), file);
+    }
     trk.StreamTrackToFile(file);
   }
   file.close();
@@ -335,14 +338,18 @@ void BioGearsEngineTest::AbsorptionTest(const std::string& rptDirectory, MealTyp
   DataTrack trk;
   std::string outputName;
 
-  if (mealType == CarbsOnly)
+  if (mealType == CarbsOnly) {
     outputName = "/AbsoptionCarbs";
-  if (mealType == ProteinOnly)
+  }
+  if (mealType == ProteinOnly) {
     outputName = "/AbsoptionProtein";
-  if (mealType == FatOnly)
+  }
+  if (mealType == FatOnly) {
     outputName = "/AbsoptionFat";
-  if (mealType == Balanced)
+  }
+  if (mealType == Balanced) {
     outputName = "/AbsoptionBalanced";
+  }
 
   m_Logger->ResetLogFile(rptDirectory + outputName + ".log");
   std::ofstream file;
@@ -697,8 +704,9 @@ void BioGearsEngineTest::AbsorptionTest(const std::string& rptDirectory, MealTyp
       trk.Track("TriacylglycerolMassAbsorbedLymph_mg", timer_s, LymphTriacylglycerol->GetMass().GetValue(MassUnit::mg));
       trk.Track("TriacylglyceroleMassSmallIntestine_mg", timer_s, SmallIntestineChymeTriacylglycerol->GetMass().GetValue(MassUnit::mg));
     }
-    if (j == 0)
+    if (j == 0) {
       trk.CreateFile(std::string(rptDirectory + outputName + ".csv").c_str(), file);
+    }
     trk.StreamTrackToFile(file);
 
     //update timer s

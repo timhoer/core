@@ -19,8 +19,9 @@ const PressureTimePerVolumeAreaUnit PressureTimePerVolumeAreaUnit::dyn_s_Per_cm5
 
 CDM::ScalarPressureTimePerVolumeAreaData* SEScalarPressureTimePerVolumeArea::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarPressureTimePerVolumeAreaData* data(new CDM::ScalarPressureTimePerVolumeAreaData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -28,23 +29,29 @@ CDM::ScalarPressureTimePerVolumeAreaData* SEScalarPressureTimePerVolumeArea::Unl
 
 bool PressureTimePerVolumeAreaUnit::IsValidUnit(const std::string& unit)
 {
-  if (mmHg_min_Per_mL_m2.GetString().compare(unit) == 0)
+  if (mmHg_min_Per_mL_m2.GetString().compare(unit) == 0) {
     return true;
-  if (mmHg_s_Per_mL_m2.GetString().compare(unit) == 0)
+  }
+  if (mmHg_s_Per_mL_m2.GetString().compare(unit) == 0) {
     return true;
-  if (dyn_s_Per_cm5_m2.GetString().compare(unit) == 0)
+  }
+  if (dyn_s_Per_cm5_m2.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const PressureTimePerVolumeAreaUnit& PressureTimePerVolumeAreaUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (mmHg_min_Per_mL_m2.GetString().compare(unit) == 0)
+  if (mmHg_min_Per_mL_m2.GetString().compare(unit) == 0) {
     return mmHg_min_Per_mL_m2;
-  if (mmHg_s_Per_mL_m2.GetString().compare(unit) == 0)
+  }
+  if (mmHg_s_Per_mL_m2.GetString().compare(unit) == 0) {
     return mmHg_s_Per_mL_m2;
-  if (dyn_s_Per_cm5_m2.GetString().compare(unit) == 0)
+  }
+  if (dyn_s_Per_cm5_m2.GetString().compare(unit) == 0) {
     return dyn_s_Per_cm5_m2;
+  }
   std::stringstream err;
   err << unit << " is not a valid PressureTimePerVolumeArea unit";
   throw CommonDataModelException(err.str());

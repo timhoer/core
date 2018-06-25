@@ -17,8 +17,9 @@ const PowerPerAreaTemperatureToTheFourthUnit PowerPerAreaTemperatureToTheFourthU
 
 CDM::ScalarPowerPerAreaTemperatureToTheFourthData* SEScalarPowerPerAreaTemperatureToTheFourth::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarPowerPerAreaTemperatureToTheFourthData* data(new CDM::ScalarPowerPerAreaTemperatureToTheFourthData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -26,15 +27,17 @@ CDM::ScalarPowerPerAreaTemperatureToTheFourthData* SEScalarPowerPerAreaTemperatu
 
 bool PowerPerAreaTemperatureToTheFourthUnit::IsValidUnit(const std::string& unit)
 {
-  if (W_Per_m2_K4.GetString().compare(unit) == 0)
+  if (W_Per_m2_K4.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const PowerPerAreaTemperatureToTheFourthUnit& PowerPerAreaTemperatureToTheFourthUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (W_Per_m2_K4.GetString().compare(unit) == 0)
+  if (W_Per_m2_K4.GetString().compare(unit) == 0) {
     return W_Per_m2_K4;
+  }
   std::stringstream err;
   err << unit << " is not a valid PowerPerAreaTemperatureToTheFourth unit";
   throw CommonDataModelException(err.str());

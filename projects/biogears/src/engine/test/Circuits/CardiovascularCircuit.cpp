@@ -83,16 +83,19 @@ void BioGearsEngineTest::TuneCardiovascularCircuitTest(const std::string& sTestD
 
   for (unsigned int HRIter = 0; HRIter < 2; HRIter++) {
     double HR = HRLower;
-    if (HRIter == 1)
+    if (HRIter == 1) {
       HR = HRUpper;
+    }
     for (unsigned int DiaIter = 0; DiaIter < 2; DiaIter++) {
       double Dia = DiaLower;
-      if (DiaIter == 1)
+      if (DiaIter == 1) {
         Dia = DiaUpper;
+      }
       for (unsigned int SysIter = 0; SysIter < 2; SysIter++) {
         double Sys = SysLower;
-        if (SysIter == 1)
+        if (SysIter == 1) {
           Sys = SysUpper;
+        }
 
         //Make sure the pulse pressure isn't abnormally narrow
         if (Dia > 0.75 * Sys) {
@@ -244,8 +247,9 @@ void BioGearsEngineTest::CardiovascularCircuitAndTransportTest(CardiovascularDri
   }
 
   cv.Initialize();
-  if (connectRenal)
+  if (connectRenal) {
     ((Renal&)bg.GetRenal());
+  }
 
   DataTrack cvGraphTrk;
   std::ofstream cvGraphFile;
@@ -354,8 +358,9 @@ void BioGearsEngineTest::CardiovascularCircuitAndTransportTest(CardiovascularDri
       if (balanceBloodGases) {
         tmr.Start("Binding");
         for (SELiquidCompartment* cmpt : bg.GetCompartments().GetVascularLeafCompartments()) {
-          if (!cmpt->HasVolume())
+          if (!cmpt->HasVolume()) {
             continue;
+          }
           bg.GetSaturationCalculator().CalculateBloodGasDistribution(*cmpt);
         }
         binding_s += tmr.GetElapsedTime_s("Binding");
@@ -393,8 +398,9 @@ void BioGearsEngineTest::CardiovascularCircuitAndTransportTest(CardiovascularDri
 
     double totalVolume_mL = 0.0;
     for (SEFluidCircuitNode* n : cvCircuit.GetNodes()) {
-      if (n->HasNextVolume())
+      if (n->HasNextVolume()) {
         totalVolume_mL += n->GetNextVolume(VolumeUnit::mL);
+      }
     }
     circiutTrk.Track("TotalVolume_mL", time_s, totalVolume_mL);
     circiutTrk.Track(time_s, cvCircuit);
@@ -455,8 +461,9 @@ void BioGearsEngineTest::CardiovascularCircuitAndTransportTest(CardiovascularDri
         if (n->HasNextVolume()) {
           auto unit = n->GetNextVolume().GetUnit();
           double volume = n->GetNextVolume().GetValue(*unit);
-          if (volume < 0)
+          if (volume < 0) {
             bg.GetLogger()->Error("Negative volume for : " + n->GetName());
+          }
           cvVolumeTrk.Track(n->GetName() + "_" + unit->GetString(), time_s, volume);
           if (n->HasVolumeBaseline()) {
             double baseVolume = n->GetVolumeBaseline().GetValue(*unit);

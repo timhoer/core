@@ -67,8 +67,9 @@ void SEOxygenTankPressureLoss::Unload(CDM::OxygenTankPressureLossData& data) con
 void SEOxygenTankPressureLoss::ToString(std::ostream& str) const
 {
   str << "Anesthesia Machine Action : Oxygen Tank Pressure Loss";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tState: " << IsActive();
   str << std::flush;
 }

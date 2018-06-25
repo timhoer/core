@@ -20,8 +20,9 @@ const LengthPerTimePressureUnit LengthPerTimePressureUnit::cm_Per_min_mmHg("cm/m
 
 CDM::ScalarLengthPerTimePressureData* SEScalarLengthPerTimePressure::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarLengthPerTimePressureData* data(new CDM::ScalarLengthPerTimePressureData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarLengthPerTimePressureData* SEScalarLengthPerTimePressure::Unload() co
 
 bool LengthPerTimePressureUnit::IsValidUnit(const std::string& unit)
 {
-  if (m_Per_s_mmHg.GetString().compare(unit) == 0)
+  if (m_Per_s_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (cm_Per_s_mmHg.GetString().compare(unit) == 0)
+  }
+  if (cm_Per_s_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (m_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (m_Per_min_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (cm_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (cm_Per_min_mmHg.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const LengthPerTimePressureUnit& LengthPerTimePressureUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (m_Per_s_mmHg.GetString().compare(unit) == 0)
+  if (m_Per_s_mmHg.GetString().compare(unit) == 0) {
     return m_Per_s_mmHg;
-  if (cm_Per_s_mmHg.GetString().compare(unit) == 0)
+  }
+  if (cm_Per_s_mmHg.GetString().compare(unit) == 0) {
     return cm_Per_s_mmHg;
-  if (m_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (m_Per_min_mmHg.GetString().compare(unit) == 0) {
     return m_Per_min_mmHg;
-  if (cm_Per_min_mmHg.GetString().compare(unit) == 0)
+  }
+  if (cm_Per_min_mmHg.GetString().compare(unit) == 0) {
     return cm_Per_min_mmHg;
+  }
   std::stringstream err;
   err << unit << " is not a valid LengthPerTimePressure unit";
   throw CommonDataModelException(err.str());

@@ -18,8 +18,9 @@ const PressurePerVolumeUnit PressurePerVolumeUnit::cmH2O_Per_mL("cmH2O/mL");
 
 CDM::ScalarPressurePerVolumeData* SEScalarPressurePerVolume::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarPressurePerVolumeData* data(new CDM::ScalarPressurePerVolumeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,19 +28,23 @@ CDM::ScalarPressurePerVolumeData* SEScalarPressurePerVolume::Unload() const
 
 bool PressurePerVolumeUnit::IsValidUnit(const std::string& unit)
 {
-  if (mmHg_Per_mL.GetString().compare(unit) == 0)
+  if (mmHg_Per_mL.GetString().compare(unit) == 0) {
     return true;
-  if (cmH2O_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (cmH2O_Per_mL.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const PressurePerVolumeUnit& PressurePerVolumeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (mmHg_Per_mL.GetString().compare(unit) == 0)
+  if (mmHg_Per_mL.GetString().compare(unit) == 0) {
     return mmHg_Per_mL;
-  if (cmH2O_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (cmH2O_Per_mL.GetString().compare(unit) == 0) {
     return cmH2O_Per_mL;
+  }
   std::stringstream err;
   err << unit << " is not a valid PressurePerVolume unit";
   throw CommonDataModelException(err.str());

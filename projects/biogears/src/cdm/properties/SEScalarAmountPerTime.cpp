@@ -22,8 +22,9 @@ AmountPerTimeUnit AmountPerTimeUnit::umol_Per_min("umol/min");
 
 CDM::ScalarAmountPerTimeData* SEScalarAmountPerTime::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarAmountPerTimeData* data(new CDM::ScalarAmountPerTimeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -31,16 +32,21 @@ CDM::ScalarAmountPerTimeData* SEScalarAmountPerTime::Unload() const
 
 bool AmountPerTimeUnit::IsValidUnit(const std::string& unit)
 {
-  if (mol_Per_day.GetString().compare(unit) == 0)
+  if (mol_Per_day.GetString().compare(unit) == 0) {
     return true;
-  if (mol_Per_s.GetString().compare(unit) == 0)
+  }
+  if (mol_Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (umol_Per_s.GetString().compare(unit) == 0)
+  }
+  if (umol_Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (mmol_Per_min.GetString().compare(unit) == 0)
+  }
+  if (mmol_Per_min.GetString().compare(unit) == 0) {
     return true;
-  if (pmol_Per_min.GetString().compare(unit) == 0)
+  }
+  if (pmol_Per_min.GetString().compare(unit) == 0) {
     return true;
+  }
   if (umol_Per_min.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -48,18 +54,24 @@ bool AmountPerTimeUnit::IsValidUnit(const std::string& unit)
 
 const AmountPerTimeUnit& AmountPerTimeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (mol_Per_day.GetString().compare(unit) == 0)
+  if (mol_Per_day.GetString().compare(unit) == 0) {
     return mol_Per_day;
-  if (mol_Per_s.GetString().compare(unit) == 0)
+  }
+  if (mol_Per_s.GetString().compare(unit) == 0) {
     return mol_Per_s;
-  if (umol_Per_s.GetString().compare(unit) == 0)
+  }
+  if (umol_Per_s.GetString().compare(unit) == 0) {
     return umol_Per_s;
-  if (mmol_Per_min.GetString().compare(unit) == 0)
+  }
+  if (mmol_Per_min.GetString().compare(unit) == 0) {
     return mmol_Per_min;
-  if (pmol_Per_min.GetString().compare(unit) == 0)
+  }
+  if (pmol_Per_min.GetString().compare(unit) == 0) {
     return pmol_Per_min;
-  if (umol_Per_min.GetString().compare(unit) == 0)
+  }
+  if (umol_Per_min.GetString().compare(unit) == 0) {
     return umol_Per_min;
+  }
   std::stringstream err;
   err << unit << " is not a valid AmountPerTime unit";
   throw CommonDataModelException(err.str());

@@ -76,10 +76,12 @@ CDM::SubstanceCompoundInfusionData* SESubstanceCompoundInfusion::Unload() const
 void SESubstanceCompoundInfusion::Unload(CDM::SubstanceCompoundInfusionData& data) const
 {
   SESubstanceAdministration::Unload(data);
-  if (m_Rate != nullptr)
+  if (m_Rate != nullptr) {
     data.Rate(std::unique_ptr<CDM::ScalarVolumePerTimeData>(m_Rate->Unload()));
-  if (m_BagVolume != nullptr)
+  }
+  if (m_BagVolume != nullptr) {
     data.BagVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_BagVolume->Unload()));
+  }
   data.SubstanceCompound(m_Compound.GetName());
 }
 
@@ -89,8 +91,9 @@ bool SESubstanceCompoundInfusion::HasRate() const
 }
 SEScalarVolumePerTime& SESubstanceCompoundInfusion::GetRate()
 {
-  if (m_Rate == nullptr)
+  if (m_Rate == nullptr) {
     m_Rate = new SEScalarVolumePerTime();
+  }
   return *m_Rate;
 }
 
@@ -100,8 +103,9 @@ bool SESubstanceCompoundInfusion::HasBagVolume() const
 }
 SEScalarVolume& SESubstanceCompoundInfusion::GetBagVolume()
 {
-  if (m_BagVolume == nullptr)
+  if (m_BagVolume == nullptr) {
     m_BagVolume = new SEScalarVolume();
+  }
   return *m_BagVolume;
 }
 
@@ -113,8 +117,9 @@ SESubstanceCompound& SESubstanceCompoundInfusion::GetSubstanceCompound() const
 void SESubstanceCompoundInfusion::ToString(std::ostream& str) const
 {
   str << "Patient Action : Compound Infusion";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tRate: ";
   HasRate() ? str << *m_Rate : str << "NaN";
   str << "\n\tBag Volume: ";

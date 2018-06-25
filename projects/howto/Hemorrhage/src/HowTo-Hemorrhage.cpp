@@ -201,11 +201,13 @@ void ParseMCIS(SEHemorrhage& hem, std::vector<unsigned int>& mcis)
 		comp = "Brain";
 		break;
 	case Torso:
-		if (torsoMap.find({ mcis.begin() + 2,mcis.end() - 1 }) != torsoMap.end())  //Check to see if subvector made from digits 3-4 is in map.
+		if (torsoMap.find({ mcis.begin() + 2,mcis.end() - 1 }) != torsoMap.end()) {
+		  //Check to see if subvector made from digits 3-4 is in map.
 			comp = torsoMap[{mcis.begin() + 2, mcis.end() - 1}];  // If yes, get compartment that goes with these digits
-		else
-			comp = "Aorta";	//If no, we messed up somewhere and we'll put it on the artery so that the sim doesn't crash
-		break;
+		} else {
+		  comp = "Aorta";	//If no, we messed up somewhere and we'll put it on the artery so that the sim doesn't crash 
+		  }
+		  break;
 	case Arm:
 		comp = "LeftArm";
 		break;

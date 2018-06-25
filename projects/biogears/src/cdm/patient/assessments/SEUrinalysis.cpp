@@ -111,33 +111,46 @@ CDM::UrinalysisData* SEUrinalysis::Unload()
 void SEUrinalysis::Unload(CDM::UrinalysisData& data)
 {
   SEPatientAssessment::Unload(data);
-  if (HasColorResult())
+  if (HasColorResult()) {
     data.Color(m_Color);
-  if (HasAppearanceResult())
+  }
+  if (HasAppearanceResult()) {
     data.Appearance(m_Appearance);
-  if (HasGlucoseResult())
+  }
+  if (HasGlucoseResult()) {
     data.Glucose(m_Glucose);
-  if (HasKetoneResult())
+  }
+  if (HasKetoneResult()) {
     data.Ketone(m_Ketone);
-  if (HasBilirubinResult())
+  }
+  if (HasBilirubinResult()) {
     data.Bilirubin(std::unique_ptr<CDM::ScalarData>(m_Bilirubin->Unload()));
-  if (HasSpecificGravityResult())
+  }
+  if (HasSpecificGravityResult()) {
     data.SpecificGravity(std::unique_ptr<CDM::ScalarData>(m_SpecificGravity->Unload()));
-  if (HasBloodResult())
+  }
+  if (HasBloodResult()) {
     data.Blood(m_Blood);
-  if (HasPHResult())
+  }
+  if (HasPHResult()) {
     data.pH(std::unique_ptr<CDM::ScalarData>(m_pH->Unload()));
-  if (HasProteinResult())
+  }
+  if (HasProteinResult()) {
     data.Protein(m_Protein);
-  if (HasUrobilinogenResult())
+  }
+  if (HasUrobilinogenResult()) {
     data.Urobilinogen(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_Urobilinogen->Unload()));
-  if (HasNitriteResult())
+  }
+  if (HasNitriteResult()) {
     data.Nitrite(m_Nitrite);
-  if (HasLeukocyteEsteraseResult())
+  }
+  if (HasLeukocyteEsteraseResult()) {
     data.LeukocyteEsterase(m_LeukocyteEsterase);
+  }
 
-  if (HasMicroscopicResult())
+  if (HasMicroscopicResult()) {
     data.Microscopic(std::unique_ptr<CDM::UrinalysisMicroscopicData>(m_Microscopic->Unload()));
+  }
 }
 
 bool SEUrinalysis::HasColorResult() const
@@ -214,8 +227,9 @@ bool SEUrinalysis::HasBilirubinResult() const
 }
 SEScalar& SEUrinalysis::GetBilirubinResult()
 {
-  if (m_Bilirubin == nullptr)
+  if (m_Bilirubin == nullptr) {
     m_Bilirubin = new SEScalar();
+  }
   return *m_Bilirubin;
 }
 
@@ -225,8 +239,9 @@ bool SEUrinalysis::HasSpecificGravityResult() const
 }
 SEScalar& SEUrinalysis::GetSpecificGravityResult()
 {
-  if (m_SpecificGravity == nullptr)
+  if (m_SpecificGravity == nullptr) {
     m_SpecificGravity = new SEScalar();
+  }
   return *m_SpecificGravity;
 }
 
@@ -253,8 +268,9 @@ bool SEUrinalysis::HasPHResult() const
 }
 SEScalar& SEUrinalysis::GetPHResult()
 {
-  if (m_pH == nullptr)
+  if (m_pH == nullptr) {
     m_pH = new SEScalar();
+  }
   return *m_pH;
 }
 
@@ -281,8 +297,9 @@ bool SEUrinalysis::HasUrobilinogenResult() const
 }
 SEScalarMassPerVolume& SEUrinalysis::GetUrobilinogenResult()
 {
-  if (m_Urobilinogen == nullptr)
+  if (m_Urobilinogen == nullptr) {
     m_Urobilinogen = new SEScalarMassPerVolume();
+  }
   return *m_Urobilinogen;
 }
 
@@ -326,8 +343,9 @@ bool SEUrinalysis::HasMicroscopicResult() const
 }
 SEUrinalysisMicroscopic& SEUrinalysis::GetMicroscopicResult()
 {
-  if (m_Microscopic == nullptr)
+  if (m_Microscopic == nullptr) {
     m_Microscopic = new SEUrinalysisMicroscopic(GetLogger());
+  }
   return *m_Microscopic;
 }
 void SEUrinalysis::RemoveMicroscopicResult()

@@ -17,8 +17,9 @@ const HeatInductanceUnit HeatInductanceUnit::K_s_Per_W("K s/W");
 
 CDM::ScalarHeatInductanceData* SEScalarHeatInductance::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarHeatInductanceData* data(new CDM::ScalarHeatInductanceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -26,15 +27,17 @@ CDM::ScalarHeatInductanceData* SEScalarHeatInductance::Unload() const
 
 bool HeatInductanceUnit::IsValidUnit(const std::string& unit)
 {
-  if (K_s_Per_W.GetString().compare(unit) == 0)
+  if (K_s_Per_W.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const HeatInductanceUnit& HeatInductanceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (K_s_Per_W.GetString().compare(unit) == 0)
+  if (K_s_Per_W.GetString().compare(unit) == 0) {
     return K_s_Per_W;
+  }
   std::stringstream err;
   err << unit << " is not a valid HeatInductance unit";
   throw CommonDataModelException(err.str());

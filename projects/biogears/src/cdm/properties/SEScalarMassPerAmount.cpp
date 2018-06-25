@@ -27,8 +27,9 @@ const MassPerAmountUnit MassPerAmountUnit::pg_Per_ct("pg/ct");
 
 CDM::ScalarMassPerAmountData* SEScalarMassPerAmount::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarMassPerAmountData* data(new CDM::ScalarMassPerAmountData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -36,26 +37,35 @@ CDM::ScalarMassPerAmountData* SEScalarMassPerAmount::Unload() const
 
 bool MassPerAmountUnit::IsValidUnit(const std::string& unit)
 {
-  if (g_Per_ct.GetString().compare(unit) == 0)
+  if (g_Per_ct.GetString().compare(unit) == 0) {
     return true;
-  if (g_Per_mol.GetString().compare(unit) == 0)
+  }
+  if (g_Per_mol.GetString().compare(unit) == 0) {
     return true;
-  if (g_Per_mmol.GetString().compare(unit) == 0)
+  }
+  if (g_Per_mmol.GetString().compare(unit) == 0) {
     return true;
-  if (g_Per_umol.GetString().compare(unit) == 0)
+  }
+  if (g_Per_umol.GetString().compare(unit) == 0) {
     return true;
+  }
   if (mg_Per_mol.GetString().compare(unit) == 0)
     return true;
-  if (mg_Per_mmol.GetString().compare(unit) == 0)
+  if (mg_Per_mmol.GetString().compare(unit) == 0) {
     return true;
-  if (kg_Per_mol.GetString().compare(unit) == 0)
+  }
+  if (kg_Per_mol.GetString().compare(unit) == 0) {
     return true;
-  if (ug_Per_mmol.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_mmol.GetString().compare(unit) == 0) {
     return true;
-  if (ug_Per_mol.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_mol.GetString().compare(unit) == 0) {
     return true;
-  if (ug_Per_ct.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_ct.GetString().compare(unit) == 0) {
     return true;
+  }
   if (pg_Per_ct.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -63,28 +73,38 @@ bool MassPerAmountUnit::IsValidUnit(const std::string& unit)
 
 const MassPerAmountUnit& MassPerAmountUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (g_Per_ct.GetString().compare(unit) == 0)
+  if (g_Per_ct.GetString().compare(unit) == 0) {
     return g_Per_ct;
-  if (g_Per_mol.GetString().compare(unit) == 0)
+  }
+  if (g_Per_mol.GetString().compare(unit) == 0) {
     return g_Per_mol;
-  if (g_Per_mmol.GetString().compare(unit) == 0)
+  }
+  if (g_Per_mmol.GetString().compare(unit) == 0) {
     return g_Per_mmol;
-  if (g_Per_umol.GetString().compare(unit) == 0)
+  }
+  if (g_Per_umol.GetString().compare(unit) == 0) {
     return g_Per_umol;
-  if (mg_Per_mol.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_mol.GetString().compare(unit) == 0) {
     return mg_Per_mol;
+  }
   if (mg_Per_mmol.GetString().compare(unit) == 0)
     return mg_Per_mmol;
-  if (kg_Per_mol.GetString().compare(unit) == 0)
+  if (kg_Per_mol.GetString().compare(unit) == 0) {
     return kg_Per_mol;
-  if (ug_Per_mmol.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_mmol.GetString().compare(unit) == 0) {
     return ug_Per_mmol;
-  if (ug_Per_mol.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_mol.GetString().compare(unit) == 0) {
     return ug_Per_mol;
-  if (ug_Per_ct.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_ct.GetString().compare(unit) == 0) {
     return ug_Per_ct;
-  if (pg_Per_ct.GetString().compare(unit) == 0)
+  }
+  if (pg_Per_ct.GetString().compare(unit) == 0) {
     return pg_Per_ct;
+  }
   std::stringstream err;
   err << unit << " is not a valid MassPerAmount unit";
   throw CommonDataModelException(err.str());

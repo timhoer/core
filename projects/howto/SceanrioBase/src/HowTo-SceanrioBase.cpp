@@ -53,9 +53,10 @@ void HowToScenarioBase()
     if (sip.HasPatientFile())
     {
       std::vector<const SECondition*> conditions;
-      for (SECondition* c : sip.GetConditions())
-        conditions.push_back(c);// Copy to const
-      if (!bg->InitializeEngine(sip.GetPatientFile(), &conditions, &sip.GetConfiguration()))
+      for (SECondition* c : sip.GetConditions()) {
+        conditions.push_back(c);// Copy to const 
+        }
+        if (!bg->InitializeEngine(sip.GetPatientFile(), &conditions, &sip.GetConfiguration()))
       {
         bg->GetLogger()->Error("Could not load state, check the error");
         return;
@@ -64,9 +65,10 @@ void HowToScenarioBase()
     else if (sip.HasPatient())
     {
       std::vector<const SECondition*> conditions;
-      for (SECondition* c : sip.GetConditions())
-        conditions.push_back(c);// Copy to const
-      if (!bg->InitializeEngine(sip.GetPatient(), &conditions, &sip.GetConfiguration()))
+      for (SECondition* c : sip.GetConditions()) {
+        conditions.push_back(c);// Copy to const 
+        }
+        if (!bg->InitializeEngine(sip.GetPatient(), &conditions, &sip.GetConfiguration()))
       {
         bg->GetLogger()->Error("Could not load state, check the error");
         return;
@@ -88,10 +90,11 @@ void HowToScenarioBase()
   bg->GetEngineTrack()->GetDataRequestManager().Load(*drData, bg->GetSubstanceManager());
   delete drData;
 
-  if (!bg->GetEngineTrack()->GetDataRequestManager().HasResultsFilename())
+  if (!bg->GetEngineTrack()->GetDataRequestManager().HasResultsFilename()) {
     bg->GetEngineTrack()->GetDataRequestManager().SetResultsFilename("./ResultsFileName.csv");
+      }
 
-  // Let's request data do be tracked that is in the scenario	
+      // Let's request data do be tracked that is in the scenario	
   HowToTracker tracker(*bg);
 	SEAdvanceTime* adv;
 	// Now run the scenario actions
@@ -99,10 +102,11 @@ void HowToScenarioBase()
 	{
 		// We want the tracker to process an advance time action so it will write each time step of data to our track file
 		adv = dynamic_cast<SEAdvanceTime*>(a);
-		if (adv != nullptr)
-			tracker.AdvanceModelTime(adv->GetTime(TimeUnit::s));// you could just do bg->AdvanceModelTime without tracking timesteps
-		else
-			bg->ProcessAction(*a);
+		if (adv != nullptr) {
+		  tracker.AdvanceModelTime(adv->GetTime(TimeUnit::s));// you could just do bg->AdvanceModelTime without tracking timesteps
+		} else {
+		  bg->ProcessAction(*a);
+	  }
 	}
 
 	// At this point your engine is where you want it to be

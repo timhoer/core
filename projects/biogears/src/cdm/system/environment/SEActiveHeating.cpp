@@ -49,22 +49,27 @@ void SEActiveHeating::Reset()
 
 const SEScalar* SEActiveHeating::GetScalar(const std::string& name)
 {
-  if (name.compare("Power") == 0)
+  if (name.compare("Power") == 0) {
     return &GetPower();
-  if (name.compare("SurfaceArea") == 0)
+  }
+  if (name.compare("SurfaceArea") == 0) {
     return &GetSurfaceArea();
-  if (name.compare("SurfaceAreaFraction") == 0)
+  }
+  if (name.compare("SurfaceAreaFraction") == 0) {
     return &GetSurfaceAreaFraction();
+  }
   return nullptr;
 }
 
 bool SEActiveHeating::Load(const CDM::ActiveHeatingData& in)
 {
   GetPower().Load(in.Power());
-  if (in.SurfaceArea().present())
+  if (in.SurfaceArea().present()) {
     GetSurfaceArea().Load(in.SurfaceArea().get());
-  if (in.SurfaceAreaFraction().present())
+  }
+  if (in.SurfaceAreaFraction().present()) {
     GetSurfaceAreaFraction().Load(in.SurfaceAreaFraction().get());
+  }
   return true;
 }
 
@@ -77,10 +82,12 @@ CDM::ActiveHeatingData* SEActiveHeating::Unload() const
 void SEActiveHeating::Unload(CDM::ActiveHeatingData& data) const
 {
   data.Power(std::unique_ptr<CDM::ScalarPowerData>(m_Power->Unload()));
-  if (HasSurfaceArea())
+  if (HasSurfaceArea()) {
     data.SurfaceArea(std::unique_ptr<CDM::ScalarAreaData>(m_SurfaceArea->Unload()));
-  if (HasSurfaceAreaFraction())
+  }
+  if (HasSurfaceAreaFraction()) {
     data.SurfaceAreaFraction(std::unique_ptr<CDM::ScalarFractionData>(m_SurfaceAreaFraction->Unload()));
+  }
 }
 
 bool SEActiveHeating::HasPower() const
@@ -89,14 +96,16 @@ bool SEActiveHeating::HasPower() const
 }
 SEScalarPower& SEActiveHeating::GetPower()
 {
-  if (m_Power == nullptr)
+  if (m_Power == nullptr) {
     m_Power = new SEScalarPower();
+  }
   return *m_Power;
 }
 double SEActiveHeating::GetPower(const PowerUnit& unit) const
 {
-  if (m_Power == nullptr)
+  if (m_Power == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Power->GetValue(unit);
 }
 
@@ -106,14 +115,16 @@ bool SEActiveHeating::HasSurfaceArea() const
 }
 SEScalarArea& SEActiveHeating::GetSurfaceArea()
 {
-  if (m_SurfaceArea == nullptr)
+  if (m_SurfaceArea == nullptr) {
     m_SurfaceArea = new SEScalarArea();
+  }
   return *m_SurfaceArea;
 }
 double SEActiveHeating::GetSurfaceArea(const AreaUnit& unit) const
 {
-  if (m_SurfaceArea == nullptr)
+  if (m_SurfaceArea == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SurfaceArea->GetValue(unit);
 }
 
@@ -123,14 +134,16 @@ bool SEActiveHeating::HasSurfaceAreaFraction() const
 }
 SEScalarFraction& SEActiveHeating::GetSurfaceAreaFraction()
 {
-  if (m_SurfaceAreaFraction == nullptr)
+  if (m_SurfaceAreaFraction == nullptr) {
     m_SurfaceAreaFraction = new SEScalarFraction();
+  }
   return *m_SurfaceAreaFraction;
 }
 double SEActiveHeating::GetSurfaceAreaFraction() const
 {
-  if (m_SurfaceAreaFraction == nullptr)
+  if (m_SurfaceAreaFraction == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SurfaceAreaFraction->GetValue();
 }
 

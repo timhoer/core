@@ -58,8 +58,9 @@ CDM::VentilatorPressureLossData* SEVentilatorPressureLoss::Unload() const
 void SEVentilatorPressureLoss::Unload(CDM::VentilatorPressureLossData& data) const
 {
   SEAnesthesiaMachineAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SEVentilatorPressureLoss::HasSeverity() const
@@ -68,16 +69,18 @@ bool SEVentilatorPressureLoss::HasSeverity() const
 }
 SEScalar0To1& SEVentilatorPressureLoss::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SEVentilatorPressureLoss::ToString(std::ostream& str) const
 {
   str << "Anesthesia Machine Action : Ventilator Pressure Loss";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity :";
   HasSeverity() ? str << *m_Severity : str << "NaN";
   str << std::flush;

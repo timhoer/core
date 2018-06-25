@@ -24,8 +24,9 @@ const TimeUnit TimeUnit::yr("yr");
 
 CDM::ScalarTimeData* SEScalarTime::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarTimeData* data(new CDM::ScalarTimeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -33,14 +34,18 @@ CDM::ScalarTimeData* SEScalarTime::Unload() const
 
 bool TimeUnit::IsValidUnit(const std::string& unit)
 {
-  if (s.GetString().compare(unit) == 0)
+  if (s.GetString().compare(unit) == 0) {
     return true;
-  if (min.GetString().compare(unit) == 0)
+  }
+  if (min.GetString().compare(unit) == 0) {
     return true;
-  if (hr.GetString().compare(unit) == 0)
+  }
+  if (hr.GetString().compare(unit) == 0) {
     return true;
-  if (day.GetString().compare(unit) == 0)
+  }
+  if (day.GetString().compare(unit) == 0) {
     return true;
+  }
   if (yr.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -48,16 +53,21 @@ bool TimeUnit::IsValidUnit(const std::string& unit)
 
 const TimeUnit& TimeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (s.GetString().compare(unit) == 0)
+  if (s.GetString().compare(unit) == 0) {
     return s;
-  if (min.GetString().compare(unit) == 0)
+  }
+  if (min.GetString().compare(unit) == 0) {
     return min;
-  if (hr.GetString().compare(unit) == 0)
+  }
+  if (hr.GetString().compare(unit) == 0) {
     return hr;
-  if (day.GetString().compare(unit) == 0)
+  }
+  if (day.GetString().compare(unit) == 0) {
     return day;
-  if (yr.GetString().compare(unit) == 0)
+  }
+  if (yr.GetString().compare(unit) == 0) {
     return yr;
+  }
   std::stringstream err;
   err << unit << " is not a valid Amount unit";
   throw CommonDataModelException(err.str());

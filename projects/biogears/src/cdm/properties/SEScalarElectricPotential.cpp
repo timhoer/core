@@ -18,8 +18,9 @@ const ElectricPotentialUnit ElectricPotentialUnit::mV("mV");
 
 CDM::ScalarElectricPotentialData* SEScalarElectricPotential::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarElectricPotentialData* data(new CDM::ScalarElectricPotentialData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,19 +28,23 @@ CDM::ScalarElectricPotentialData* SEScalarElectricPotential::Unload() const
 
 bool ElectricPotentialUnit::IsValidUnit(const std::string& unit)
 {
-  if (V.GetString().compare(unit) == 0)
+  if (V.GetString().compare(unit) == 0) {
     return true;
-  if (mV.GetString().compare(unit) == 0)
+  }
+  if (mV.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const ElectricPotentialUnit& ElectricPotentialUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (V.GetString().compare(unit) == 0)
+  if (V.GetString().compare(unit) == 0) {
     return V;
-  if (mV.GetString().compare(unit) == 0)
+  }
+  if (mV.GetString().compare(unit) == 0) {
     return mV;
+  }
   std::stringstream err;
   err << unit << " is not a valid Electric Potential unit";
   throw CommonDataModelException(err.str());

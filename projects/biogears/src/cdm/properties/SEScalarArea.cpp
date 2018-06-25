@@ -18,8 +18,9 @@ const AreaUnit AreaUnit::m2("m^2");
 
 CDM::ScalarAreaData* SEScalarArea::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarAreaData* data(new CDM::ScalarAreaData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,19 +28,23 @@ CDM::ScalarAreaData* SEScalarArea::Unload() const
 
 bool AreaUnit::IsValidUnit(const std::string& unit)
 {
-  if (cm2.GetString().compare(unit) == 0)
+  if (cm2.GetString().compare(unit) == 0) {
     return true;
-  if (m2.GetString().compare(unit) == 0)
+  }
+  if (m2.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const AreaUnit& AreaUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (cm2.GetString().compare(unit) == 0)
+  if (cm2.GetString().compare(unit) == 0) {
     return cm2;
-  if (m2.GetString().compare(unit) == 0)
+  }
+  if (m2.GetString().compare(unit) == 0) {
     return m2;
+  }
   std::stringstream err;
   err << unit << " is not a valid Area unit";
   throw CommonDataModelException(err.str());

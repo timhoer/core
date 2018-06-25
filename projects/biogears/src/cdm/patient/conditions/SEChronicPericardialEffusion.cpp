@@ -55,8 +55,9 @@ CDM::ChronicPericardialEffusionData* SEChronicPericardialEffusion::Unload() cons
 void SEChronicPericardialEffusion::Unload(CDM::ChronicPericardialEffusionData& data) const
 {
   SEPatientCondition::Unload(data);
-  if (m_AccumulatedVolume != nullptr)
+  if (m_AccumulatedVolume != nullptr) {
     data.AccumulatedVolume(std::unique_ptr<CDM::ScalarVolumeData>(m_AccumulatedVolume->Unload()));
+  }
 }
 
 bool SEChronicPericardialEffusion::HasAccumulatedVolume() const
@@ -66,15 +67,17 @@ bool SEChronicPericardialEffusion::HasAccumulatedVolume() const
 
 SEScalarVolume& SEChronicPericardialEffusion::GetAccumulatedVolume()
 {
-  if (m_AccumulatedVolume == nullptr)
+  if (m_AccumulatedVolume == nullptr) {
     m_AccumulatedVolume = new SEScalarVolume();
+  }
   return *m_AccumulatedVolume;
 }
 
 void SEChronicPericardialEffusion::ToString(std::ostream& str) const
 {
   str << "Patient Condition : Pericardial Effusion";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << std::flush;
 }

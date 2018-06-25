@@ -46,33 +46,43 @@ void SESubstancePhysicochemicals::Clear()
 
 bool SESubstancePhysicochemicals::IsValid() const
 {
-  if (!HasAcidDissociationConstant())
+  if (!HasAcidDissociationConstant()) {
     return false;
-  if (!HasBindingProtein())
+  }
+  if (!HasBindingProtein()) {
     return false;
-  if (!HasBloodPlasmaRatio())
+  }
+  if (!HasBloodPlasmaRatio()) {
     return false;
-  if (!HasFractionUnboundInPlasma())
+  }
+  if (!HasFractionUnboundInPlasma()) {
     return false;
-  if (!HasIonicState())
+  }
+  if (!HasIonicState()) {
     return false;
-  if (!HasLogP())
+  }
+  if (!HasLogP()) {
     return false;
+  }
   return true;
 }
 
 const SEScalar* SESubstancePhysicochemicals::GetScalar(const std::string& name)
 {
-  if (name.compare("AcidDissociationConstant") == 0)
+  if (name.compare("AcidDissociationConstant") == 0) {
     return &GetAcidDissociationConstant();
+  }
   if (name.compare("BloodPlasmaRatio") == 0)
     return &GetBloodPlasmaRatio();
-  if (name.compare("FractionUnboundInPlasma") == 0)
+  if (name.compare("FractionUnboundInPlasma") == 0) {
     return &GetFractionUnboundInPlasma();
-  if (name.compare("LogP") == 0)
+  }
+  if (name.compare("LogP") == 0) {
     return &GetLogP();
-  if (name.compare("OralAbsorptionRateConstant") == 0)
+  }
+  if (name.compare("OralAbsorptionRateConstant") == 0) {
     return &GetOralAbsorptionRateConstant();
+  }
 
   return nullptr;
 }
@@ -87,16 +97,18 @@ bool SESubstancePhysicochemicals::Load(const CDM::SubstancePhysicochemicalData& 
   GetFractionUnboundInPlasma().Load(in.FractionUnboundInPlasma());
   SetIonicState(in.IonicState());
   GetLogP().Load(in.LogP());
-  if (in.OralAbsorptionRateConstant().present())
+  if (in.OralAbsorptionRateConstant().present()) {
     GetOralAbsorptionRateConstant().Load(in.OralAbsorptionRateConstant().get());
+  }
 
   return true;
 }
 
 CDM::SubstancePhysicochemicalData* SESubstancePhysicochemicals::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::SubstancePhysicochemicalData* data = new CDM::SubstancePhysicochemicalData();
   Unload(*data);
   return data;
@@ -104,20 +116,27 @@ CDM::SubstancePhysicochemicalData* SESubstancePhysicochemicals::Unload() const
 
 void SESubstancePhysicochemicals::Unload(CDM::SubstancePhysicochemicalData& data) const
 {
-  if (HasAcidDissociationConstant())
+  if (HasAcidDissociationConstant()) {
     data.AcidDissociationConstant(std::unique_ptr<CDM::ScalarData>(m_AcidDissociationConstant->Unload()));
-  if (HasBindingProtein())
+  }
+  if (HasBindingProtein()) {
     data.BindingProtein(m_BindingProtein);
-  if (HasBloodPlasmaRatio())
+  }
+  if (HasBloodPlasmaRatio()) {
     data.BloodPlasmaRatio(std::unique_ptr<CDM::ScalarData>(m_BloodPlasmaRatio->Unload()));
-  if (HasFractionUnboundInPlasma())
+  }
+  if (HasFractionUnboundInPlasma()) {
     data.FractionUnboundInPlasma(std::unique_ptr<CDM::ScalarFractionData>(m_FractionUnboundInPlasma->Unload()));
-  if (HasIonicState())
+  }
+  if (HasIonicState()) {
     data.IonicState(m_IonicState);
-  if (HasLogP())
+  }
+  if (HasLogP()) {
     data.LogP(std::unique_ptr<CDM::ScalarData>(m_LogP->Unload()));
-  if (HasOralAbsorptionRateConstant())
+  }
+  if (HasOralAbsorptionRateConstant()) {
     data.OralAbsorptionRateConstant(std::unique_ptr<CDM::ScalarData>(m_OralAbsorptionRateConstant->Unload()));
+  }
 };
 
 bool SESubstancePhysicochemicals::HasAcidDissociationConstant() const
@@ -126,14 +145,16 @@ bool SESubstancePhysicochemicals::HasAcidDissociationConstant() const
 }
 SEScalar& SESubstancePhysicochemicals::GetAcidDissociationConstant()
 {
-  if (m_AcidDissociationConstant == nullptr)
+  if (m_AcidDissociationConstant == nullptr) {
     m_AcidDissociationConstant = new SEScalar();
+  }
   return *m_AcidDissociationConstant;
 }
 double SESubstancePhysicochemicals::GetAcidDissociationConstant() const
 {
-  if (m_AcidDissociationConstant == nullptr)
+  if (m_AcidDissociationConstant == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_AcidDissociationConstant->GetValue();
 }
 
@@ -160,14 +181,16 @@ bool SESubstancePhysicochemicals::HasBloodPlasmaRatio() const
 }
 SEScalar& SESubstancePhysicochemicals::GetBloodPlasmaRatio()
 {
-  if (m_BloodPlasmaRatio == nullptr)
+  if (m_BloodPlasmaRatio == nullptr) {
     m_BloodPlasmaRatio = new SEScalar();
+  }
   return *m_BloodPlasmaRatio;
 }
 double SESubstancePhysicochemicals::GetBloodPlasmaRatio() const
 {
-  if (m_BloodPlasmaRatio == nullptr)
+  if (m_BloodPlasmaRatio == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_BloodPlasmaRatio->GetValue();
 }
 
@@ -177,14 +200,16 @@ bool SESubstancePhysicochemicals::HasFractionUnboundInPlasma() const
 }
 SEScalarFraction& SESubstancePhysicochemicals::GetFractionUnboundInPlasma()
 {
-  if (m_FractionUnboundInPlasma == nullptr)
+  if (m_FractionUnboundInPlasma == nullptr) {
     m_FractionUnboundInPlasma = new SEScalarFraction();
+  }
   return *m_FractionUnboundInPlasma;
 }
 double SESubstancePhysicochemicals::GetFractionUnboundInPlasma() const
 {
-  if (m_FractionUnboundInPlasma == nullptr)
+  if (m_FractionUnboundInPlasma == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FractionUnboundInPlasma->GetValue();
 }
 
@@ -211,14 +236,16 @@ bool SESubstancePhysicochemicals::HasLogP() const
 }
 SEScalar& SESubstancePhysicochemicals::GetLogP()
 {
-  if (m_LogP == nullptr)
+  if (m_LogP == nullptr) {
     m_LogP = new SEScalar();
+  }
   return *m_LogP;
 }
 double SESubstancePhysicochemicals::GetLogP() const
 {
-  if (m_LogP == nullptr)
+  if (m_LogP == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_LogP->GetValue();
 }
 
@@ -228,13 +255,15 @@ bool SESubstancePhysicochemicals::HasOralAbsorptionRateConstant() const
 }
 SEScalar& SESubstancePhysicochemicals::GetOralAbsorptionRateConstant()
 {
-  if (m_OralAbsorptionRateConstant == nullptr)
+  if (m_OralAbsorptionRateConstant == nullptr) {
     m_OralAbsorptionRateConstant = new SEScalar();
+  }
   return *m_OralAbsorptionRateConstant;
 }
 double SESubstancePhysicochemicals::GetOralAbsorptionRateConstant() const
 {
-  if (m_OralAbsorptionRateConstant == nullptr)
+  if (m_OralAbsorptionRateConstant == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_OralAbsorptionRateConstant->GetValue();
 }

@@ -21,8 +21,9 @@ const VolumePerTimeMassUnit VolumePerTimeMassUnit::uL_Per_min_kg("uL/min kg");
 
 CDM::ScalarVolumePerTimeMassData* SEScalarVolumePerTimeMass::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarVolumePerTimeMassData* data(new CDM::ScalarVolumePerTimeMassData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -30,14 +31,18 @@ CDM::ScalarVolumePerTimeMassData* SEScalarVolumePerTimeMass::Unload() const
 
 bool VolumePerTimeMassUnit::IsValidUnit(const std::string& unit)
 {
-  if (L_Per_s_g.GetString().compare(unit) == 0)
+  if (L_Per_s_g.GetString().compare(unit) == 0) {
     return true;
-  if (mL_Per_s_g.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_s_g.GetString().compare(unit) == 0) {
     return true;
-  if (mL_Per_min_kg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_min_kg.GetString().compare(unit) == 0) {
     return true;
-  if (mL_Per_s_kg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_s_kg.GetString().compare(unit) == 0) {
     return true;
+  }
   if (uL_Per_min_kg.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -45,16 +50,21 @@ bool VolumePerTimeMassUnit::IsValidUnit(const std::string& unit)
 
 const VolumePerTimeMassUnit& VolumePerTimeMassUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (L_Per_s_g.GetString().compare(unit) == 0)
+  if (L_Per_s_g.GetString().compare(unit) == 0) {
     return L_Per_s_g;
-  if (mL_Per_s_g.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_s_g.GetString().compare(unit) == 0) {
     return mL_Per_s_g;
-  if (mL_Per_min_kg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_min_kg.GetString().compare(unit) == 0) {
     return mL_Per_min_kg;
-  if (mL_Per_s_kg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_s_kg.GetString().compare(unit) == 0) {
     return mL_Per_s_kg;
-  if (uL_Per_min_kg.GetString().compare(unit) == 0)
+  }
+  if (uL_Per_min_kg.GetString().compare(unit) == 0) {
     return uL_Per_min_kg;
+  }
   std::stringstream err;
   err << unit << " is not a valid VolumePerTimeMass unit";
   throw CommonDataModelException(err.str());

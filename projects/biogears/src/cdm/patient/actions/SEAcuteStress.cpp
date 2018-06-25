@@ -60,8 +60,9 @@ CDM::AcuteStressData* SEAcuteStress::Unload() const
 void SEAcuteStress::Unload(CDM::AcuteStressData& data) const
 {
   SEPatientAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SEAcuteStress::HasSeverity() const
@@ -71,16 +72,18 @@ bool SEAcuteStress::HasSeverity() const
 
 SEScalar0To1& SEAcuteStress::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SEAcuteStress::ToString(std::ostream& str) const
 {
   str << "Patient Action : Acute Stress";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity: ";
   HasSeverity() ? str << *m_Severity : str << "Not Set";
   str << std::flush;

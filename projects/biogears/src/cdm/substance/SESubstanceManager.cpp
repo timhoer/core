@@ -50,10 +50,12 @@ void SESubstanceManager::Reset()
   m_ActiveSubstances.clear();
   m_ActiveGases.clear();
   m_ActiveLiquids.clear();
-  for (auto itr : m_OriginalSubstanceData)
+  for (auto itr : m_OriginalSubstanceData) {
     itr.first->Load(*itr.second);
-  for (auto itr : m_OriginalCompoundData)
+  }
+  for (auto itr : m_OriginalCompoundData) {
     itr.first->Load(*itr.second, *this);
+  }
 }
 
 /**
@@ -64,8 +66,9 @@ void SESubstanceManager::AddSubstance(SESubstance& substance)
   SESubstance* s;
   for (unsigned int i = 0; i < m_Substances.size(); i++) {
     s = m_Substances.at(i);
-    if (s == &substance)
+    if (s == &substance) {
       return;
+    }
   }
   m_Substances.push_back(&substance);
 }
@@ -75,8 +78,9 @@ SESubstance* SESubstanceManager::GetSubstance(const std::string& name) const
   SESubstance* s;
   for (unsigned int i = 0; i < m_Substances.size(); i++) {
     s = m_Substances.at(i);
-    if (name.compare(s->GetName()) == 0)
+    if (name.compare(s->GetName()) == 0) {
       return s;
+    }
   }
   return nullptr;
 }
@@ -91,8 +95,9 @@ bool SESubstanceManager::IsActive(const SESubstance& substance) const
   SESubstance* sub;
   for (unsigned int iSubstance = 0; iSubstance < m_ActiveSubstances.size(); iSubstance++) {
     sub = m_ActiveSubstances.at(iSubstance);
-    if (sub == &substance)
+    if (sub == &substance) {
       return true;
+    }
   }
   return false;
 }
@@ -104,12 +109,15 @@ const std::vector<SESubstance*>& SESubstanceManager::GetActiveSubstances() const
 
 void SESubstanceManager::AddActiveSubstance(SESubstance& substance)
 {
-  if (IsActive(substance))
+  if (IsActive(substance)) {
     return;
-  if (substance.GetState() == CDM::enumSubstanceState::Gas)
+  }
+  if (substance.GetState() == CDM::enumSubstanceState::Gas) {
     m_ActiveGases.push_back(&substance);
-  if (substance.GetState() == CDM::enumSubstanceState::Liquid)
+  }
+  if (substance.GetState() == CDM::enumSubstanceState::Liquid) {
     m_ActiveLiquids.push_back(&substance);
+  }
   m_ActiveSubstances.push_back(&substance);
 }
 
@@ -141,15 +149,17 @@ void SESubstanceManager::RemoveActiveSubstance(const SESubstance& substance)
 
 void SESubstanceManager::RemoveActiveSubstances(const std::vector<SESubstance*>& substances)
 {
-  for (SESubstance* sub : substances)
+  for (SESubstance* sub : substances) {
     RemoveActiveSubstance(*sub);
+  }
 }
 
 void SESubstanceManager::RemoveActiveSubstances()
 {
   std::vector<SESubstance*> copy(m_ActiveSubstances);
-  for (SESubstance* sub : copy)
+  for (SESubstance* sub : copy) {
     RemoveActiveSubstance(*sub);
+  }
 }
 
 const std::vector<SESubstance*>& SESubstanceManager::GetActiveGases() const
@@ -167,8 +177,9 @@ void SESubstanceManager::AddCompound(SESubstanceCompound& compound)
   SESubstanceCompound* c;
   for (unsigned int i = 0; i < m_Compounds.size(); i++) {
     c = m_Compounds.at(i);
-    if (c == &compound)
+    if (c == &compound) {
       return;
+    }
   }
   m_Compounds.push_back(&compound);
 }
@@ -178,8 +189,9 @@ SESubstanceCompound* SESubstanceManager::GetCompound(const std::string& name) co
   SESubstanceCompound* c;
   for (unsigned int i = 0; i < m_Compounds.size(); i++) {
     c = m_Compounds.at(i);
-    if (name.compare(c->GetName()) == 0)
+    if (name.compare(c->GetName()) == 0) {
       return c;
+    }
   }
   return nullptr;
 }
@@ -194,8 +206,9 @@ bool SESubstanceManager::IsActive(const SESubstanceCompound& compound) const
   SESubstanceCompound* c;
   for (unsigned int i = 0; i < m_ActiveCompounds.size(); i++) {
     c = m_ActiveCompounds.at(i);
-    if (c == &compound)
+    if (c == &compound) {
       return true;
+    }
   }
   return false;
 }
@@ -210,8 +223,9 @@ void SESubstanceManager::AddActiveCompound(SESubstanceCompound& compound)
   SESubstanceCompound* c;
   for (unsigned int i = 0; i < m_ActiveCompounds.size(); i++) {
     c = m_ActiveCompounds.at(i);
-    if (c == &compound)
+    if (c == &compound) {
       return;
+    }
   }
   m_ActiveCompounds.push_back(&compound);
 }
@@ -230,8 +244,9 @@ void SESubstanceManager::RemoveActiveCompound(SESubstanceCompound& compound)
 
 void SESubstanceManager::RemoveActiveCompounds(const std::vector<SESubstanceCompound*>& compounds)
 {
-  for (SESubstanceCompound* c : compounds)
+  for (SESubstanceCompound* c : compounds) {
     RemoveActiveCompound(*c);
+  }
 }
 
 SESubstance* SESubstanceManager::ReadSubstanceFile(const std::string& xmlFile)
@@ -328,8 +343,9 @@ bool SESubstanceManager::LoadSubstanceDirectory()
       }
     } // Done with directory search
     // Ok, now let's load up our compounds
-    for (auto itr : m_OriginalCompoundData)
+    for (auto itr : m_OriginalCompoundData) {
       itr.first->Load((const CDM::SubstanceCompoundData&)*itr.second, *this);
+    }
 
     return succeed;
 

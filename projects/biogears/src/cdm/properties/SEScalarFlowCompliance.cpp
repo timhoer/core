@@ -20,8 +20,9 @@ const FlowComplianceUnit FlowComplianceUnit::m3_Per_Pa("m^3/Pa");
 
 CDM::ScalarFlowComplianceData* SEScalarFlowCompliance::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarFlowComplianceData* data(new CDM::ScalarFlowComplianceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarFlowComplianceData* SEScalarFlowCompliance::Unload() const
 
 bool FlowComplianceUnit::IsValidUnit(const std::string& unit)
 {
-  if (L_Per_cmH2O.GetString().compare(unit) == 0)
+  if (L_Per_cmH2O.GetString().compare(unit) == 0) {
     return true;
-  if (mL_Per_mmHg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (mL_Per_cmH2O.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_cmH2O.GetString().compare(unit) == 0) {
     return true;
-  if (m3_Per_Pa.GetString().compare(unit) == 0)
+  }
+  if (m3_Per_Pa.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const FlowComplianceUnit& FlowComplianceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (L_Per_cmH2O.GetString().compare(unit) == 0)
+  if (L_Per_cmH2O.GetString().compare(unit) == 0) {
     return L_Per_cmH2O;
-  if (mL_Per_mmHg.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_mmHg.GetString().compare(unit) == 0) {
     return mL_Per_mmHg;
-  if (mL_Per_cmH2O.GetString().compare(unit) == 0)
+  }
+  if (mL_Per_cmH2O.GetString().compare(unit) == 0) {
     return mL_Per_cmH2O;
-  if (m3_Per_Pa.GetString().compare(unit) == 0)
+  }
+  if (m3_Per_Pa.GetString().compare(unit) == 0) {
     return m3_Per_Pa;
+  }
   std::stringstream err;
   err << unit << " is not a valid FlowCompliance unit";
   throw CommonDataModelException(err.str());

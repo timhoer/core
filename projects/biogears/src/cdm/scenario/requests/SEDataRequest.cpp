@@ -66,8 +66,9 @@ bool SEDataRequest::Load(const CDM::DataRequestData& in)
 {
   SEDecimalFormat::Load(in);
   m_Name = in.Name();
-  if (in.Unit().present())
+  if (in.Unit().present()) {
     m_RequestedUnit = in.Unit().get();
+  }
   return true;
 }
 
@@ -82,10 +83,11 @@ void SEDataRequest::Unload(CDM::DataRequestData& data) const
 {
   SEDecimalFormat::Unload(data);
   data.Name(m_Name);
-  if (HasUnit())
+  if (HasUnit()) {
     data.Unit(m_Unit->GetString());
-  else if (HasRequestedUnit())
+  } else if (HasRequestedUnit()) {
     data.Unit(m_RequestedUnit);
+  }
 }
 
 std::string SEDataRequest::GetName() const

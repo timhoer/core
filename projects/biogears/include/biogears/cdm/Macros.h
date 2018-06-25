@@ -22,8 +22,9 @@ inline size_t _Hash_value(_InIt _Begin, _InIt _End)
 { // hash range of elements
   size_t _Val = 2166136261U;
 
-  while (_Begin != _End)
+  while (_Begin != _End) {
     _Val = 16777619U * _Val ^ (size_t)*_Begin++;
+  }
   return (_Val);
 }
 

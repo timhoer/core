@@ -27,8 +27,9 @@ BioGearsScenario::~BioGearsScenario()
 BioGearsScenarioInitialParameters& BioGearsScenario::GetInitialParameters()
 {
   InvalidateEngineStateFile();
-  if (m_InitialParameters == nullptr)
+  if (m_InitialParameters == nullptr) {
     m_InitialParameters = new BioGearsScenarioInitialParameters(m_SubMgr);
+  }
   return *((BioGearsScenarioInitialParameters*)m_InitialParameters);
 }
 const BioGearsScenarioInitialParameters* BioGearsScenario::GetInitialParameters() const

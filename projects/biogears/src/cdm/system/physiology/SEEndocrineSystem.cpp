@@ -37,20 +37,24 @@ void SEEndocrineSystem::Clear()
 
 const SEScalar* SEEndocrineSystem::GetScalar(const std::string& name)
 {
-  if (name.compare("InsulinSynthesisRate") == 0)
+  if (name.compare("InsulinSynthesisRate") == 0) {
     return &GetInsulinSynthesisRate();
-  if (name.compare("GlucagonSynthesisRate") == 0)
+  }
+  if (name.compare("GlucagonSynthesisRate") == 0) {
     return &GetGlucagonSynthesisRate();
+  }
   return nullptr;
 }
 
 bool SEEndocrineSystem::Load(const CDM::EndocrineSystemData& in)
 {
   SESystem::Load(in);
-  if (in.InsulinSynthesisRate().present())
+  if (in.InsulinSynthesisRate().present()) {
     GetInsulinSynthesisRate().Load(in.InsulinSynthesisRate().get());
-  if (in.GlucagonSynthesisRate().present())
+  }
+  if (in.GlucagonSynthesisRate().present()) {
     GetGlucagonSynthesisRate().Load(in.GlucagonSynthesisRate().get());
+  }
   return true;
 }
 
@@ -63,10 +67,12 @@ CDM::EndocrineSystemData* SEEndocrineSystem::Unload() const
 
 void SEEndocrineSystem::Unload(CDM::EndocrineSystemData& data) const
 {
-  if (m_InsulinSynthesisRate != nullptr)
+  if (m_InsulinSynthesisRate != nullptr) {
     data.InsulinSynthesisRate(std::unique_ptr<CDM::ScalarAmountPerTimeData>(m_InsulinSynthesisRate->Unload()));
-  if (m_GlucagonSynthesisRate != nullptr)
+  }
+  if (m_GlucagonSynthesisRate != nullptr) {
     data.GlucagonSynthesisRate(std::unique_ptr<CDM::ScalarAmountPerTimeData>(m_GlucagonSynthesisRate->Unload()));
+  }
   SESystem::Unload(data);
 }
 
@@ -76,14 +82,16 @@ bool SEEndocrineSystem::HasInsulinSynthesisRate() const
 }
 SEScalarAmountPerTime& SEEndocrineSystem::GetInsulinSynthesisRate()
 {
-  if (m_InsulinSynthesisRate == nullptr)
+  if (m_InsulinSynthesisRate == nullptr) {
     m_InsulinSynthesisRate = new SEScalarAmountPerTime();
+  }
   return *m_InsulinSynthesisRate;
 }
 double SEEndocrineSystem::GetInsulinSynthesisRate(const AmountPerTimeUnit& unit) const
 {
-  if (m_InsulinSynthesisRate == nullptr)
+  if (m_InsulinSynthesisRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_InsulinSynthesisRate->GetValue(unit);
 }
 
@@ -93,13 +101,15 @@ bool SEEndocrineSystem::HasGlucagonSynthesisRate() const
 }
 SEScalarAmountPerTime& SEEndocrineSystem::GetGlucagonSynthesisRate()
 {
-  if (m_GlucagonSynthesisRate == nullptr)
+  if (m_GlucagonSynthesisRate == nullptr) {
     m_GlucagonSynthesisRate = new SEScalarAmountPerTime();
+  }
   return *m_GlucagonSynthesisRate;
 }
 double SEEndocrineSystem::GetGlucagonSynthesisRate(const AmountPerTimeUnit& unit) const
 {
-  if (m_GlucagonSynthesisRate == nullptr)
+  if (m_GlucagonSynthesisRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_GlucagonSynthesisRate->GetValue(unit);
 }

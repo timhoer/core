@@ -57,12 +57,15 @@ bool SEThermalApplication::IsValid() const
 
 bool SEThermalApplication::IsActive() const
 {
-  if (HasActiveHeating() && m_ActiveHeating->GetPower().IsPositive())
+  if (HasActiveHeating() && m_ActiveHeating->GetPower().IsPositive()) {
     return true;
-  if (HasActiveCooling() && m_ActiveCooling->GetPower().IsPositive())
+  }
+  if (HasActiveCooling() && m_ActiveCooling->GetPower().IsPositive()) {
     return true;
-  if (HasAppliedTemperature() && m_AppliedTemperature->GetState() == CDM::enumOnOff::On)
+  }
+  if (HasAppliedTemperature() && m_AppliedTemperature->GetState() == CDM::enumOnOff::On) {
     return true;
+  }
   return false;
 }
 
@@ -72,12 +75,15 @@ bool SEThermalApplication::Load(const CDM::ThermalApplicationData& in)
   m_ClearContents = !in.AppendToPrevious();
   SEEnvironmentAction::Load(in);
   m_ClearContents = true;
-  if (in.ActiveHeating().present())
+  if (in.ActiveHeating().present()) {
     GetActiveHeating().Load(in.ActiveHeating().get());
-  if (in.ActiveCooling().present())
+  }
+  if (in.ActiveCooling().present()) {
     GetActiveCooling().Load(in.ActiveCooling().get());
-  if (in.AppliedTemperature().present())
+  }
+  if (in.AppliedTemperature().present()) {
     GetAppliedTemperature().Load(in.AppliedTemperature().get());
+  }
 
   return true;
 }
@@ -91,12 +97,15 @@ CDM::ThermalApplicationData* SEThermalApplication::Unload() const
 void SEThermalApplication::Unload(CDM::ThermalApplicationData& data) const
 {
   SEEnvironmentAction::Unload(data);
-  if (HasActiveHeating())
+  if (HasActiveHeating()) {
     data.ActiveHeating(std::unique_ptr<CDM::ActiveHeatingData>(m_ActiveHeating->Unload()));
-  if (HasActiveCooling())
+  }
+  if (HasActiveCooling()) {
     data.ActiveCooling(std::unique_ptr<CDM::ActiveCoolingData>(m_ActiveCooling->Unload()));
-  if (HasAppliedTemperature())
+  }
+  if (HasAppliedTemperature()) {
     data.AppliedTemperature(std::unique_ptr<CDM::AppliedTemperatureData>(m_AppliedTemperature->Unload()));
+  }
 }
 
 bool SEThermalApplication::HasActiveHeating() const
@@ -105,8 +114,9 @@ bool SEThermalApplication::HasActiveHeating() const
 }
 SEActiveHeating& SEThermalApplication::GetActiveHeating()
 {
-  if (m_ActiveHeating == nullptr)
+  if (m_ActiveHeating == nullptr) {
     m_ActiveHeating = new SEActiveHeating(GetLogger());
+  }
   return *m_ActiveHeating;
 }
 void SEThermalApplication::RemoveActiveHeating()
@@ -120,8 +130,9 @@ bool SEThermalApplication::HasActiveCooling() const
 }
 SEActiveCooling& SEThermalApplication::GetActiveCooling()
 {
-  if (m_ActiveCooling == nullptr)
+  if (m_ActiveCooling == nullptr) {
     m_ActiveCooling = new SEActiveCooling(GetLogger());
+  }
   return *m_ActiveCooling;
 }
 void SEThermalApplication::RemoveActiveCooling()
@@ -135,8 +146,9 @@ bool SEThermalApplication::HasAppliedTemperature() const
 }
 SEAppliedTemperature& SEThermalApplication::GetAppliedTemperature()
 {
-  if (m_AppliedTemperature == nullptr)
+  if (m_AppliedTemperature == nullptr) {
     m_AppliedTemperature = new SEAppliedTemperature(GetLogger());
+  }
   return *m_AppliedTemperature;
 }
 void SEThermalApplication::RemoveAppliedTemperature()
@@ -147,25 +159,29 @@ void SEThermalApplication::RemoveAppliedTemperature()
 void SEThermalApplication::ToString(std::ostream& str) const
 {
   str << "Environment Action : Thermal Application";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   if (HasActiveHeating()) {
     str << "\n\t";
     m_ActiveHeating->ToString(str);
-  } else
+  } else {
     str << "\n\tNo Active Heating";
+  }
 
   if (HasActiveCooling()) {
     str << "\n\t";
     m_ActiveCooling->ToString(str);
-  } else
+  } else {
     str << "\n\tNo Active Cooling";
+  }
 
   if (HasAppliedTemperature()) {
     str << "\n\t";
     m_AppliedTemperature->ToString(str);
-  } else
+  } else {
     str << "\n\tNo Applied Temperature";
+  }
 
   str << std::flush;
 }

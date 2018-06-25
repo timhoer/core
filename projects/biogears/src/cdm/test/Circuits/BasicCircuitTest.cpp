@@ -5139,8 +5139,10 @@ void CommonDataModelTest::TestCircuitSerialization(const std::string& fileName)
   std::unique_ptr<CDM::ObjectData> bind = Serializer::ReadFile(fileName, m_Logger);
   CDM::CircuitManagerData* data = dynamic_cast<CDM::CircuitManagerData*>(bind.get());
   if (data != nullptr) {
-    if (!m_Circuits.Load(*data))
+    if (!m_Circuits.Load(*data)) {
       Error("Could not load Circuit Data");
-  } else
+    }
+  } else {
     Error("Could not cast loaded Circuit Data");
+  }
 }

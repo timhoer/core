@@ -48,11 +48,13 @@ bool SEElectroCardioGramInterpolatorWaveform::Load(const CDM::ElectroCardioGramI
   m_Rhythm = in.Rhythm();
   m_LeadNumber = in.Lead();
   GetData().Load(in.Data());
-  if (in.TimeStep().present())
+  if (in.TimeStep().present()) {
     GetTimeStep().Load(in.TimeStep().get());
+  }
   if (in.ActiveIndicies().present()) {
-    for (size_t i = 0; i < in.ActiveIndicies().get().IntegerList().size(); i++)
+    for (size_t i = 0; i < in.ActiveIndicies().get().IntegerList().size(); i++) {
       m_ActiveIndicies.push_back(in.ActiveIndicies().get().IntegerList()[i]);
+    }
   }
   return true;
 }
@@ -66,19 +68,23 @@ CDM::ElectroCardioGramInterpolationWaveformData* SEElectroCardioGramInterpolator
 
 void SEElectroCardioGramInterpolatorWaveform::Unload(CDM::ElectroCardioGramInterpolationWaveformData& data) const
 {
-  if (HasRhythm())
+  if (HasRhythm()) {
     data.Rhythm(m_Rhythm);
-  if (HasLeadNumber())
+  }
+  if (HasLeadNumber()) {
     data.Lead(m_LeadNumber);
+  }
   if (HasData()) {
     data.Data(std::unique_ptr<CDM::FunctionElectricPotentialVsTimeData>(m_Data->Unload()));
     data.ActiveIndicies(std::unique_ptr<CDM::IntegerArray>(new CDM::IntegerArray()));
     data.ActiveIndicies().get().IntegerList(std::unique_ptr<CDM::IntegerList>(new CDM::IntegerList()));
-    for (int i : m_ActiveIndicies)
+    for (int i : m_ActiveIndicies) {
       data.ActiveIndicies().get().IntegerList().push_back(i);
+    }
   }
-  if (HasTimeStep())
+  if (HasTimeStep()) {
     data.TimeStep(std::unique_ptr<CDM::ScalarTimeData>(m_TimeStep->Unload()));
+  }
 }
 
 CDM::ElectroCardioGramWaveformLeadNumber SEElectroCardioGramInterpolatorWaveform::GetLeadNumber() const
@@ -121,8 +127,9 @@ bool SEElectroCardioGramInterpolatorWaveform::HasData() const
 }
 SEFunctionElectricPotentialVsTime& SEElectroCardioGramInterpolatorWaveform::GetData()
 {
-  if (m_Data == nullptr)
+  if (m_Data == nullptr) {
     m_Data = new SEFunctionElectricPotentialVsTime();
+  }
   return *m_Data;
 }
 const SEFunctionElectricPotentialVsTime* SEElectroCardioGramInterpolatorWaveform::GetData() const
@@ -136,13 +143,15 @@ bool SEElectroCardioGramInterpolatorWaveform::HasTimeStep() const
 }
 SEScalarTime& SEElectroCardioGramInterpolatorWaveform::GetTimeStep()
 {
-  if (m_TimeStep == nullptr)
+  if (m_TimeStep == nullptr) {
     m_TimeStep = new SEScalarTime();
+  }
   return *m_TimeStep;
 }
 double SEElectroCardioGramInterpolatorWaveform::GetTimeStep(const TimeUnit& unit) const
 {
-  if (m_TimeStep == nullptr)
+  if (m_TimeStep == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_TimeStep->GetValue(unit);
 }

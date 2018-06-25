@@ -153,15 +153,17 @@ void BioGearsEngineTest::AcidBaseMathTest(const std::string& rptDirectory)
           while (knob <= 1.0 && itr < 50) {
             itr++;
             knob += 0.2 * (1.0 - knob);
-            if (itr == 50)
-              knob = 1.0; //Last time through make sure knob is exactly 1.0
-            HbO2CO2_mM = knob * std::min(HbReq4O2_mM, HbReq4CO2_mM);
+            if (itr == 50) {
+              knob = 1.0; //Last time through make sure knob is exactly 1.0 
+              }
+              HbO2CO2_mM = knob * std::min(HbReq4O2_mM, HbReq4CO2_mM);
             HbCO2_mM = HbReq4CO2_mM - HbO2CO2_mM;
             HbO2_mM = HbReq4O2_mM - HbO2CO2_mM;
             Hb_mM = normalHgb_mM - (HbO2CO2_mM + HbCO2_mM + HbO2_mM);
-            if (Hb_mM > 0. && HbCO2_mM > 0. && HbO2_mM > 0. && HbO2CO2_mM > 0.)
+            if (Hb_mM > 0. && HbCO2_mM > 0. && HbO2_mM > 0. && HbO2CO2_mM > 0.) {
               itr = 50;
-          }
+              }
+            }
         }
 
         if (Hb_mM < 0. || HbCO2_mM < 0. || HbO2_mM < 0. || HbO2CO2_mM < 0.) {
@@ -250,15 +252,17 @@ void BioGearsEngineTest::AcidBaseMathTest(const std::string& rptDirectory)
         trk.Probe("totalCO2_mM", totalCO2_mM);
 
         // Write data to file
-        if (!file.is_open())
+        if (!file.is_open()) {
           trk.CreateFile(rptFile.c_str(), file);
-        trk.StreamProbesToFile(testID, file);
+          }
+          trk.StreamProbesToFile(testID, file);
         testID++;
 
-        if (total_SID_iterations > 1)
+        if (total_SID_iterations > 1) {
           strongIonDifference.IncrementValue(SID_range_mM / (total_SID_iterations - 1), AmountPerVolumeUnit::mmol_Per_L);
+          }
 
-      } //End SID Loop
+        } //End SID Loop
     } //End CO2 loop
   } //End O2 loop
 }
@@ -373,8 +377,9 @@ void BioGearsEngineTest::AcidBaseFeedbackTest(const std::string& rptDirectory)
     trk.Probe("TotalCO2_gPerL", finalTotalCO2_gPerL);
 
     // Write data to file
-    if (!file.is_open())
+    if (!file.is_open()) {
       trk.CreateFile(rptFile.c_str(), file);
+    }
     trk.StreamProbesToFile(j + 1, file);
   }
 }
@@ -486,8 +491,9 @@ void BioGearsEngineTest::AcidBaseLimitsTest(const std::string& rptDirectory)
   double testID = 1.0;
 
   // Write data to file
-  if (!file.is_open())
+  if (!file.is_open()) {
     trk.CreateFile(rptFile.c_str(), file);
+  }
   trk.StreamProbesToFile(testID, file);
 
   std::string caseName;
@@ -728,8 +734,9 @@ void BioGearsEngineTest::AcidBaseExtremeTest(const std::string& rptDirectory)
                     trk.Probe("finalBoundCO2_mM", finalBoundCO2_mM);
 
                     // Write data to file
-                    if (!file.is_open())
+                    if (!file.is_open()) {
                       trk.CreateFile(rptFile.c_str(), file);
+                    }
                     trk.StreamProbesToFile(testID, file);
 
                     std::string caseName;

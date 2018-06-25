@@ -18,8 +18,9 @@ const MassPerMassUnit MassPerMassUnit::mg_Per_g("mg/g");
 
 CDM::ScalarMassPerMassData* SEScalarMassPerMass::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarMassPerMassData* data(new CDM::ScalarMassPerMassData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,19 +28,23 @@ CDM::ScalarMassPerMassData* SEScalarMassPerMass::Unload() const
 
 bool MassPerMassUnit::IsValidUnit(const std::string& unit)
 {
-  if (ug_Per_kg.GetString().compare(unit) == 0)
+  if (ug_Per_kg.GetString().compare(unit) == 0) {
     return true;
-  if (mg_Per_g.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_g.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const MassPerMassUnit& MassPerMassUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (ug_Per_kg.GetString().compare(unit) == 0)
+  if (ug_Per_kg.GetString().compare(unit) == 0) {
     return ug_Per_kg;
-  if (mg_Per_g.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_g.GetString().compare(unit) == 0) {
     return mg_Per_g;
+  }
   std::stringstream err;
   err << unit << " is not a valid MassPerMass unit";
   throw CommonDataModelException(err.str());

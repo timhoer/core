@@ -35,14 +35,16 @@ specific language governing permissions and limitations under the License.
 
 void CommonDataModelTest::ConvertList(std::vector<std::string> stringList)
 {
-  if (stringList.empty())
+  if (stringList.empty()) {
     return;
+  }
 
   int size = stringList.size();
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      if (i == j)
+      if (i == j) {
         continue;
+      }
 
       std::cout << "converting from " << stringList[i] << " to " << stringList[j] << std::endl;
       //Convert(1.0, stringList[i], stringList[j]); TODO this whole test should use our predefined compound units

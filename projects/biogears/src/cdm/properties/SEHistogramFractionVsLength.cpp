@@ -34,8 +34,9 @@ void SEHistogramFractionVsLength::Clear()
 
 bool SEHistogramFractionVsLength::IsVaild() const
 {
-  if (!SEHistogram::IsValid())
+  if (!SEHistogram::IsValid()) {
     return false;
+  }
 
   double binned = std::accumulate(m_Dependent.begin(), m_Dependent.end(), 0.);
   if (!SEScalar::IsValue(1, binned)) {
@@ -47,16 +48,18 @@ bool SEHistogramFractionVsLength::IsVaild() const
 
 bool SEHistogramFractionVsLength::Load(const CDM::HistogramFractionVsLengthData& in)
 {
-  if (!SEHistogram::Load(in))
+  if (!SEHistogram::Load(in)) {
     return false;
+  }
   m_LengthUnit = &LengthUnit::GetCompoundUnit(in.IndependentUnit().get());
   return IsValid();
 }
 
 CDM::HistogramFractionVsLengthData* SEHistogramFractionVsLength::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::HistogramFractionVsLengthData* data(new CDM::HistogramFractionVsLengthData());
   Unload(*data);
   return data;
@@ -70,10 +73,12 @@ void SEHistogramFractionVsLength::Unload(CDM::HistogramFractionVsLengthData& dat
 
 double SEHistogramFractionVsLength::GetLengthValue(unsigned int index, const LengthUnit& unit) const
 {
-  if (m_LengthUnit == nullptr)
+  if (m_LengthUnit == nullptr) {
     throw CommonDataModelException("No length units have been set");
-  if (index >= m_Independent.size())
+  }
+  if (index >= m_Independent.size()) {
     throw CommonDataModelException("Independent index out of bounds");
+  }
   return Convert(m_Independent[index], *m_LengthUnit, unit);
 }
 std::vector<double>& SEHistogramFractionVsLength::GetLength()
@@ -95,8 +100,9 @@ void SEHistogramFractionVsLength::SetLengthUnit(const LengthUnit& unit)
 
 double SEHistogramFractionVsLength::GetFractionValue(unsigned int index) const
 {
-  if (index >= m_Dependent.size())
+  if (index >= m_Dependent.size()) {
     throw CommonDataModelException("Dependent index out of bounds");
+  }
   return m_Dependent[index];
 }
 std::vector<double>& SEHistogramFractionVsLength::GetFraction()

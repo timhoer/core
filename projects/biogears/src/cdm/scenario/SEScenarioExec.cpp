@@ -99,21 +99,24 @@ bool SEScenarioExec::Execute(const SEScenario& scenario, const std::string& resu
       CDM::DataRequestsData* drData = scenario.GetDataRequestManager().Unload();
       m_Engine.GetEngineTrack()->GetDataRequestManager().Load(*drData, m_Engine.GetSubstanceManager());
       delete drData;
-      if (!m_Engine.GetEngineTrack()->GetDataRequestManager().HasResultsFilename())
+      if (!m_Engine.GetEngineTrack()->GetDataRequestManager().HasResultsFilename()) {
         m_Engine.GetEngineTrack()->GetDataRequestManager().SetResultsFilename(resultsFile);
+      }
     } else if (scenario.HasInitialParameters()) {
       // Make a copy of the data requests, not this clears out data requests from the engine
       CDM::DataRequestsData* drData = scenario.GetDataRequestManager().Unload();
       m_Engine.GetEngineTrack()->GetDataRequestManager().Load(*drData, m_Engine.GetSubstanceManager());
       delete drData;
-      if (!m_Engine.GetEngineTrack()->GetDataRequestManager().HasResultsFilename())
+      if (!m_Engine.GetEngineTrack()->GetDataRequestManager().HasResultsFilename()) {
         m_Engine.GetEngineTrack()->GetDataRequestManager().SetResultsFilename(resultsFile);
+      }
 
       const SEScenarioInitialParameters* params = scenario.GetInitialParameters();
       // Do we have any conditions
       std::vector<const SECondition*> conditions;
-      for (SECondition* c : params->GetConditions())
+      for (SECondition* c : params->GetConditions()) {
         conditions.push_back(c);
+      }
 
       if (params->HasPatientFile()) {
         // Set up the patient
@@ -137,9 +140,10 @@ bool SEScenarioExec::Execute(const SEScenario& scenario, const std::string& resu
       return false;
     }
 
-    if (scenario.HasAutoSerialization())
-      CreateFilePath(scenario.GetAutoSerialization()->GetDirectory()); // Note method assumes you have a file and it ignores it
-    return ProcessActions(scenario);
+    if (scenario.HasAutoSerialization()) {
+      CreateFilePath(scenario.GetAutoSerialization()->GetDirectory()); // Note method assumes you have a file and it ignores it }
+    }
+      return ProcessActions(scenario);
   } catch (CommonDataModelException& ex) {
     Error(ex.what());
   } catch (std::exception& ex) {
@@ -165,8 +169,9 @@ bool SEScenarioExec::ProcessActions(const SEScenario& scenario)
   double statusStep_s = 60; //How long did it take to simulate this much time
 
   double sampleTime_s = scenario.GetDataRequestManager().GetSamplesPerSecond();
-  if (sampleTime_s != 0)
+  if (sampleTime_s != 0) {
     sampleTime_s = 1 / sampleTime_s;
+  }
   double currentSampleTime_s = sampleTime_s; //Sample the first step
 
   // Auto serialization
@@ -178,9 +183,9 @@ bool SEScenarioExec::ProcessActions(const SEScenario& scenario)
   std::stringstream serializationFileName;
   const SEScenarioAutoSerialization* serialization = scenario.GetAutoSerialization();
   if (serialization != nullptr) {
-    if (!serialization->IsValid())
+    if (!serialization->IsValid()) {
       serialization = nullptr; //ignore it
-    else {
+    } else {
       serializationFileNameBase = serialization->GetFileName();
       // Strip off the xml if it's there
       size_t split = serializationFileNameBase.find(".xml");
@@ -202,8 +207,9 @@ bool SEScenarioExec::ProcessActions(const SEScenario& scenario)
   bool err = false;
   SEAdvanceTime* adv;
   for (SEAction* a : scenario.GetActions()) {
-    if (m_Cancel)
+    if (m_Cancel) {
       break;
+    }
     // We override advance time actions in order to advance and
     // pull requested data at each time step, all other actions
     // will be processed by the engine
@@ -212,8 +218,9 @@ bool SEScenarioExec::ProcessActions(const SEScenario& scenario)
       double time_s = adv->GetTime(TimeUnit::s);
       int count = (int)(time_s / dT_s);
       for (int i = 0; i <= count; i++) {
-        if (m_Cancel)
+        if (m_Cancel) {
           break;
+        }
 
         m_Engine.AdvanceModelTime();
 
@@ -224,8 +231,9 @@ bool SEScenarioExec::ProcessActions(const SEScenario& scenario)
               serializationTime_s = 0;
               serializationFileName.str("");
               serializationFileName << serializationFileNameBase;
-              if (serialization->GetPeriodTimeStamps() == CDM::enumOnOff::On)
+              if (serialization->GetPeriodTimeStamps() == CDM::enumOnOff::On) {
                 serializationFileName << "@" << m_Engine.GetSimulationTime(TimeUnit::s);
+              }
               serializationFileName << ".xml";
               std::unique_ptr<CDM::PhysiologyEngineStateData> state(m_Engine.SaveState(serializationFileName.str()));
               if (serialization->GetReloadState() == CDM::enumOnOff::On) {
@@ -254,8 +262,9 @@ bool SEScenarioExec::ProcessActions(const SEScenario& scenario)
           m_Engine.GetEngineTrack()->TrackData(scenarioTime_s);
         }
         // Call any custom callback provided
-        if (m_CustomExec != nullptr)
+        if (m_CustomExec != nullptr) {
           m_CustomExec->CustomExec(scenarioTime_s, &m_Engine);
+        }
         statusTime_s += dT_s;
         // How are we running?
         if (statusTime_s > statusStep_s) {
@@ -264,9 +273,10 @@ bool SEScenarioExec::ProcessActions(const SEScenario& scenario)
           profiler.Reset("Status");
           Info(m_ss);
         }
-        if (m_Engine.GetPatient().IsEventActive(CDM::enumPatientEvent::IrreversibleState))
-          return false; // Patient is for all intents and purposes dead, or out at least out of its methodology bounds, quit running
-      }
+        if (m_Engine.GetPatient().IsEventActive(CDM::enumPatientEvent::IrreversibleState)) {
+          return false; // Patient is for all intents and purposes dead, or out at least out of its methodology bounds, quit running }
+        }
+        }
       continue;
     }
 
@@ -293,15 +303,18 @@ bool SEScenarioExec::ProcessActions(const SEScenario& scenario)
       serializeAction = true; // Serialize after the next time step
     }
 
-    if (m_Engine.GetPatient().IsEventActive(CDM::enumPatientEvent::IrreversibleState))
-      return false; // Patient is for all intents and purposes dead, or out at least out of its methodology bounds, quit running
-  }
+    if (m_Engine.GetPatient().IsEventActive(CDM::enumPatientEvent::IrreversibleState)) {
+      return false; // Patient is for all intents and purposes dead, or out at least out of its methodology bounds, quit running }
+    }
+      }
   m_ss << "It took " << profiler.GetElapsedTime_s("Total") << "s to run this simulation";
   profiler.Clear();
   Info(m_ss);
 
   return !err;
 }
+
+  
 
 bool SEScenarioExec::ProcessAction(const SEAction& action)
 {

@@ -76,32 +76,44 @@ void SEEnergySystem::Clear()
 
 const SEScalar* SEEnergySystem::GetScalar(const std::string& name)
 {
-  if (name.compare("AchievedExerciseLevel") == 0)
+  if (name.compare("AchievedExerciseLevel") == 0) {
     return &GetAchievedExerciseLevel();
-  if (name.compare("ChlorideLostToSweat") == 0)
+  }
+  if (name.compare("ChlorideLostToSweat") == 0) {
     return &GetChlorideLostToSweat();
-  if (name.compare("CoreTemperature") == 0)
+  }
+  if (name.compare("CoreTemperature") == 0) {
     return &GetCoreTemperature();
-  if (name.compare("CreatinineProductionRate") == 0)
+  }
+  if (name.compare("CreatinineProductionRate") == 0) {
     return &GetCreatinineProductionRate();
-  if (name.compare("ExerciseMeanArterialPressureDelta") == 0)
+  }
+  if (name.compare("ExerciseMeanArterialPressureDelta") == 0) {
     return &GetExerciseMeanArterialPressureDelta();
+  }
   if (name.compare("FatigueLevel") == 0)
     return &GetFatigueLevel();
-  if (name.compare("LactateProductionRate") == 0)
+  if (name.compare("LactateProductionRate") == 0) {
     return &GetLactateProductionRate();
-  if (name.compare("PotassiumLostToSweat") == 0)
+  }
+  if (name.compare("PotassiumLostToSweat") == 0) {
     return &GetPotassiumLostToSweat();
-  if (name.compare("SkinTemperature") == 0)
+  }
+  if (name.compare("SkinTemperature") == 0) {
     return &GetSkinTemperature();
-  if (name.compare("SodiumLostToSweat") == 0)
+  }
+  if (name.compare("SodiumLostToSweat") == 0) {
     return &GetSodiumLostToSweat();
-  if (name.compare("SweatRate") == 0)
+  }
+  if (name.compare("SweatRate") == 0) {
     return &GetSweatRate();
-  if (name.compare("TotalMetabolicRate") == 0)
+  }
+  if (name.compare("TotalMetabolicRate") == 0) {
     return &GetTotalMetabolicRate();
-  if (name.compare("TotalWorkRateLevel") == 0)
+  }
+  if (name.compare("TotalWorkRateLevel") == 0) {
     return &GetTotalWorkRateLevel();
+  }
   return nullptr;
 }
 
@@ -109,32 +121,45 @@ bool SEEnergySystem::Load(const CDM::EnergySystemData& in)
 {
   SESystem::Load(in);
 
-  if (in.AchievedExerciseLevel().present())
+  if (in.AchievedExerciseLevel().present()) {
     GetAchievedExerciseLevel().Load(in.AchievedExerciseLevel().get());
-  if (in.ChlorideLostToSweat().present())
+  }
+  if (in.ChlorideLostToSweat().present()) {
     GetChlorideLostToSweat().Load(in.ChlorideLostToSweat().get());
-  if (in.CoreTemperature().present())
+  }
+  if (in.CoreTemperature().present()) {
     GetCoreTemperature().Load(in.CoreTemperature().get());
-  if (in.CreatinineProductionRate().present())
+  }
+  if (in.CreatinineProductionRate().present()) {
     GetCreatinineProductionRate().Load(in.CreatinineProductionRate().get());
-  if (in.ExerciseMeanArterialPressureDelta().present())
+  }
+  if (in.ExerciseMeanArterialPressureDelta().present()) {
     GetExerciseMeanArterialPressureDelta().Load(in.ExerciseMeanArterialPressureDelta().get());
-  if (in.FatigueLevel().present())
+  }
+  if (in.FatigueLevel().present()) {
     GetFatigueLevel().Load(in.FatigueLevel().get());
-  if (in.LactateProductionRate().present())
+  }
+  if (in.LactateProductionRate().present()) {
     GetLactateProductionRate().Load(in.LactateProductionRate().get());
-  if (in.PotassiumLostToSweat().present())
+  }
+  if (in.PotassiumLostToSweat().present()) {
     GetPotassiumLostToSweat().Load(in.PotassiumLostToSweat().get());
-  if (in.SkinTemperature().present())
+  }
+  if (in.SkinTemperature().present()) {
     GetSkinTemperature().Load(in.SkinTemperature().get());
-  if (in.SodiumLostToSweat().present())
+  }
+  if (in.SodiumLostToSweat().present()) {
     GetSodiumLostToSweat().Load(in.SodiumLostToSweat().get());
-  if (in.SweatRate().present())
+  }
+  if (in.SweatRate().present()) {
     GetSweatRate().Load(in.SweatRate().get());
-  if (in.TotalMetabolicRate().present())
+  }
+  if (in.TotalMetabolicRate().present()) {
     GetTotalMetabolicRate().Load(in.TotalMetabolicRate().get());
-  if (in.TotalWorkRateLevel().present())
+  }
+  if (in.TotalWorkRateLevel().present()) {
     GetTotalWorkRateLevel().Load(in.TotalWorkRateLevel().get());
+  }
 
   return true;
 }
@@ -150,32 +175,45 @@ void SEEnergySystem::Unload(CDM::EnergySystemData& data) const
 {
   SESystem::Unload(data);
 
-  if (m_AchievedExerciseLevel != nullptr)
+  if (m_AchievedExerciseLevel != nullptr) {
     data.AchievedExerciseLevel(std::unique_ptr<CDM::ScalarFractionData>(m_AchievedExerciseLevel->Unload()));
-  if (m_ChlorideLostToSweat != nullptr)
+  }
+  if (m_ChlorideLostToSweat != nullptr) {
     data.ChlorideLostToSweat(std::unique_ptr<CDM::ScalarMassData>(m_ChlorideLostToSweat->Unload()));
-  if (m_CoreTemperature != nullptr)
+  }
+  if (m_CoreTemperature != nullptr) {
     data.CoreTemperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_CoreTemperature->Unload()));
-  if (m_CreatinineProductionRate != nullptr)
+  }
+  if (m_CreatinineProductionRate != nullptr) {
     data.CreatinineProductionRate(std::unique_ptr<CDM::ScalarAmountPerTimeData>(m_CreatinineProductionRate->Unload()));
-  if (m_ExerciseMeanArterialPressureDelta != nullptr)
+  }
+  if (m_ExerciseMeanArterialPressureDelta != nullptr) {
     data.ExerciseMeanArterialPressureDelta(std::unique_ptr<CDM::ScalarPressureData>(m_ExerciseMeanArterialPressureDelta->Unload()));
-  if (m_FatigueLevel != nullptr)
+  }
+  if (m_FatigueLevel != nullptr) {
     data.FatigueLevel(std::unique_ptr<CDM::ScalarFractionData>(m_FatigueLevel->Unload()));
-  if (m_LactateProductionRate != nullptr)
+  }
+  if (m_LactateProductionRate != nullptr) {
     data.LactateProductionRate(std::unique_ptr<CDM::ScalarAmountPerTimeData>(m_LactateProductionRate->Unload()));
-  if (m_PotassiumLostToSweat != nullptr)
+  }
+  if (m_PotassiumLostToSweat != nullptr) {
     data.PotassiumLostToSweat(std::unique_ptr<CDM::ScalarMassData>(m_PotassiumLostToSweat->Unload()));
-  if (m_SkinTemperature != nullptr)
+  }
+  if (m_SkinTemperature != nullptr) {
     data.SkinTemperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_SkinTemperature->Unload()));
-  if (m_SodiumLostToSweat != nullptr)
+  }
+  if (m_SodiumLostToSweat != nullptr) {
     data.SodiumLostToSweat(std::unique_ptr<CDM::ScalarMassData>(m_SodiumLostToSweat->Unload()));
-  if (m_SweatRate != nullptr)
+  }
+  if (m_SweatRate != nullptr) {
     data.SweatRate(std::unique_ptr<CDM::ScalarMassPerTimeData>(m_SweatRate->Unload()));
-  if (m_TotalMetabolicRate != nullptr)
+  }
+  if (m_TotalMetabolicRate != nullptr) {
     data.TotalMetabolicRate(std::unique_ptr<CDM::ScalarPowerData>(m_TotalMetabolicRate->Unload()));
-  if (m_TotalWorkRateLevel != nullptr)
+  }
+  if (m_TotalWorkRateLevel != nullptr) {
     data.TotalWorkRateLevel(std::unique_ptr<CDM::ScalarFractionData>(m_TotalWorkRateLevel->Unload()));
+  }
 }
 
 bool SEEnergySystem::HasAchievedExerciseLevel() const
@@ -184,14 +222,16 @@ bool SEEnergySystem::HasAchievedExerciseLevel() const
 }
 SEScalarFraction& SEEnergySystem::GetAchievedExerciseLevel()
 {
-  if (m_AchievedExerciseLevel == nullptr)
+  if (m_AchievedExerciseLevel == nullptr) {
     m_AchievedExerciseLevel = new SEScalarFraction();
+  }
   return *m_AchievedExerciseLevel;
 }
 double SEEnergySystem::GetAchievedExerciseLevel() const
 {
-  if (m_AchievedExerciseLevel == nullptr)
+  if (m_AchievedExerciseLevel == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_AchievedExerciseLevel->GetValue();
 }
 
@@ -201,14 +241,16 @@ bool SEEnergySystem::HasChlorideLostToSweat() const
 }
 SEScalarMass& SEEnergySystem::GetChlorideLostToSweat()
 {
-  if (m_ChlorideLostToSweat == nullptr)
+  if (m_ChlorideLostToSweat == nullptr) {
     m_ChlorideLostToSweat = new SEScalarMass();
+  }
   return *m_ChlorideLostToSweat;
 }
 double SEEnergySystem::GetChlorideLostToSweat(const MassUnit& unit) const
 {
-  if (m_ChlorideLostToSweat == nullptr)
+  if (m_ChlorideLostToSweat == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ChlorideLostToSweat->GetValue(unit);
 }
 
@@ -218,14 +260,16 @@ bool SEEnergySystem::HasCoreTemperature() const
 }
 SEScalarTemperature& SEEnergySystem::GetCoreTemperature()
 {
-  if (m_CoreTemperature == nullptr)
+  if (m_CoreTemperature == nullptr) {
     m_CoreTemperature = new SEScalarTemperature();
+  }
   return *m_CoreTemperature;
 }
 double SEEnergySystem::GetCoreTemperature(const TemperatureUnit& unit) const
 {
-  if (m_CoreTemperature == nullptr)
+  if (m_CoreTemperature == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_CoreTemperature->GetValue(unit);
 }
 
@@ -235,14 +279,16 @@ bool SEEnergySystem::HasCreatinineProductionRate() const
 }
 SEScalarAmountPerTime& SEEnergySystem::GetCreatinineProductionRate()
 {
-  if (m_CreatinineProductionRate == nullptr)
+  if (m_CreatinineProductionRate == nullptr) {
     m_CreatinineProductionRate = new SEScalarAmountPerTime();
+  }
   return *m_CreatinineProductionRate;
 }
 double SEEnergySystem::GetCreatinineProductionRate(const AmountPerTimeUnit& unit) const
 {
-  if (m_CreatinineProductionRate == nullptr)
+  if (m_CreatinineProductionRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_CreatinineProductionRate->GetValue(unit);
 }
 
@@ -252,14 +298,16 @@ bool SEEnergySystem::HasExerciseMeanArterialPressureDelta() const
 }
 SEScalarPressure& SEEnergySystem::GetExerciseMeanArterialPressureDelta()
 {
-  if (m_ExerciseMeanArterialPressureDelta == nullptr)
+  if (m_ExerciseMeanArterialPressureDelta == nullptr) {
     m_ExerciseMeanArterialPressureDelta = new SEScalarPressure();
+  }
   return *m_ExerciseMeanArterialPressureDelta;
 }
 double SEEnergySystem::GetExerciseMeanArterialPressureDelta(const PressureUnit& unit) const
 {
-  if (m_ExerciseMeanArterialPressureDelta == nullptr)
+  if (m_ExerciseMeanArterialPressureDelta == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ExerciseMeanArterialPressureDelta->GetValue(unit);
 }
 
@@ -269,14 +317,16 @@ bool SEEnergySystem::HasFatigueLevel() const
 }
 SEScalarFraction& SEEnergySystem::GetFatigueLevel()
 {
-  if (m_FatigueLevel == nullptr)
+  if (m_FatigueLevel == nullptr) {
     m_FatigueLevel = new SEScalarFraction();
+  }
   return *m_FatigueLevel;
 }
 double SEEnergySystem::GetFatigueLevel() const
 {
-  if (m_FatigueLevel == nullptr)
+  if (m_FatigueLevel == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FatigueLevel->GetValue();
 }
 
@@ -286,14 +336,16 @@ bool SEEnergySystem::HasLactateProductionRate() const
 }
 SEScalarAmountPerTime& SEEnergySystem::GetLactateProductionRate()
 {
-  if (m_LactateProductionRate == nullptr)
+  if (m_LactateProductionRate == nullptr) {
     m_LactateProductionRate = new SEScalarAmountPerTime();
+  }
   return *m_LactateProductionRate;
 }
 double SEEnergySystem::GetLactateProductionRate(const AmountPerTimeUnit& unit) const
 {
-  if (m_LactateProductionRate == nullptr)
+  if (m_LactateProductionRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_LactateProductionRate->GetValue(unit);
 }
 
@@ -303,14 +355,16 @@ bool SEEnergySystem::HasPotassiumLostToSweat() const
 }
 SEScalarMass& SEEnergySystem::GetPotassiumLostToSweat()
 {
-  if (m_PotassiumLostToSweat == nullptr)
+  if (m_PotassiumLostToSweat == nullptr) {
     m_PotassiumLostToSweat = new SEScalarMass();
+  }
   return *m_PotassiumLostToSweat;
 }
 double SEEnergySystem::GetPotassiumLostToSweat(const MassUnit& unit) const
 {
-  if (m_PotassiumLostToSweat == nullptr)
+  if (m_PotassiumLostToSweat == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_PotassiumLostToSweat->GetValue(unit);
 }
 
@@ -320,14 +374,16 @@ bool SEEnergySystem::HasSkinTemperature() const
 }
 SEScalarTemperature& SEEnergySystem::GetSkinTemperature()
 {
-  if (m_SkinTemperature == nullptr)
+  if (m_SkinTemperature == nullptr) {
     m_SkinTemperature = new SEScalarTemperature();
+  }
   return *m_SkinTemperature;
 }
 double SEEnergySystem::GetSkinTemperature(const TemperatureUnit& unit) const
 {
-  if (m_SkinTemperature == nullptr)
+  if (m_SkinTemperature == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SkinTemperature->GetValue(unit);
 }
 
@@ -337,14 +393,16 @@ bool SEEnergySystem::HasSodiumLostToSweat() const
 }
 SEScalarMass& SEEnergySystem::GetSodiumLostToSweat()
 {
-  if (m_SodiumLostToSweat == nullptr)
+  if (m_SodiumLostToSweat == nullptr) {
     m_SodiumLostToSweat = new SEScalarMass();
+  }
   return *m_SodiumLostToSweat;
 }
 double SEEnergySystem::GetSodiumLostToSweat(const MassUnit& unit) const
 {
-  if (m_SodiumLostToSweat == nullptr)
+  if (m_SodiumLostToSweat == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SodiumLostToSweat->GetValue(unit);
 }
 
@@ -354,14 +412,16 @@ bool SEEnergySystem::HasSweatRate() const
 }
 SEScalarMassPerTime& SEEnergySystem::GetSweatRate()
 {
-  if (m_SweatRate == nullptr)
+  if (m_SweatRate == nullptr) {
     m_SweatRate = new SEScalarMassPerTime();
+  }
   return *m_SweatRate;
 }
 double SEEnergySystem::GetSweatRate(const MassPerTimeUnit& unit) const
 {
-  if (m_SweatRate == nullptr)
+  if (m_SweatRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SweatRate->GetValue(unit);
 }
 
@@ -371,14 +431,16 @@ bool SEEnergySystem::HasTotalMetabolicRate() const
 }
 SEScalarPower& SEEnergySystem::GetTotalMetabolicRate()
 {
-  if (m_TotalMetabolicRate == nullptr)
+  if (m_TotalMetabolicRate == nullptr) {
     m_TotalMetabolicRate = new SEScalarPower();
+  }
   return *m_TotalMetabolicRate;
 }
 double SEEnergySystem::GetTotalMetabolicRate(const PowerUnit& unit) const
 {
-  if (m_TotalMetabolicRate == nullptr)
+  if (m_TotalMetabolicRate == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_TotalMetabolicRate->GetValue(unit);
 }
 
@@ -388,13 +450,15 @@ bool SEEnergySystem::HasTotalWorkRateLevel() const
 }
 SEScalarFraction& SEEnergySystem::GetTotalWorkRateLevel()
 {
-  if (m_TotalWorkRateLevel == nullptr)
+  if (m_TotalWorkRateLevel == nullptr) {
     m_TotalWorkRateLevel = new SEScalarFraction();
+  }
   return *m_TotalWorkRateLevel;
 }
 double SEEnergySystem::GetTotalWorkRateLevel() const
 {
-  if (m_TotalWorkRateLevel == nullptr)
+  if (m_TotalWorkRateLevel == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_TotalWorkRateLevel->GetValue();
 }

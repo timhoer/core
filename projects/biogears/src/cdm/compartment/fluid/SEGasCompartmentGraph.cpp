@@ -48,10 +48,12 @@ CDM::GasCompartmentGraphData* SEGasCompartmentGraph::Unload()
 void SEGasCompartmentGraph::Unload(CDM::GasCompartmentGraphData& data)
 {
   data.Name(m_Name);
-  for (SEGasCompartment* cmpt : m_Compartments)
+  for (SEGasCompartment* cmpt : m_Compartments) {
     data.Compartment().push_back(cmpt->GetName());
-  for (SEGasCompartmentLink* link : m_CompartmentLinks)
+  }
+  for (SEGasCompartmentLink* link : m_CompartmentLinks) {
     data.Link().push_back(link->GetName());
+  }
 }
 
 void SEGasCompartmentGraph::BalanceByIntensive()
@@ -60,13 +62,15 @@ void SEGasCompartmentGraph::BalanceByIntensive()
     // Make sure Volume Fractions sum to 1.0 and adjust accordingly
     double totalVolumeFraction = 0;
     for (SEGasSubstanceQuantity* subQ : cmpt->GetSubstanceQuantities()) {
-      if (subQ->HasVolumeFraction())
+      if (subQ->HasVolumeFraction()) {
         totalVolumeFraction += subQ->GetVolumeFraction().GetValue();
+      }
     }
     if (totalVolumeFraction == 0.0) {
       for (SEGasSubstanceQuantity* subQ : cmpt->GetSubstanceQuantities()) {
-        if (subQ->HasVolumeFraction())
+        if (subQ->HasVolumeFraction()) {
           subQ->SetToZero();
+        }
       }
       continue;
     } else {
@@ -86,8 +90,10 @@ void SEGasCompartmentGraph::BalanceByIntensive()
 
 void SEGasCompartmentGraph::AddGraph(SEGasCompartmentGraph& graph)
 {
-  for (SEGasCompartment* cmpt : graph.GetCompartments())
+  for (SEGasCompartment* cmpt : graph.GetCompartments()) {
     AddCompartment(*cmpt);
-  for (SEGasCompartmentLink* lnk : graph.GetLinks())
+  }
+  for (SEGasCompartmentLink* lnk : graph.GetLinks()) {
     AddLink(*lnk);
+  }
 }

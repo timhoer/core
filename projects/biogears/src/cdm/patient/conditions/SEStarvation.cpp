@@ -55,8 +55,9 @@ CDM::StarvationData* SEStarvation::Unload() const
 void SEStarvation::Unload(CDM::StarvationData& data) const
 {
   SEPatientCondition::Unload(data);
-  if (m_TimeSinceMeal != nullptr)
+  if (m_TimeSinceMeal != nullptr) {
     data.TimeSinceMeal(std::unique_ptr<CDM::ScalarTimeData>(m_TimeSinceMeal->Unload()));
+  }
 }
 
 bool SEStarvation::HasTimeSinceMeal() const
@@ -66,15 +67,17 @@ bool SEStarvation::HasTimeSinceMeal() const
 
 SEScalarTime& SEStarvation::GetTimeSinceMeal()
 {
-  if (m_TimeSinceMeal == nullptr)
+  if (m_TimeSinceMeal == nullptr) {
     m_TimeSinceMeal = new SEScalarTime();
+  }
   return *m_TimeSinceMeal;
 }
 
 void SEStarvation::ToString(std::ostream& str) const
 {
   str << "Patient Condition : Starvation";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << std::flush;
 }

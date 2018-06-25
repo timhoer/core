@@ -36,8 +36,9 @@ void SEFunctionElectricPotentialVsTime::Clear()
 
 bool SEFunctionElectricPotentialVsTime::Load(const CDM::FunctionElectricPotentialVsTimeData& in)
 {
-  if (!SEFunction::Load(in))
+  if (!SEFunction::Load(in)) {
     return false;
+  }
   m_TimeUnit = &TimeUnit::GetCompoundUnit(in.IndependentUnit().get());
   m_ElectricPotentialUnit = &ElectricPotentialUnit::GetCompoundUnit(in.DependentUnit().get());
   return IsValid();
@@ -45,8 +46,9 @@ bool SEFunctionElectricPotentialVsTime::Load(const CDM::FunctionElectricPotentia
 
 CDM::FunctionElectricPotentialVsTimeData* SEFunctionElectricPotentialVsTime::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::FunctionElectricPotentialVsTimeData* data(new CDM::FunctionElectricPotentialVsTimeData());
   Unload(*data);
   return data;
@@ -61,10 +63,12 @@ void SEFunctionElectricPotentialVsTime::Unload(CDM::FunctionElectricPotentialVsT
 
 double SEFunctionElectricPotentialVsTime::GetTimeValue(unsigned int index, const TimeUnit& unit)
 {
-  if (m_TimeUnit == nullptr)
+  if (m_TimeUnit == nullptr) {
     throw CommonDataModelException("No time units have been set");
-  if (index >= m_Independent.size())
+  }
+  if (index >= m_Independent.size()) {
     throw CommonDataModelException("Independent index out of bounds");
+  }
   return Convert(m_Independent[index], *m_TimeUnit, unit);
 }
 std::vector<double>& SEFunctionElectricPotentialVsTime::GetTime()
@@ -82,10 +86,12 @@ void SEFunctionElectricPotentialVsTime::SetTimeUnit(const TimeUnit& unit)
 
 double SEFunctionElectricPotentialVsTime::GetElectricPotentialValue(unsigned int index, const ElectricPotentialUnit& unit)
 {
-  if (m_ElectricPotentialUnit == nullptr)
+  if (m_ElectricPotentialUnit == nullptr) {
     throw CommonDataModelException("No electric potential units have been set");
-  if (index >= m_Dependent.size())
+  }
+  if (index >= m_Dependent.size()) {
     throw CommonDataModelException("Dependent index out of bounds");
+  }
   return Convert(m_Dependent[index], *m_ElectricPotentialUnit, unit);
 }
 std::vector<double>& SEFunctionElectricPotentialVsTime::GetElectricPotential()
@@ -119,15 +125,17 @@ void SEFunctionElectricPotentialVsTime::SetElectricPotentialUnit(const ElectricP
 //--------------------------------------------------------------------------------------------------
 SEFunctionElectricPotentialVsTime* SEFunctionElectricPotentialVsTime::InterpolateToTime(std::vector<double>& newTime, const TimeUnit& unit)
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
 
   SEFunctionElectricPotentialVsTime* newFunction = new SEFunctionElectricPotentialVsTime();
   std::vector<double>& fTime = newFunction->GetTime();
   std::vector<double>& fEleP = newFunction->GetElectricPotential();
 
-  for (double t : newTime)
+  for (double t : newTime) {
     fTime.push_back(t);
+  }
   newFunction->SetTimeUnit(unit);
 
   //m_Independent;// Original X (Time)
@@ -145,15 +153,18 @@ SEFunctionElectricPotentialVsTime* SEFunctionElectricPotentialVsTime::Interpolat
       yPrime = GeneralMath::LinearInterpolator(x1, x2, y1, y2, xPrime); // call general math function LinearInterpolator to find yPrime at xPrime, xPrime must be between x1 and x2
       fEleP.push_back(yPrime); // populate the voltage vector
       newTimeIterator++;
-      if (newTimeIterator >= newTime.size())
+      if (newTimeIterator >= newTime.size()) {
         break;
+      }
     }
-    if (newTimeIterator >= newTime.size())
+    if (newTimeIterator >= newTime.size()) {
       break;
+    }
   }
   newFunction->SetElectricPotentialUnit(*m_ElectricPotentialUnit); //
 
-  if (!newFunction->IsValid())
+  if (!newFunction->IsValid()) {
     throw new CommonDataModelException("Could not Interpolate to provided time");
+  }
   return newFunction;
 }

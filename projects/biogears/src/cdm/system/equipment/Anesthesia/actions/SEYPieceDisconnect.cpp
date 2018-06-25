@@ -58,8 +58,9 @@ CDM::YPieceDisconnectData* SEYPieceDisconnect::Unload() const
 void SEYPieceDisconnect::Unload(CDM::YPieceDisconnectData& data) const
 {
   SEAnesthesiaMachineAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SEYPieceDisconnect::HasSeverity() const
@@ -68,16 +69,18 @@ bool SEYPieceDisconnect::HasSeverity() const
 }
 SEScalar0To1& SEYPieceDisconnect::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SEYPieceDisconnect::ToString(std::ostream& str) const
 {
   str << "Anesthesia Machine Action : YPiece Disconnect";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity :";
   HasSeverity() ? str << *m_Severity : str << "NaN";
   str << std::flush;

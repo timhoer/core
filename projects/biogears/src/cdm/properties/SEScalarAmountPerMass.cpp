@@ -18,8 +18,9 @@ AmountPerMassUnit AmountPerMassUnit::ct_Per_ug("ct/ug");
 
 CDM::ScalarAmountPerMassData* SEScalarAmountPerMass::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarAmountPerMassData* data(new CDM::ScalarAmountPerMassData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,18 +28,22 @@ CDM::ScalarAmountPerMassData* SEScalarAmountPerMass::Unload() const
 
 bool AmountPerMassUnit::IsValidUnit(const std::string& unit)
 {
-  if (ct_Per_g.GetString().compare(unit) == 0)
+  if (ct_Per_g.GetString().compare(unit) == 0) {
     return true;
-  if (ct_Per_ug.GetString().compare(unit) == 0)
+  }
+  if (ct_Per_ug.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 const AmountPerMassUnit& AmountPerMassUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (ct_Per_g.GetString().compare(unit) == 0)
+  if (ct_Per_g.GetString().compare(unit) == 0) {
     return ct_Per_g;
-  if (ct_Per_ug.GetString().compare(unit) == 0)
+  }
+  if (ct_Per_ug.GetString().compare(unit) == 0) {
     return ct_Per_ug;
+  }
   std::stringstream err;
   err << unit << " is not a valid AmountPerMass unit";
   throw CommonDataModelException(err.str());

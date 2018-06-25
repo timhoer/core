@@ -30,8 +30,9 @@ const MassPerVolumeUnit MassPerVolumeUnit::kg_Per_L("kg/L");
 
 CDM::ScalarMassPerVolumeData* SEScalarMassPerVolume::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarMassPerVolumeData* data(new CDM::ScalarMassPerVolumeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -39,32 +40,44 @@ CDM::ScalarMassPerVolumeData* SEScalarMassPerVolume::Unload() const
 
 bool MassPerVolumeUnit::IsValidUnit(const std::string& unit)
 {
-  if (g_Per_dL.GetString().compare(unit) == 0)
+  if (g_Per_dL.GetString().compare(unit) == 0) {
     return true;
-  if (g_Per_cm3.GetString().compare(unit) == 0)
+  }
+  if (g_Per_cm3.GetString().compare(unit) == 0) {
     return true;
-  if (g_Per_m3.GetString().compare(unit) == 0)
+  }
+  if (g_Per_m3.GetString().compare(unit) == 0) {
     return true;
-  if (ug_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_mL.GetString().compare(unit) == 0) {
     return true;
-  if (mg_Per_m3.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_m3.GetString().compare(unit) == 0) {
     return true;
-  if (kg_Per_m3.GetString().compare(unit) == 0)
+  }
+  if (kg_Per_m3.GetString().compare(unit) == 0) {
     return true;
+  }
   if (ug_Per_L.GetString().compare(unit) == 0)
     return true;
-  if (g_Per_L.GetString().compare(unit) == 0)
+  if (g_Per_L.GetString().compare(unit) == 0) {
     return true;
-  if (g_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (g_Per_mL.GetString().compare(unit) == 0) {
     return true;
-  if (mg_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_mL.GetString().compare(unit) == 0) {
     return true;
-  if (mg_Per_L.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_L.GetString().compare(unit) == 0) {
     return true;
-  if (mg_Per_dL.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_dL.GetString().compare(unit) == 0) {
     return true;
-  if (kg_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (kg_Per_mL.GetString().compare(unit) == 0) {
     return true;
+  }
   if (kg_Per_L.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -72,34 +85,47 @@ bool MassPerVolumeUnit::IsValidUnit(const std::string& unit)
 
 const MassPerVolumeUnit& MassPerVolumeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (g_Per_dL.GetString().compare(unit) == 0)
+  if (g_Per_dL.GetString().compare(unit) == 0) {
     return g_Per_dL;
-  if (g_Per_cm3.GetString().compare(unit) == 0)
+  }
+  if (g_Per_cm3.GetString().compare(unit) == 0) {
     return g_Per_cm3;
-  if (g_Per_m3.GetString().compare(unit) == 0)
+  }
+  if (g_Per_m3.GetString().compare(unit) == 0) {
     return g_Per_m3;
-  if (ug_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_mL.GetString().compare(unit) == 0) {
     return ug_Per_mL;
-  if (mg_Per_m3.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_m3.GetString().compare(unit) == 0) {
     return mg_Per_m3;
-  if (kg_Per_m3.GetString().compare(unit) == 0)
+  }
+  if (kg_Per_m3.GetString().compare(unit) == 0) {
     return kg_Per_m3;
-  if (ug_Per_L.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_L.GetString().compare(unit) == 0) {
     return ug_Per_L;
+  }
   if (g_Per_L.GetString().compare(unit) == 0)
     return g_Per_L;
-  if (g_Per_mL.GetString().compare(unit) == 0)
+  if (g_Per_mL.GetString().compare(unit) == 0) {
     return g_Per_mL;
-  if (mg_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_mL.GetString().compare(unit) == 0) {
     return mg_Per_mL;
-  if (mg_Per_L.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_L.GetString().compare(unit) == 0) {
     return mg_Per_L;
-  if (mg_Per_dL.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_dL.GetString().compare(unit) == 0) {
     return mg_Per_dL;
-  if (kg_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (kg_Per_mL.GetString().compare(unit) == 0) {
     return kg_Per_mL;
-  if (kg_Per_L.GetString().compare(unit) == 0)
+  }
+  if (kg_Per_L.GetString().compare(unit) == 0) {
     return kg_Per_L;
+  }
   std::stringstream err;
   err << unit << " is not a valid MassPerVolume unit";
   throw CommonDataModelException(err.str());

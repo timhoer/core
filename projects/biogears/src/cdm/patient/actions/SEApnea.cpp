@@ -60,8 +60,9 @@ CDM::ApneaData* SEApnea::Unload() const
 void SEApnea::Unload(CDM::ApneaData& data) const
 {
   SEPatientAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SEApnea::HasSeverity() const
@@ -71,16 +72,18 @@ bool SEApnea::HasSeverity() const
 
 SEScalar0To1& SEApnea::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SEApnea::ToString(std::ostream& str) const
 {
   str << "Patient Action : Apnea";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity: ";
   HasSeverity() ? str << *m_Severity : str << "Not Set";
   str << std::flush;

@@ -42,20 +42,27 @@ void SEScenarioAutoSerialization::Clear()
 
 bool SEScenarioAutoSerialization::IsValid() const
 {
-  if (!HasPeriod())
+  if (!HasPeriod()) {
     return false;
-  if (m_Period->IsNegative())
+  }
+  if (m_Period->IsNegative()) {
     return false;
-  if (!HasPeriodTimeStamps())
+  }
+  if (!HasPeriodTimeStamps()) {
     return false;
-  if (!HasAfterActions())
+  }
+  if (!HasAfterActions()) {
     return false;
-  if (!HasReloadState())
+  }
+  if (!HasReloadState()) {
     return false;
-  if (!HasDirectory())
+  }
+  if (!HasDirectory()) {
     return false;
-  if (!HasFileName())
+  }
+  if (!HasFileName()) {
     return false;
+  }
   return true;
 }
 
@@ -78,18 +85,24 @@ CDM::ScenarioAutoSerializationData* SEScenarioAutoSerialization::Unload() const
 }
 void SEScenarioAutoSerialization::Unload(CDM::ScenarioAutoSerializationData& data) const
 {
-  if (HasPeriod())
+  if (HasPeriod()) {
     data.Period(std::unique_ptr<CDM::ScalarTimeData>(m_Period->Unload()));
-  if (HasPeriodTimeStamps())
+  }
+  if (HasPeriodTimeStamps()) {
     data.PeriodTimeStamps(m_PeriodTimeStamps);
-  if (HasAfterActions())
+  }
+  if (HasAfterActions()) {
     data.AfterActions(m_AfterActions);
-  if (HasReloadState())
+  }
+  if (HasReloadState()) {
     data.ReloadState(m_ReloadState);
-  if (HasDirectory())
+  }
+  if (HasDirectory()) {
     data.Directory(m_Directory);
-  if (HasFileName())
+  }
+  if (HasFileName()) {
     data.FileName(m_FileName);
+  }
 }
 
 bool SEScenarioAutoSerialization::HasPeriod() const
@@ -98,14 +111,16 @@ bool SEScenarioAutoSerialization::HasPeriod() const
 }
 SEScalarTime& SEScenarioAutoSerialization::GetPeriod()
 {
-  if (m_Period == nullptr)
+  if (m_Period == nullptr) {
     m_Period = new SEScalarTime();
+  }
   return *m_Period;
 }
 double SEScenarioAutoSerialization::GetPeriod(const TimeUnit& unit) const
 {
-  if (m_Period == nullptr)
+  if (m_Period == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Period->GetValue(unit);
 }
 

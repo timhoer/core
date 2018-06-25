@@ -46,26 +46,33 @@ void SEAppliedTemperature::Clear()
 
 const SEScalar* SEAppliedTemperature::GetScalar(const std::string& name)
 {
-  if (name.compare("Temperature") == 0)
+  if (name.compare("Temperature") == 0) {
     return &GetTemperature();
-  if (name.compare("SurfaceArea") == 0)
+  }
+  if (name.compare("SurfaceArea") == 0) {
     return &GetSurfaceArea();
-  if (name.compare("SurfaceAreaFraction") == 0)
+  }
+  if (name.compare("SurfaceAreaFraction") == 0) {
     return &GetSurfaceAreaFraction();
+  }
   return nullptr;
 }
 
 bool SEAppliedTemperature::Load(const CDM::AppliedTemperatureData& in)
 {
   Clear();
-  if (in.State().present())
+  if (in.State().present()) {
     m_State = in.State().get();
-  if (in.Temperature().present())
+  }
+  if (in.Temperature().present()) {
     GetTemperature().Load(in.Temperature().get());
-  if (in.SurfaceArea().present())
+  }
+  if (in.SurfaceArea().present()) {
     GetSurfaceArea().Load(in.SurfaceArea().get());
-  if (in.SurfaceAreaFraction().present())
+  }
+  if (in.SurfaceAreaFraction().present()) {
     GetSurfaceAreaFraction().Load(in.SurfaceAreaFraction().get());
+  }
   return true;
 }
 
@@ -77,12 +84,15 @@ CDM::AppliedTemperatureData* SEAppliedTemperature::Unload() const
 }
 void SEAppliedTemperature::Unload(CDM::AppliedTemperatureData& data) const
 {
-  if (HasTemperature())
+  if (HasTemperature()) {
     data.Temperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_Temperature->Unload()));
-  if (HasSurfaceArea())
+  }
+  if (HasSurfaceArea()) {
     data.SurfaceArea(std::unique_ptr<CDM::ScalarAreaData>(m_SurfaceArea->Unload()));
-  if (HasSurfaceAreaFraction())
+  }
+  if (HasSurfaceAreaFraction()) {
     data.SurfaceAreaFraction(std::unique_ptr<CDM::ScalarFractionData>(m_SurfaceAreaFraction->Unload()));
+  }
   data.State(m_State);
 }
 
@@ -92,14 +102,16 @@ bool SEAppliedTemperature::HasTemperature() const
 }
 SEScalarTemperature& SEAppliedTemperature::GetTemperature()
 {
-  if (m_Temperature == nullptr)
+  if (m_Temperature == nullptr) {
     m_Temperature = new SEScalarTemperature();
+  }
   return *m_Temperature;
 }
 double SEAppliedTemperature::GetTemperature(const TemperatureUnit& unit) const
 {
-  if (m_Temperature == nullptr)
+  if (m_Temperature == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Temperature->GetValue(unit);
 }
 
@@ -109,14 +121,16 @@ bool SEAppliedTemperature::HasSurfaceArea() const
 }
 SEScalarArea& SEAppliedTemperature::GetSurfaceArea()
 {
-  if (m_SurfaceArea == nullptr)
+  if (m_SurfaceArea == nullptr) {
     m_SurfaceArea = new SEScalarArea();
+  }
   return *m_SurfaceArea;
 }
 double SEAppliedTemperature::GetSurfaceArea(const AreaUnit& unit) const
 {
-  if (m_SurfaceArea == nullptr)
+  if (m_SurfaceArea == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SurfaceArea->GetValue(unit);
 }
 
@@ -126,14 +140,16 @@ bool SEAppliedTemperature::HasSurfaceAreaFraction() const
 }
 SEScalarFraction& SEAppliedTemperature::GetSurfaceAreaFraction()
 {
-  if (m_SurfaceAreaFraction == nullptr)
+  if (m_SurfaceAreaFraction == nullptr) {
     m_SurfaceAreaFraction = new SEScalarFraction();
+  }
   return *m_SurfaceAreaFraction;
 }
 double SEAppliedTemperature::GetSurfaceAreaFraction() const
 {
-  if (m_SurfaceAreaFraction == nullptr)
+  if (m_SurfaceAreaFraction == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SurfaceAreaFraction->GetValue();
 }
 

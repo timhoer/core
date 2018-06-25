@@ -17,8 +17,9 @@ const ElectricCurrentUnit ElectricCurrentUnit::A("A");
 
 CDM::ScalarElectricCurrentData* SEScalarElectricCurrent::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarElectricCurrentData* data(new CDM::ScalarElectricCurrentData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -26,15 +27,17 @@ CDM::ScalarElectricCurrentData* SEScalarElectricCurrent::Unload() const
 
 bool ElectricCurrentUnit::IsValidUnit(const std::string& unit)
 {
-  if (A.GetString().compare(unit) == 0)
+  if (A.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const ElectricCurrentUnit& ElectricCurrentUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (A.GetString().compare(unit) == 0)
+  if (A.GetString().compare(unit) == 0) {
     return A;
+  }
   std::stringstream err;
   err << unit << " is not a valid ElectricCurrent unit";
   throw CommonDataModelException(err.str());

@@ -20,8 +20,9 @@ const TemperatureUnit TemperatureUnit::R("degR");
 
 CDM::ScalarTemperatureData* SEScalarTemperature::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarTemperatureData* data(new CDM::ScalarTemperatureData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,14 +30,18 @@ CDM::ScalarTemperatureData* SEScalarTemperature::Unload() const
 
 bool TemperatureUnit::IsValidUnit(const std::string& unit)
 {
-  if (F.GetString().compare(unit) == 0)
+  if (F.GetString().compare(unit) == 0) {
     return true;
-  if (C.GetString().compare(unit) == 0)
+  }
+  if (C.GetString().compare(unit) == 0) {
     return true;
-  if (K.GetString().compare(unit) == 0)
+  }
+  if (K.GetString().compare(unit) == 0) {
     return true;
-  if (R.GetString().compare(unit) == 0)
+  }
+  if (R.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
@@ -44,12 +49,15 @@ const TemperatureUnit& TemperatureUnit::GetCompoundUnit(const std::string& unit)
 {
   if (F.GetString().compare(unit) == 0)
     return F;
-  if (C.GetString().compare(unit) == 0)
+  if (C.GetString().compare(unit) == 0) {
     return C;
-  if (K.GetString().compare(unit) == 0)
+  }
+  if (K.GetString().compare(unit) == 0) {
     return K;
-  if (R.GetString().compare(unit) == 0)
+  }
+  if (R.GetString().compare(unit) == 0) {
     return R;
+  }
   std::stringstream err;
   err << unit << " is not a valid Temperature unit";
   throw CommonDataModelException(err.str());
@@ -57,11 +65,14 @@ const TemperatureUnit& TemperatureUnit::GetCompoundUnit(const std::string& unit)
 
 double SEScalarTemperature::GetValue(const TemperatureUnit& unit) const
 {
-  if (m_isnan)
+  if (m_isnan) {
     throw CommonDataModelException("Value is NaN");
-  if (m_isinf)
+  }
+  if (m_isinf) {
     return m_value;
-  if (m_unit == &unit)
+  }
+  if (m_unit == &unit) {
     return m_value;
+  }
   return Convert(m_value, *m_unit, unit);
 }

@@ -53,27 +53,35 @@ void SENervousSystem::Clear()
 
 const SEScalar* SENervousSystem::GetScalar(const std::string& name)
 {
-  if (name.compare("BaroreceptorHeartRateScale") == 0)
+  if (name.compare("BaroreceptorHeartRateScale") == 0) {
     return &GetBaroreceptorHeartRateScale();
-  if (name.compare("BaroreceptorHeartElastanceScale") == 0)
+  }
+  if (name.compare("BaroreceptorHeartElastanceScale") == 0) {
     return &GetBaroreceptorHeartElastanceScale();
-  if (name.compare("BaroreceptorResistanceScale") == 0)
+  }
+  if (name.compare("BaroreceptorResistanceScale") == 0) {
     return &GetBaroreceptorResistanceScale();
-  if (name.compare("BaroreceptorComplianceScale") == 0)
+  }
+  if (name.compare("BaroreceptorComplianceScale") == 0) {
     return &GetBaroreceptorComplianceScale();
-  if (name.compare("ChemoreceptorHeartRateScale") == 0)
+  }
+  if (name.compare("ChemoreceptorHeartRateScale") == 0) {
     return &GetChemoreceptorHeartRateScale();
-  if (name.compare("ChemoreceptorHeartElastanceScale") == 0)
+  }
+  if (name.compare("ChemoreceptorHeartElastanceScale") == 0) {
     return &GetChemoreceptorHeartElastanceScale();
+  }
 
   size_t split = name.find('-');
   if (split != name.npos) {
     std::string child = name.substr(0, split);
     std::string prop = name.substr(split + 1, name.npos);
-    if (child == "LeftEyePupillaryResponse")
+    if (child == "LeftEyePupillaryResponse") {
       return GetLeftEyePupillaryResponse().GetScalar(prop);
-    if (child == "RightEyePupillaryResponse")
+    }
+    if (child == "RightEyePupillaryResponse") {
       return GetRightEyePupillaryResponse().GetScalar(prop);
+    }
   }
   return nullptr;
 }
@@ -81,22 +89,30 @@ const SEScalar* SENervousSystem::GetScalar(const std::string& name)
 bool SENervousSystem::Load(const CDM::NervousSystemData& in)
 {
   SESystem::Load(in);
-  if (in.BaroreceptorHeartRateScale().present())
+  if (in.BaroreceptorHeartRateScale().present()) {
     GetBaroreceptorHeartRateScale().Load(in.BaroreceptorHeartRateScale().get());
-  if (in.BaroreceptorHeartElastanceScale().present())
+  }
+  if (in.BaroreceptorHeartElastanceScale().present()) {
     GetBaroreceptorHeartElastanceScale().Load(in.BaroreceptorHeartElastanceScale().get());
-  if (in.BaroreceptorResistanceScale().present())
+  }
+  if (in.BaroreceptorResistanceScale().present()) {
     GetBaroreceptorResistanceScale().Load(in.BaroreceptorResistanceScale().get());
-  if (in.BaroreceptorComplianceScale().present())
+  }
+  if (in.BaroreceptorComplianceScale().present()) {
     GetBaroreceptorComplianceScale().Load(in.BaroreceptorComplianceScale().get());
-  if (in.ChemoreceptorHeartRateScale().present())
+  }
+  if (in.ChemoreceptorHeartRateScale().present()) {
     GetChemoreceptorHeartRateScale().Load(in.ChemoreceptorHeartRateScale().get());
-  if (in.ChemoreceptorHeartElastanceScale().present())
+  }
+  if (in.ChemoreceptorHeartElastanceScale().present()) {
     GetChemoreceptorHeartElastanceScale().Load(in.ChemoreceptorHeartElastanceScale().get());
-  if (in.LeftEyePupillaryResponse().present())
+  }
+  if (in.LeftEyePupillaryResponse().present()) {
     GetLeftEyePupillaryResponse().Load(in.LeftEyePupillaryResponse().get());
-  if (in.RightEyePupillaryResponse().present())
+  }
+  if (in.RightEyePupillaryResponse().present()) {
     GetRightEyePupillaryResponse().Load(in.RightEyePupillaryResponse().get());
+  }
   return true;
 }
 
@@ -110,22 +126,30 @@ CDM::NervousSystemData* SENervousSystem::Unload() const
 void SENervousSystem::Unload(CDM::NervousSystemData& data) const
 {
   SESystem::Unload(data);
-  if (m_BaroreceptorHeartRateScale != nullptr)
+  if (m_BaroreceptorHeartRateScale != nullptr) {
     data.BaroreceptorHeartRateScale(std::unique_ptr<CDM::ScalarData>(m_BaroreceptorHeartRateScale->Unload()));
-  if (m_BaroreceptorHeartElastanceScale != nullptr)
+  }
+  if (m_BaroreceptorHeartElastanceScale != nullptr) {
     data.BaroreceptorHeartElastanceScale(std::unique_ptr<CDM::ScalarData>(m_BaroreceptorHeartElastanceScale->Unload()));
-  if (m_BaroreceptorResistanceScale != nullptr)
+  }
+  if (m_BaroreceptorResistanceScale != nullptr) {
     data.BaroreceptorResistanceScale(std::unique_ptr<CDM::ScalarData>(m_BaroreceptorResistanceScale->Unload()));
-  if (m_BaroreceptorComplianceScale != nullptr)
+  }
+  if (m_BaroreceptorComplianceScale != nullptr) {
     data.BaroreceptorComplianceScale(std::unique_ptr<CDM::ScalarData>(m_BaroreceptorComplianceScale->Unload()));
-  if (m_ChemoreceptorHeartRateScale != nullptr)
+  }
+  if (m_ChemoreceptorHeartRateScale != nullptr) {
     data.ChemoreceptorHeartRateScale(std::unique_ptr<CDM::ScalarData>(m_ChemoreceptorHeartRateScale->Unload()));
-  if (m_ChemoreceptorHeartElastanceScale != nullptr)
+  }
+  if (m_ChemoreceptorHeartElastanceScale != nullptr) {
     data.ChemoreceptorHeartElastanceScale(std::unique_ptr<CDM::ScalarData>(m_ChemoreceptorHeartElastanceScale->Unload()));
-  if (m_LeftEyePupillaryResponse != nullptr)
+  }
+  if (m_LeftEyePupillaryResponse != nullptr) {
     data.LeftEyePupillaryResponse(std::unique_ptr<CDM::PupillaryResponseData>(m_LeftEyePupillaryResponse->Unload()));
-  if (m_RightEyePupillaryResponse != nullptr)
+  }
+  if (m_RightEyePupillaryResponse != nullptr) {
     data.RightEyePupillaryResponse(std::unique_ptr<CDM::PupillaryResponseData>(m_RightEyePupillaryResponse->Unload()));
+  }
 }
 
 bool SENervousSystem::HasBaroreceptorHeartRateScale() const
@@ -134,14 +158,16 @@ bool SENervousSystem::HasBaroreceptorHeartRateScale() const
 }
 SEScalar& SENervousSystem::GetBaroreceptorHeartRateScale()
 {
-  if (m_BaroreceptorHeartRateScale == nullptr)
+  if (m_BaroreceptorHeartRateScale == nullptr) {
     m_BaroreceptorHeartRateScale = new SEScalar();
+  }
   return *m_BaroreceptorHeartRateScale;
 }
 double SENervousSystem::GetBaroreceptorHeartRateScale() const
 {
-  if (m_BaroreceptorHeartRateScale == nullptr)
+  if (m_BaroreceptorHeartRateScale == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_BaroreceptorHeartRateScale->GetValue();
 }
 
@@ -151,14 +177,16 @@ bool SENervousSystem::HasBaroreceptorHeartElastanceScale() const
 }
 SEScalar& SENervousSystem::GetBaroreceptorHeartElastanceScale()
 {
-  if (m_BaroreceptorHeartElastanceScale == nullptr)
+  if (m_BaroreceptorHeartElastanceScale == nullptr) {
     m_BaroreceptorHeartElastanceScale = new SEScalar();
+  }
   return *m_BaroreceptorHeartElastanceScale;
 }
 double SENervousSystem::GetBaroreceptorHeartElastanceScale() const
 {
-  if (m_BaroreceptorHeartElastanceScale == nullptr)
+  if (m_BaroreceptorHeartElastanceScale == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_BaroreceptorHeartElastanceScale->GetValue();
 }
 
@@ -168,14 +196,16 @@ bool SENervousSystem::HasBaroreceptorResistanceScale() const
 }
 SEScalar& SENervousSystem::GetBaroreceptorResistanceScale()
 {
-  if (m_BaroreceptorResistanceScale == nullptr)
+  if (m_BaroreceptorResistanceScale == nullptr) {
     m_BaroreceptorResistanceScale = new SEScalar();
+  }
   return *m_BaroreceptorResistanceScale;
 }
 double SENervousSystem::GetBaroreceptorResistanceScale() const
 {
-  if (m_BaroreceptorResistanceScale == nullptr)
+  if (m_BaroreceptorResistanceScale == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_BaroreceptorResistanceScale->GetValue();
 }
 
@@ -185,14 +215,16 @@ bool SENervousSystem::HasBaroreceptorComplianceScale() const
 }
 SEScalar& SENervousSystem::GetBaroreceptorComplianceScale()
 {
-  if (m_BaroreceptorComplianceScale == nullptr)
+  if (m_BaroreceptorComplianceScale == nullptr) {
     m_BaroreceptorComplianceScale = new SEScalar();
+  }
   return *m_BaroreceptorComplianceScale;
 }
 double SENervousSystem::GetBaroreceptorComplianceScale() const
 {
-  if (m_BaroreceptorComplianceScale == nullptr)
+  if (m_BaroreceptorComplianceScale == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_BaroreceptorComplianceScale->GetValue();
 }
 
@@ -202,14 +234,16 @@ bool SENervousSystem::HasChemoreceptorHeartRateScale() const
 }
 SEScalar& SENervousSystem::GetChemoreceptorHeartRateScale()
 {
-  if (m_ChemoreceptorHeartRateScale == nullptr)
+  if (m_ChemoreceptorHeartRateScale == nullptr) {
     m_ChemoreceptorHeartRateScale = new SEScalar();
+  }
   return *m_ChemoreceptorHeartRateScale;
 }
 double SENervousSystem::GetChemoreceptorHeartRateScale() const
 {
-  if (m_ChemoreceptorHeartRateScale == nullptr)
+  if (m_ChemoreceptorHeartRateScale == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ChemoreceptorHeartRateScale->GetValue();
 }
 
@@ -219,14 +253,16 @@ bool SENervousSystem::HasChemoreceptorHeartElastanceScale() const
 }
 SEScalar& SENervousSystem::GetChemoreceptorHeartElastanceScale()
 {
-  if (m_ChemoreceptorHeartElastanceScale == nullptr)
+  if (m_ChemoreceptorHeartElastanceScale == nullptr) {
     m_ChemoreceptorHeartElastanceScale = new SEScalar();
+  }
   return *m_ChemoreceptorHeartElastanceScale;
 }
 double SENervousSystem::GetChemoreceptorHeartElastanceScale() const
 {
-  if (m_ChemoreceptorHeartElastanceScale == nullptr)
+  if (m_ChemoreceptorHeartElastanceScale == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ChemoreceptorHeartElastanceScale->GetValue();
 }
 bool SENervousSystem::HasLeftEyePupillaryResponse() const
@@ -235,8 +271,9 @@ bool SENervousSystem::HasLeftEyePupillaryResponse() const
 }
 SEPupillaryResponse& SENervousSystem::GetLeftEyePupillaryResponse()
 {
-  if (m_LeftEyePupillaryResponse == nullptr)
+  if (m_LeftEyePupillaryResponse == nullptr) {
     m_LeftEyePupillaryResponse = new SEPupillaryResponse(GetLogger());
+  }
   return *m_LeftEyePupillaryResponse;
 }
 const SEPupillaryResponse* SENervousSystem::GetLeftEyePupillaryResponse() const
@@ -254,8 +291,9 @@ bool SENervousSystem::HasRightEyePupillaryResponse() const
 }
 SEPupillaryResponse& SENervousSystem::GetRightEyePupillaryResponse()
 {
-  if (m_RightEyePupillaryResponse == nullptr)
+  if (m_RightEyePupillaryResponse == nullptr) {
     m_RightEyePupillaryResponse = new SEPupillaryResponse(GetLogger());
+  }
   return *m_RightEyePupillaryResponse;
 }
 const SEPupillaryResponse* SENervousSystem::GetRightEyePupillaryResponse() const

@@ -58,8 +58,9 @@ void Logger::ResetLogFile(const std::string& logFilename)
 
     // delete previous log contents if it exists
     FILE* FilePointer = fopen(logFilename.c_str(), "wt+");
-    if (FilePointer)
+    if (FilePointer) {
       fclose(FilePointer);
+    }
 
     m_FileAppender = log4cpp::Appender::getAppender(logFilename);
     if (m_FileAppender == nullptr) {
@@ -91,8 +92,9 @@ void Logger::SetLogTime(const SEScalarTime* time) { m_time = time; }
 // This function will change the priority of the logger
 void Logger::SetLogLevel(log4cpp::Priority::Value priority)
 {
-  if (m_Log)
+  if (m_Log) {
     m_Log->setPriority(priority);
+  }
 }
 
 // This function will return the priority of the logger
@@ -110,12 +112,14 @@ std::string Logger::FormatLogMessage(const std::string& msg,
 {
   m_ss.str("");
   m_ss.clear();
-  if (m_time != nullptr && m_time->IsValid())
+  if (m_time != nullptr && m_time->IsValid()) {
     m_ss << "[" << *m_time << "] " << msg;
-  else
+  } else {
     m_ss << msg;
-  if (msg.empty())
+  }
+  if (msg.empty()) {
     return origin;
+  }
   return origin + " : " + m_ss.str();
 }
 
@@ -123,8 +127,9 @@ void Logger::Debug(const std::string& msg, const std::string& origin)
 {
   m_Log->debug(FormatLogMessage(msg, origin));
   // m_Log->debugStream().flush();
-  if (m_Forward != nullptr)
+  if (m_Forward != nullptr) {
     m_Forward->ForwardDebug(m_ss.str().c_str(), origin.c_str());
+  }
 }
 
 void Logger::Debug(std::stringstream& msg, const std::string& origin)
@@ -146,8 +151,9 @@ void Logger::Info(const std::string& msg, const std::string& origin)
   // std::endl;
   m_Log->info(FormatLogMessage(msg, origin));
   // m_Log->infoStream().flush();
-  if (m_Forward != nullptr)
+  if (m_Forward != nullptr) {
     m_Forward->ForwardInfo(m_ss.str().c_str(), origin.c_str());
+  }
 }
 
 void Logger::Info(std::stringstream& msg, const std::string& origin)
@@ -173,8 +179,9 @@ void Logger::Warning(const std::string& msg, const std::string& origin)
 {
   m_Log->warn(FormatLogMessage(msg, origin));
   // m_Log->warnStream().flush();
-  if (m_Forward != nullptr)
+  if (m_Forward != nullptr) {
     m_Forward->ForwardWarning(m_ss.str().c_str(), origin.c_str());
+  }
 }
 void Logger::Warning(std::stringstream& msg, const std::string& origin)
 {
@@ -193,8 +200,9 @@ void Logger::Error(const std::string& msg, const std::string& origin)
 {
   m_Log->error(FormatLogMessage(msg, origin));
   // m_Log->errorStream().flush();
-  if (m_Forward != nullptr)
+  if (m_Forward != nullptr) {
     m_Forward->ForwardError(m_ss.str().c_str(), origin.c_str());
+  }
 }
 void Logger::Error(std::stringstream& msg, const std::string& origin)
 {
@@ -213,8 +221,9 @@ void Logger::Fatal(const std::string& msg, const std::string& origin)
 {
   m_Log->fatal(FormatLogMessage(msg, origin));
   // m_Log->fatalStream().flush();
-  if (m_Forward != nullptr)
+  if (m_Forward != nullptr) {
     m_Forward->ForwardFatal(m_ss.str().c_str(), origin.c_str());
+  }
 }
 void Logger::Fatal(std::stringstream& msg, const std::string& origin)
 {
@@ -239,10 +248,12 @@ Logger* Loggable::GetLogger() const { return m_Logger; }
 
 void Loggable::Error(const std::string& msg, const std::string& origin) const
 {
-  if (m_Logger)
+  if (m_Logger) {
     m_Logger->Error(msg, origin);
-  else // if(stdOut) TODO support
+  } else {
+    // if(stdOut) TODO support
     std::cerr << "ERROR:" << msg << " : " << origin << std::endl;
+  }
 }
 void Loggable::Error(std::stringstream& msg, const std::string& origin) const
 {
@@ -259,10 +270,12 @@ void Loggable::Error(std::ostream& msg, const std::string& origin) const
 
 void Loggable::Info(const std::string& msg, const std::string& origin) const
 {
-  if (m_Logger)
+  if (m_Logger) {
     m_Logger->Info(msg, origin);
-  else // if(stdOut) TODO support
+  } else {
+    // if(stdOut) TODO support
     std::cout << "INFO:" << msg << " : " << origin << std::endl;
+  }
 }
 void Loggable::Info(std::stringstream& msg, const std::string& origin) const
 {
@@ -287,10 +300,12 @@ void Loggable::Info(std::ostream& msg, const std::string& origin) const
 void Loggable::Warning(const std::string& msg,
   const std::string& origin) const
 {
-  if (m_Logger)
+  if (m_Logger) {
     m_Logger->Warning(msg, origin);
-  else // if(stdOut) TODO support
+  } else {
+    // if(stdOut) TODO support
     std::cout << "WARN:" << msg << " : " << origin << std::endl;
+  }
 }
 void Loggable::Warning(std::stringstream& msg,
   const std::string& origin) const
@@ -309,10 +324,12 @@ void Loggable::Warning(std::ostream& msg, const std::string& origin) const
 void Loggable::Fatal(const std::string& msg, const std::string& origin) const
 {
   std::cerr << "FATAL:" << msg << " : " << origin << std::endl;
-  if (m_Logger)
+  if (m_Logger) {
     m_Logger->Fatal(msg, origin);
-  else // if(stdOut) TODO support
+  } else {
+    // if(stdOut) TODO support
     std::cerr << "FATAL:" << msg << " : " << origin << std::endl;
+  }
 }
 void Loggable::Fatal(std::stringstream& msg, const std::string& origin) const
 {
@@ -329,8 +346,9 @@ void Loggable::Fatal(std::ostream& msg, const std::string& origin) const
 
 void Loggable::Debug(const std::string& msg, const std::string& origin) const
 {
-  if (m_Logger)
+  if (m_Logger) {
     m_Logger->Debug(msg, origin);
+  }
   // Not writing out DEBUG to console, only to log
   // else// if(stdOut) TODO support
   //	std::cout<<"DEBUG:"<<msg<<" : "<<origin<<std::endl;

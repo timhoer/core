@@ -268,10 +268,12 @@ void CommonDataModelTest::TestThermalFlowHierarchy(SETestSuite& testSuite, SESub
 
 void CommonDataModelTest::TestFlow(SETestCase& testCase, SEThermalCompartment& cmpt, double inflow_kcal_Per_s, double outflow_kcal_Per_s)
 {
-  if (!cmpt.HasHeatTransferRateIn())
+  if (!cmpt.HasHeatTransferRateIn()) {
     testCase.AddFailure(cmpt.GetName() + " does not have Inflow");
-  if (!cmpt.HasHeatTransferRateOut())
+  }
+  if (!cmpt.HasHeatTransferRateOut()) {
     testCase.AddFailure(cmpt.GetName() + " does not have Outflow");
+  }
   m_ss << cmpt.GetName() + " Inflow : " << cmpt.GetHeatTransferRateIn(PowerUnit::kcal_Per_s) << " vs. inflow_kcal_Per_s " << inflow_kcal_Per_s;
   Info(m_ss);
   if (GeneralMath::PercentTolerance(cmpt.GetHeatTransferRateIn(PowerUnit::kcal_Per_s), inflow_kcal_Per_s) > m_PercentTolerance) {
@@ -604,8 +606,9 @@ void CommonDataModelTest::CheckTemperatureAndHeat(SETestCase& testCase, SETherma
   const std::vector<SEThermalCircuitNode*>& vNodes = cmpt.GetNodeMapping().GetNodes();
   double nHeat_kcal = 0;
   for (SEThermalCircuitNode* n : vNodes) {
-    if (n->HasNextHeat())
+    if (n->HasNextHeat()) {
       nHeat_kcal += n->GetNextHeat().GetValue(EnergyUnit::kcal);
+    }
   }
   m_ss << "Cmpt Heat : " << cmpt.GetHeat(EnergyUnit::kcal) << " vs. Node Heat " << nHeat_kcal;
   Info(m_ss);
@@ -631,8 +634,9 @@ void CommonDataModelTest::CheckTemperatureAndHeat(SETestCase& testCase, SETherma
   for (SEThermalCircuitNode* n : cmpt.GetNodeMapping().GetNodes()) {
     if (n->HasNextPotential()) {
       averageTemperature = true;
-      if (n->HasNextQuantity())
+      if (n->HasNextQuantity()) {
         HeatWeightedTemperature = true;
+      }
     }
   }
   if (HeatWeightedTemperature == false && averageTemperature == false) {
@@ -643,8 +647,9 @@ void CommonDataModelTest::CheckTemperatureAndHeat(SETestCase& testCase, SETherma
   double nTemperature_C = 0;
   for (SEThermalCircuitNode* n : pNodes) {
     if (HeatWeightedTemperature) {
-      if (n->HasNextTemperature() && n->HasNextHeat())
+      if (n->HasNextTemperature() && n->HasNextHeat()) {
         nTemperature_C += n->GetNextTemperature().GetValue(TemperatureUnit::C) * (n->GetNextHeat(EnergyUnit::kcal) / nHeat_kcal);
+      }
     } else {
       if (n->HasNextTemperature()) {
         TemperatureNodes++;
@@ -652,8 +657,9 @@ void CommonDataModelTest::CheckTemperatureAndHeat(SETestCase& testCase, SETherma
       }
     }
   }
-  if (!HeatWeightedTemperature && averageTemperature)
+  if (!HeatWeightedTemperature && averageTemperature) {
     nTemperature_C /= TemperatureNodes;
+  }
   m_ss << "Cmpt Temperature : " << cmpt.GetTemperature(TemperatureUnit::C) << " vs. Node Temperature " << nTemperature_C;
   Info(m_ss);
   if (GeneralMath::PercentTolerance(cmpt.GetTemperature(TemperatureUnit::C), nTemperature_C) > m_PercentTolerance) {

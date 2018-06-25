@@ -48,8 +48,9 @@ bool SETestErrorStatistics::Load(const CDM::TestErrorStatisticsData& in)
   std::string dData;
   for (unsigned int i = 0; i < in.Differences().size(); i++) {
     dData = (std::string)in.Differences().at(i);
-    if (dData != nullptr)
+    if (dData != nullptr) {
       m_Differences.push_back(dData);
+    }
   }
   m_ComputedPropertyID = in.ComputedPropertyID();
   m_ExpectedPropertyID = in.ExpectedPropertyID();
@@ -68,29 +69,37 @@ std::unique_ptr<CDM::TestErrorStatisticsData> SETestErrorStatistics::Unload() co
 
 void SETestErrorStatistics::Unload(CDM::TestErrorStatisticsData& data) const
 {
-  if (!std::isnan(m_MinimumError))
+  if (!std::isnan(m_MinimumError)) {
     data.MinimumError(m_MinimumError);
-  if (!std::isnan(m_MaximumError))
+  }
+  if (!std::isnan(m_MaximumError)) {
     data.MaximumError(m_MaximumError);
-  if (!std::isnan(m_AverageError))
+  }
+  if (!std::isnan(m_AverageError)) {
     data.AverageError(m_AverageError);
-  if (!std::isnan(m_StandardDeviation))
+  }
+  if (!std::isnan(m_StandardDeviation)) {
     data.StandardDeviation(m_StandardDeviation);
+  }
 
   std::string dData;
   for (unsigned int i = 0; i < m_Differences.size(); i++) {
     dData = m_Differences.at(i);
-    if (dData != nullptr)
+    if (dData != nullptr) {
       data.Differences().push_back(dData);
+    }
   }
-  if (!m_ComputedPropertyID.empty())
+  if (!m_ComputedPropertyID.empty()) {
     data.ComputedPropertyID(m_ComputedPropertyID);
-  if (!m_ExpectedPropertyID.empty())
+  }
+  if (!m_ExpectedPropertyID.empty()) {
     data.ExpectedPropertyID(m_ExpectedPropertyID);
+  }
   data.NumberOfErrors(m_NumberOfErrors);
   data.PercentTolerance(m_PercentTolerance);
-  if (!m_PropertyName.empty())
+  if (!m_PropertyName.empty()) {
     data.PropertyName(m_PropertyName);
+  }
   if (m_PercentToleranceVsNumErrorsHistogram != nullptr) {
     data.PercentToleranceVsNumErrors(std::unique_ptr<CDM::FunctionData>(m_PercentToleranceVsNumErrorsHistogram->Unload()));
   }
@@ -146,8 +155,9 @@ void SETestErrorStatistics::AddDifference(const std::string& difference)
   std::string n;
   for (unsigned int i = 0; i < m_Differences.size(); i++) {
     n = m_Differences.at(i);
-    if (n == difference)
+    if (n == difference) {
       return;
+    }
   }
   m_Differences.push_back(difference);
 }
@@ -199,15 +209,17 @@ std::string SETestErrorStatistics::GetPropertyName() const
 
 bool SETestErrorStatistics::HasPercentTolerancevsNumErrorsHistogram() const
 {
-  if (m_PercentToleranceVsNumErrorsHistogram == nullptr)
+  if (m_PercentToleranceVsNumErrorsHistogram == nullptr) {
     return false;
+  }
   return true;
 }
 
 SEFunction& SETestErrorStatistics::GetPercentToleranceVsNumErrorsHistogram()
 {
-  if (HasPercentTolerancevsNumErrorsHistogram())
+  if (HasPercentTolerancevsNumErrorsHistogram()) {
     return *m_PercentToleranceVsNumErrorsHistogram;
+  }
 
   m_PercentToleranceVsNumErrorsHistogram = new SEFunction();
   m_PercentToleranceVsNumErrorsHistogram->GetIndependent().push_back(m_PercentTolerance);

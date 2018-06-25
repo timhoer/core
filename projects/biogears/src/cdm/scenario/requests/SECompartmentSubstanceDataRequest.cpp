@@ -37,24 +37,27 @@ void SECompartmentSubstanceDataRequest::Clear()
 size_t SECompartmentSubstanceDataRequest::HashCode()
 {
   size_t h = SECompartmentDataRequest::HashCode();
-  if (m_Substance != nullptr)
+  if (m_Substance != nullptr) {
     h += std::hash<std::string>()(m_Substance->GetName());
+  }
   return h;
 }
 
 bool SECompartmentSubstanceDataRequest::Load(const CDM::CompartmentSubstanceDataRequestData& in, const SESubstanceManager& substances)
 {
   SECompartmentDataRequest::Load(in);
-  if (in.Substance().present())
+  if (in.Substance().present()) {
     SetSubstance(substances.GetSubstance(in.Substance().get()));
+  }
   return true;
 }
 
 void SECompartmentSubstanceDataRequest::Unload(CDM::CompartmentSubstanceDataRequestData& data) const
 {
   SECompartmentDataRequest::Unload(data);
-  if (HasSubstance())
+  if (HasSubstance()) {
     data.Substance(m_Substance->GetName());
+  }
 }
 
 SESubstance* SECompartmentSubstanceDataRequest::GetSubstance() const

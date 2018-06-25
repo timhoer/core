@@ -51,10 +51,11 @@ void HowToThreadedBioGears()
       std::cin >> location;
       bgThread.GetLogger()->Info("Type an initial bleeding rate (in mL/min), then hit ENTER: ");
       std::cin >> rate;
-      if (rate <= ZERO_APPROX)
+      if (rate <= ZERO_APPROX) {
         out = "Stop hemorrhage in " + location;
-      else
+      } else {
         out = "Hemorrhage in " + location + " with initial bleeding rate = " + std::to_string(rate) + " mL/min";
+      }
       bgThread.GetLogger()->Info(out);
       bgThread.SetHemorrhage(location, rate);
       break;

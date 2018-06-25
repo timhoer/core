@@ -79,7 +79,8 @@ bool PhysiologyEngineStabilization::HasStabilizationDuration()
 }
 SEScalarTime& PhysiologyEngineStabilization::GetStabilizationDuration()
 {
-  if (m_StabilizationDuration == nullptr)
+  if (m_StabilizationDuration == nullptr) {
     m_StabilizationDuration = new SEScalarTime();
+  }
   return *m_StabilizationDuration;
 }

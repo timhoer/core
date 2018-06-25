@@ -22,8 +22,9 @@ const PowerUnit PowerUnit::BTU_Per_hr("BTU/hr");
 
 CDM::ScalarPowerData* SEScalarPower::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarPowerData* data(new CDM::ScalarPowerData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -31,16 +32,21 @@ CDM::ScalarPowerData* SEScalarPower::Unload() const
 
 bool PowerUnit::IsValidUnit(const std::string& unit)
 {
-  if (W.GetString().compare(unit) == 0)
+  if (W.GetString().compare(unit) == 0) {
     return true;
-  if (kcal_Per_s.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (kcal_Per_hr.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_hr.GetString().compare(unit) == 0) {
     return true;
-  if (kcal_Per_day.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_day.GetString().compare(unit) == 0) {
     return true;
-  if (J_Per_s.GetString().compare(unit) == 0)
+  }
+  if (J_Per_s.GetString().compare(unit) == 0) {
     return true;
+  }
   if (BTU_Per_hr.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -48,18 +54,24 @@ bool PowerUnit::IsValidUnit(const std::string& unit)
 
 const PowerUnit& PowerUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (W.GetString().compare(unit) == 0)
+  if (W.GetString().compare(unit) == 0) {
     return W;
-  if (kcal_Per_s.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_s.GetString().compare(unit) == 0) {
     return kcal_Per_s;
-  if (kcal_Per_hr.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_hr.GetString().compare(unit) == 0) {
     return kcal_Per_hr;
-  if (kcal_Per_day.GetString().compare(unit) == 0)
+  }
+  if (kcal_Per_day.GetString().compare(unit) == 0) {
     return kcal_Per_day;
-  if (J_Per_s.GetString().compare(unit) == 0)
+  }
+  if (J_Per_s.GetString().compare(unit) == 0) {
     return J_Per_s;
-  if (BTU_Per_hr.GetString().compare(unit) == 0)
+  }
+  if (BTU_Per_hr.GetString().compare(unit) == 0) {
     return BTU_Per_hr;
+  }
   std::stringstream err;
   err << unit << " is not a valid Power unit";
   throw CommonDataModelException(err.str());

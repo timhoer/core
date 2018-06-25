@@ -22,8 +22,9 @@ const LengthPerTimeUnit LengthPerTimeUnit::ft_Per_min("ft/min");
 
 CDM::ScalarLengthPerTimeData* SEScalarLengthPerTime::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarLengthPerTimeData* data(new CDM::ScalarLengthPerTimeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -31,16 +32,21 @@ CDM::ScalarLengthPerTimeData* SEScalarLengthPerTime::Unload() const
 
 bool LengthPerTimeUnit::IsValidUnit(const std::string& unit)
 {
-  if (m_Per_s.GetString().compare(unit) == 0)
+  if (m_Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (cm_Per_s.GetString().compare(unit) == 0)
+  }
+  if (cm_Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (m_Per_min.GetString().compare(unit) == 0)
+  }
+  if (m_Per_min.GetString().compare(unit) == 0) {
     return true;
-  if (cm_Per_min.GetString().compare(unit) == 0)
+  }
+  if (cm_Per_min.GetString().compare(unit) == 0) {
     return true;
-  if (ft_Per_s.GetString().compare(unit) == 0)
+  }
+  if (ft_Per_s.GetString().compare(unit) == 0) {
     return true;
+  }
   if (ft_Per_min.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -48,18 +54,24 @@ bool LengthPerTimeUnit::IsValidUnit(const std::string& unit)
 
 const LengthPerTimeUnit& LengthPerTimeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (m_Per_s.GetString().compare(unit) == 0)
+  if (m_Per_s.GetString().compare(unit) == 0) {
     return m_Per_s;
-  if (cm_Per_s.GetString().compare(unit) == 0)
+  }
+  if (cm_Per_s.GetString().compare(unit) == 0) {
     return cm_Per_s;
-  if (m_Per_min.GetString().compare(unit) == 0)
+  }
+  if (m_Per_min.GetString().compare(unit) == 0) {
     return m_Per_min;
-  if (cm_Per_min.GetString().compare(unit) == 0)
+  }
+  if (cm_Per_min.GetString().compare(unit) == 0) {
     return cm_Per_min;
-  if (ft_Per_s.GetString().compare(unit) == 0)
+  }
+  if (ft_Per_s.GetString().compare(unit) == 0) {
     return ft_Per_s;
-  if (ft_Per_min.GetString().compare(unit) == 0)
+  }
+  if (ft_Per_min.GetString().compare(unit) == 0) {
     return ft_Per_min;
+  }
   std::stringstream err;
   err << unit << " is not a valid LengthPerTime unit";
   throw CommonDataModelException(err.str());

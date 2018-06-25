@@ -20,8 +20,9 @@ specific language governing permissions and limitations under the License.
 SEDecimalFormat::SEDecimalFormat(const SEDecimalFormat* dfault)
 {
   Reset();
-  if (dfault != nullptr)
+  if (dfault != nullptr) {
     Set(*dfault);
+  }
 }
 
 SEDecimalFormat::~SEDecimalFormat()
@@ -45,13 +46,15 @@ bool SEDecimalFormat::Load(const CDM::DecimalFormatData& in)
 {
   Reset();
   if (in.DecimalFormat().present()) {
-    if (in.DecimalFormat().get() == CDM::enumDecimalFormat::FixedMantissa)
+    if (in.DecimalFormat().get() == CDM::enumDecimalFormat::FixedMantissa) {
       m_Notation = DecimalNotation::Fixed;
-    else if (in.DecimalFormat().get() == CDM::enumDecimalFormat::SignificantDigits)
+    } else if (in.DecimalFormat().get() == CDM::enumDecimalFormat::SignificantDigits) {
       m_Notation = DecimalNotation::Scientific;
+    }
   }
-  if (in.Precision().present())
+  if (in.Precision().present()) {
     m_Precision = in.Precision().get();
+  }
   return true;
 }
 CDM::DecimalFormatData* SEDecimalFormat::Unload()

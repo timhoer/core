@@ -64,10 +64,12 @@ CDM::ForcedExhaleData* SEForcedExhale::Unload() const
 void SEForcedExhale::Unload(CDM::ForcedExhaleData& data) const
 {
   SEConsciousRespirationCommand::Unload(data);
-  if (m_ExpiratoryReserveVolumeFraction != nullptr)
+  if (m_ExpiratoryReserveVolumeFraction != nullptr) {
     data.ExpiratoryReserveVolumeFraction(std::unique_ptr<CDM::Scalar0To1Data>(m_ExpiratoryReserveVolumeFraction->Unload()));
-  if (m_Period != nullptr)
+  }
+  if (m_Period != nullptr) {
     data.Period(std::unique_ptr<CDM::ScalarTimeData>(m_Period->Unload()));
+  }
 }
 
 bool SEForcedExhale::HasExpiratoryReserveVolumeFraction() const
@@ -76,8 +78,9 @@ bool SEForcedExhale::HasExpiratoryReserveVolumeFraction() const
 }
 SEScalar0To1& SEForcedExhale::GetExpiratoryReserveVolumeFraction()
 {
-  if (m_ExpiratoryReserveVolumeFraction == nullptr)
+  if (m_ExpiratoryReserveVolumeFraction == nullptr) {
     m_ExpiratoryReserveVolumeFraction = new SEScalar0To1();
+  }
   return *m_ExpiratoryReserveVolumeFraction;
 }
 
@@ -87,16 +90,18 @@ bool SEForcedExhale::HasPeriod() const
 }
 SEScalarTime& SEForcedExhale::GetPeriod()
 {
-  if (m_Period == nullptr)
+  if (m_Period == nullptr) {
     m_Period = new SEScalarTime();
+  }
   return *m_Period;
 }
 
 void SEForcedExhale::ToString(std::ostream& str) const
 {
   str << "Forced Exhale";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tExpiratoryReserveVolumeFraction: ";
   HasExpiratoryReserveVolumeFraction() ? str << *m_ExpiratoryReserveVolumeFraction : str << "NaN";
   str << "\n\tPeriod: ";

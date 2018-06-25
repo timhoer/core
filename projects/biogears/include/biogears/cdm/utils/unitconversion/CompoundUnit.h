@@ -314,9 +314,10 @@ inline std::ostream& operator<<(std::ostream& out, const CCompoundUnit& ccu)
 }
 inline std::ostream& operator<<(std::ostream& out, const CCompoundUnit* ccu)
 {
-  if (ccu == nullptr)
+  if (ccu == nullptr) {
     out << "";
-  else
+  } else {
     out << ccu->GetString();
+  }
   return out;
 }

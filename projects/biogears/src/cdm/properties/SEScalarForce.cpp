@@ -19,8 +19,9 @@ const ForceUnit ForceUnit::dyn("dyn");
 
 CDM::ScalarForceData* SEScalarForce::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarForceData* data(new CDM::ScalarForceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -28,23 +29,29 @@ CDM::ScalarForceData* SEScalarForce::Unload() const
 
 bool ForceUnit::IsValidUnit(const std::string& unit)
 {
-  if (N.GetString().compare(unit) == 0)
+  if (N.GetString().compare(unit) == 0) {
     return true;
-  if (lbf.GetString().compare(unit) == 0)
+  }
+  if (lbf.GetString().compare(unit) == 0) {
     return true;
-  if (dyn.GetString().compare(unit) == 0)
+  }
+  if (dyn.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const ForceUnit& ForceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (N.GetString().compare(unit) == 0)
+  if (N.GetString().compare(unit) == 0) {
     return N;
-  if (lbf.GetString().compare(unit) == 0)
+  }
+  if (lbf.GetString().compare(unit) == 0) {
     return lbf;
-  if (dyn.GetString().compare(unit) == 0)
+  }
+  if (dyn.GetString().compare(unit) == 0) {
     return dyn;
+  }
   std::stringstream err;
   err << unit << " is not a valid Force unit";
   throw CommonDataModelException(err.str());

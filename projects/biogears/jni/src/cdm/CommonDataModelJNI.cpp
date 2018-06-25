@@ -63,18 +63,21 @@ extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_utilities_UnitCo
     testUnitBuf = nullptr;
 
     // See if they are of the same quantity type (Dimension)
-    if (*theUnit.GetDimension() == *theTestUnit.GetDimension())
+    if (*theUnit.GetDimension() == *theTestUnit.GetDimension()) {
       return JNI_TRUE;
+    }
     // See if the quantity types (Dimensions) are convertable
     double fromExp;
     CCompoundUnit mappingUnit;
     CUnitConversionEngine& uce = CUnitConversionEngine::GetEngine();
-    if (uce.GetQuantityConversionParams(theUnit.GetDimension(), theTestUnit.GetDimension(), fromExp, mappingUnit))
+    if (uce.GetQuantityConversionParams(theUnit.GetDimension(), theTestUnit.GetDimension(), fromExp, mappingUnit)) {
       return JNI_TRUE;
+    }
   } catch (std::exception ex) {
     std::cerr << ex.what() << std::endl;
-    if (unitBuf != nullptr)
+    if (unitBuf != nullptr) {
       env->ReleaseStringUTFChars(unit, unitBuf);
+    }
     if (testUnitBuf != nullptr)
       env->ReleaseStringUTFChars(testUnit, testUnitBuf);
   }
@@ -97,14 +100,17 @@ extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_utilities_UnitCo
     templateUnitBuf = nullptr;
 
     // See if they are of the same quantity type (Dimension)
-    if (*theUnit.GetDimension() == *theTemplateUnit.GetDimension())
+    if (*theUnit.GetDimension() == *theTemplateUnit.GetDimension()) {
       return JNI_TRUE;
+    }
   } catch (std::exception ex) {
     std::cerr << ex.what() << std::endl;
-    if (unitBuf != nullptr)
+    if (unitBuf != nullptr) {
       env->ReleaseStringUTFChars(unit, unitBuf);
-    if (templateUnitBuf != nullptr)
+    }
+    if (templateUnitBuf != nullptr) {
       env->ReleaseStringUTFChars(templateUnit, templateUnitBuf);
+    }
   }
   return JNI_FALSE;
 }
@@ -113,8 +119,9 @@ extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_utilities_UnitCo
 // list is an array of unit strings, like {"J", "cm", "Hz"}. (This example works for testing ELambdaNu.)
 extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_utilities_UnitConverter_nativeIsCompatibleWithUnitList(JNIEnv* env, jobject obj, jobjectArray list, jstring unit)
 {
-  if (list == nullptr)
+  if (list == nullptr) {
     return JNI_FALSE;
+  }
 
   jboolean rtn = JNI_FALSE;
   const char* unitBuf = env->GetStringUTFChars(unit, JNI_FALSE);
@@ -167,8 +174,9 @@ extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_utilities_UnitCo
 // list is an array of quantity type strings, like {"Energy", "Distance", "Frequency"}. (This example also works for testing ELambdaNu.)
 extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_utilities_UnitConverter_nativeIsOfQuantityTypes(JNIEnv* env, jobject obj, jobjectArray templateUnits, jstring unit)
 {
-  if (templateUnits == nullptr)
+  if (templateUnits == nullptr) {
     return JNI_FALSE;
+  }
 
   jboolean rtn = JNI_FALSE;
   const char* unitBuf = env->GetStringUTFChars(unit, JNI_FALSE);
@@ -178,8 +186,9 @@ extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_utilities_UnitCo
     unitBuf = nullptr;
   } catch (std::exception& ex) {
     std::cerr << ex.what() << std::endl;
-    if (unitBuf != nullptr)
+    if (unitBuf != nullptr) {
       env->ReleaseStringUTFChars(unit, unitBuf);
+    }
     return JNI_FALSE;
   }
   env->ReleaseStringUTFChars(unit, unitBuf);
@@ -199,8 +208,9 @@ extern "C" JNIEXPORT jboolean JNICALL Java_mil_tatrc_physiology_utilities_UnitCo
       testUnitBuf = nullptr;
     } catch (std::exception& ex) {
       std::cerr << ex.what() << std::endl;
-      if (testUnitBuf != nullptr)
+      if (testUnitBuf != nullptr) {
         env->ReleaseStringUTFChars(testUnit, testUnitBuf);
+      }
       return JNI_FALSE;
     }
     env->ReleaseStringUTFChars(testUnit, testUnitBuf);

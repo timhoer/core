@@ -23,11 +23,13 @@ std::chrono::microseconds::rep vectorAverage(std::vector<std::chrono::microsecon
 {
   if (v.size() > 0) {
     std::chrono::microseconds::rep sum = 0;
-    for (auto f : v)
+    for (auto f : v) {
       sum += f;
+    }
     return sum / v.size();
-  } else
+  } else {
     return INT_MAX;
+  }
 }
 
 void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
@@ -145,17 +147,19 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("AnesthesiaMachineSolo");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else {
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("AnesthesiaMachineSolo"));
+      }
     }
 
     anesthesiaMachineTimes.push_back(vectorAverage(times));
     anesthesiaMachineFailureRate.push_back(100 * numFails / numSolves);
     ss << "and over " << numSolves - numFails << "/" << numSolves << " successful solves, took an average of " << anesthesiaMachineTimes.back() << " microseconds with " << solver.string() << " solver.";
-    if (showAllOutput)
+    if (showAllOutput) {
       Info(ss);
+    }
 
     //Anesthesia Machine with Respiratory
     fCircuit = &bg.GetCircuits().GetRespiratoryAndAnesthesiaMachineCircuit();
@@ -202,17 +206,19 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("AnesthesiaMachineWithRespiratory");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else {
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("AnesthesiaMachineWithRespiratory"));
+      }
     }
 
     anesthesiaMachineWithRespTimes.push_back(vectorAverage(times));
     anesthesiaMachineWithRespFailureRate.push_back(100 * numFails / numSolves);
     ss << "and over " << numSolves - numFails << "/" << numSolves << " successful solves, took an average of " << anesthesiaMachineWithRespTimes.back() << " microseconds with " << solver.string() << " solver.";
-    if (showAllOutput)
+    if (showAllOutput) {
       Info(ss);
+    }
 
     //Respiratory Only
     fCircuit = &bg.GetCircuits().GetRespiratoryCircuit();
@@ -260,17 +266,19 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("Respiratory");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else {
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("Respiratory"));
+      }
     }
 
     respiratoryTimes.push_back(vectorAverage(times));
     respiratoryFailureRate.push_back(100 * numFails / numSolves);
     ss << "and over " << numSolves - numFails << "/" << numSolves << " successful solves, took an average of " << respiratoryTimes.back() << " microseconds with " << solver.string() << " solver.";
-    if (showAllOutput)
+    if (showAllOutput) {
       Info(ss);
+    }
 
     //Respiratory with Inhaler
     fCircuit = &bg.GetCircuits().GetRespiratoryAndInhalerCircuit();
@@ -318,9 +326,9 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("RespiratoryWithInhaler");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("RespiratoryWithInhaler"));
     }
 
@@ -375,17 +383,19 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("Cardiovascular");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else {
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("Cardiovascular"));
+      }
     }
 
     cardiovascularTimes.push_back(vectorAverage(times));
     cardiovascularFailureRate.push_back(100 * numFails / numSolves);
     ss << "and over " << numSolves - numFails << "/" << numSolves << " successful solves, took an average of " << cardiovascularTimes.back() << " microseconds with " << solver.string() << " solver.";
-    if (showAllOutput)
+    if (showAllOutput) {
       Info(ss);
+    }
 
     //Renal
     fCircuit = &bg.GetCircuits().GetRenalCircuit();
@@ -432,17 +442,19 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("Renal");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else {
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("Renal"));
+      }
     }
 
     renalTimes.push_back(vectorAverage(times));
     renalFailureRate.push_back(100 * numFails / numSolves);
     ss << "and over " << numSolves - numFails << "/" << numSolves << " successful solves, took an average of " << renalTimes.back() << " microseconds with " << solver.string() << " solver.";
-    if (showAllOutput)
+    if (showAllOutput) {
       Info(ss);
+    }
 
     //Internal Temp
     SEThermalCircuit* tCircuit = &bg.GetCircuits().GetInternalTemperatureCircuit();
@@ -490,17 +502,19 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("InternalTemperature");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else {
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("InternalTemperature"));
+      }
     }
 
     internalTempTimes.push_back(vectorAverage(times));
     internalTempFailureRate.push_back(100 * numFails / numSolves);
     ss << "and over " << numSolves - numFails << "/" << numSolves << " successful solves, took an average of " << internalTempTimes.back() << " microseconds with " << solver.string() << " solver.";
-    if (showAllOutput)
+    if (showAllOutput) {
       Info(ss);
+    }
 
     //External Temp
     tCircuit = &bg.GetCircuits().GetExternalTemperatureCircuit();
@@ -547,17 +561,19 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("ExternalTemperature");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else {
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("ExternalTemperature"));
+      }
     }
 
     externalTempTimes.push_back(vectorAverage(times));
     externalTempFailureRate.push_back(100 * numFails / numSolves);
     ss << "and over " << numSolves - numFails << "/" << numSolves << " successful solves, took an average of " << externalTempTimes.back() << " microseconds with " << solver.string() << " solver.";
-    if (showAllOutput)
+    if (showAllOutput) {
       Info(ss);
+    }
 
     //Temperature
     tCircuit = &bg.GetCircuits().GetTemperatureCircuit();
@@ -604,17 +620,19 @@ void BioGearsEngineTest::SolverSpeedTest(const std::string& rptDirectory)
       }
       timer.Stop("Temperature");
 
-      if (failed)
+      if (failed) {
         numFails++;
-      else
+      } else {
         times.push_back(timer.GetElapsedTime<std::chrono::microseconds>("Temperature"));
+      }
     }
 
     temperatureTimes.push_back(vectorAverage(times));
     temperatureFailureRate.push_back(100 * numFails / numSolves);
     ss << "and over " << numSolves - numFails << "/" << numSolves << " successful solves, took an average of " << temperatureTimes.back() << " microseconds with " << solver.string() << " solver.";
-    if (showAllOutput)
+    if (showAllOutput) {
       Info(ss);
+    }
   }
 
   //Now find the quickest time for each circuit

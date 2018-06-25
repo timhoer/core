@@ -373,15 +373,17 @@ void BioGearsEngineTest::RenalFeedbackTest(RenalFeedback feedback, const std::st
       }
 
       // all must be steady to satisfy criteria
-      if (currentGFR_L_Per_min <= (steadyGFR_L_Per_min * (1 + convergencePercentage)) && currentGFR_L_Per_min >= (steadyGFR_L_Per_min * (1 - convergencePercentage)))
+      if (currentGFR_L_Per_min <= (steadyGFR_L_Per_min * (1 + convergencePercentage)) && currentGFR_L_Per_min >= (steadyGFR_L_Per_min * (1 - convergencePercentage))) {
         GFRSteady = true;
-      else
+      } else {
         steadyGFR_L_Per_min = currentGFR_L_Per_min;
+      }
 
-      if (currentRBF_L_Per_min <= (steadyRBF_L_Per_min * (1 + convergencePercentage)) && currentRBF_L_Per_min >= (steadyRBF_L_Per_min * (1 - convergencePercentage)))
+      if (currentRBF_L_Per_min <= (steadyRBF_L_Per_min * (1 + convergencePercentage)) && currentRBF_L_Per_min >= (steadyRBF_L_Per_min * (1 - convergencePercentage))) {
         RBFSteady = true;
-      else
+      } else {
         steadyRBF_L_Per_min = currentRBF_L_Per_min;
+      }
 
       //set upr to steady to mitigate low map fluctuations around zero
       UPRSteady = true;
@@ -390,10 +392,11 @@ void BioGearsEngineTest::RenalFeedbackTest(RenalFeedback feedback, const std::st
       permeabilitySteadyLeft_mL_Per_s_Per_mmHg_Per_m2 = permeabilityCurrentLeft_mL_Per_s_Per_mmHg_Per_m2;
       permeabilitySteadyRight_mL_Per_s_Per_mmHg_Per_m2 = permeabilityCurrentRight_mL_Per_s_Per_mmHg_Per_m2;
 
-      if (GFRSteady && RBFSteady && UPRSteady)
+      if (GFRSteady && RBFSteady && UPRSteady) {
         steadyCycles += 1;
-      else
+      } else {
         steadyCycles = 0;
+      }
 
       if (steadyCycles == maxSteadyCycles) {
         convergedCheck = true;

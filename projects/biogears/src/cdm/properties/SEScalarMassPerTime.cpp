@@ -24,8 +24,9 @@ const MassPerTimeUnit MassPerTimeUnit::ug_Per_min("ug/min");
 
 CDM::ScalarMassPerTimeData* SEScalarMassPerTime::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarMassPerTimeData* data(new CDM::ScalarMassPerTimeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -33,20 +34,27 @@ CDM::ScalarMassPerTimeData* SEScalarMassPerTime::Unload() const
 
 bool MassPerTimeUnit::IsValidUnit(const std::string& unit)
 {
-  if (g_Per_s.GetString().compare(unit) == 0)
+  if (g_Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (g_Per_min.GetString().compare(unit) == 0)
+  }
+  if (g_Per_min.GetString().compare(unit) == 0) {
     return true;
-  if (g_Per_day.GetString().compare(unit) == 0)
+  }
+  if (g_Per_day.GetString().compare(unit) == 0) {
     return true;
-  if (mg_Per_s.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (mg_Per_min.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_min.GetString().compare(unit) == 0) {
     return true;
-  if (ug_Per_s.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (kg_Per_s.GetString().compare(unit) == 0)
+  }
+  if (kg_Per_s.GetString().compare(unit) == 0) {
     return true;
+  }
   if (ug_Per_min.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -54,22 +62,30 @@ bool MassPerTimeUnit::IsValidUnit(const std::string& unit)
 
 const MassPerTimeUnit& MassPerTimeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (g_Per_s.GetString().compare(unit) == 0)
+  if (g_Per_s.GetString().compare(unit) == 0) {
     return g_Per_s;
-  if (g_Per_min.GetString().compare(unit) == 0)
+  }
+  if (g_Per_min.GetString().compare(unit) == 0) {
     return g_Per_min;
-  if (g_Per_day.GetString().compare(unit) == 0)
+  }
+  if (g_Per_day.GetString().compare(unit) == 0) {
     return g_Per_day;
-  if (mg_Per_s.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_s.GetString().compare(unit) == 0) {
     return mg_Per_s;
-  if (mg_Per_min.GetString().compare(unit) == 0)
+  }
+  if (mg_Per_min.GetString().compare(unit) == 0) {
     return mg_Per_min;
-  if (ug_Per_s.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_s.GetString().compare(unit) == 0) {
     return ug_Per_s;
-  if (kg_Per_s.GetString().compare(unit) == 0)
+  }
+  if (kg_Per_s.GetString().compare(unit) == 0) {
     return kg_Per_s;
-  if (ug_Per_min.GetString().compare(unit) == 0)
+  }
+  if (ug_Per_min.GetString().compare(unit) == 0) {
     return ug_Per_min;
+  }
   std::stringstream err;
   err << unit << " is not a valid MassPerTime unit";
   throw CommonDataModelException(err.str());

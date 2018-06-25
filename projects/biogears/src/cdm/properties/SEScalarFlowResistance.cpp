@@ -21,8 +21,9 @@ const FlowResistanceUnit FlowResistanceUnit::Pa_s_Per_m3("Pa s/m^3");
 
 CDM::ScalarFlowResistanceData* SEScalarFlowResistance::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarFlowResistanceData* data(new CDM::ScalarFlowResistanceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -30,14 +31,18 @@ CDM::ScalarFlowResistanceData* SEScalarFlowResistance::Unload() const
 
 bool FlowResistanceUnit::IsValidUnit(const std::string& unit)
 {
-  if (cmH2O_s_Per_L.GetString().compare(unit) == 0)
+  if (cmH2O_s_Per_L.GetString().compare(unit) == 0) {
     return true;
-  if (mmHg_s_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (mmHg_s_Per_mL.GetString().compare(unit) == 0) {
     return true;
-  if (mmHg_min_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (mmHg_min_Per_mL.GetString().compare(unit) == 0) {
     return true;
-  if (mmHg_min_Per_L.GetString().compare(unit) == 0)
+  }
+  if (mmHg_min_Per_L.GetString().compare(unit) == 0) {
     return true;
+  }
   if (Pa_s_Per_m3.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -45,16 +50,21 @@ bool FlowResistanceUnit::IsValidUnit(const std::string& unit)
 
 const FlowResistanceUnit& FlowResistanceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (cmH2O_s_Per_L.GetString().compare(unit) == 0)
+  if (cmH2O_s_Per_L.GetString().compare(unit) == 0) {
     return cmH2O_s_Per_L;
-  if (mmHg_s_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (mmHg_s_Per_mL.GetString().compare(unit) == 0) {
     return mmHg_s_Per_mL;
-  if (mmHg_min_Per_mL.GetString().compare(unit) == 0)
+  }
+  if (mmHg_min_Per_mL.GetString().compare(unit) == 0) {
     return mmHg_min_Per_mL;
-  if (mmHg_min_Per_L.GetString().compare(unit) == 0)
+  }
+  if (mmHg_min_Per_L.GetString().compare(unit) == 0) {
     return mmHg_min_Per_L;
-  if (Pa_s_Per_m3.GetString().compare(unit) == 0)
+  }
+  if (Pa_s_Per_m3.GetString().compare(unit) == 0) {
     return Pa_s_Per_m3;
+  }
   std::stringstream err;
   err << unit << " is not a valid FlowResistance unit";
   throw CommonDataModelException(err.str());

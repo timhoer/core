@@ -18,8 +18,9 @@ const EnergyPerAmountUnit EnergyPerAmountUnit::kJ_Per_mol("kJ/mol");
 
 CDM::ScalarEnergyPerAmountData* SEScalarEnergyPerAmount::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarEnergyPerAmountData* data(new CDM::ScalarEnergyPerAmountData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -27,19 +28,23 @@ CDM::ScalarEnergyPerAmountData* SEScalarEnergyPerAmount::Unload() const
 
 bool EnergyPerAmountUnit::IsValidUnit(const std::string& unit)
 {
-  if (kcal_Per_mol.GetString().compare(unit) == 0)
+  if (kcal_Per_mol.GetString().compare(unit) == 0) {
     return true;
-  if (kJ_Per_mol.GetString().compare(unit) == 0)
+  }
+  if (kJ_Per_mol.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const EnergyPerAmountUnit& EnergyPerAmountUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (kcal_Per_mol.GetString().compare(unit) == 0)
+  if (kcal_Per_mol.GetString().compare(unit) == 0) {
     return kcal_Per_mol;
-  if (kJ_Per_mol.GetString().compare(unit) == 0)
+  }
+  if (kJ_Per_mol.GetString().compare(unit) == 0) {
     return kJ_Per_mol;
+  }
   std::stringstream err;
   err << unit << " is not a valid EnergyPerAmount unit";
   throw CommonDataModelException(err.str());

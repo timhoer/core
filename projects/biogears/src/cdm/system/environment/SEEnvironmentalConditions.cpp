@@ -82,24 +82,32 @@ void SEEnvironmentalConditions::Clear()
 
 const SEScalar* SEEnvironmentalConditions::GetScalar(const std::string& name)
 {
-  if (name.compare("AirDensity") == 0)
+  if (name.compare("AirDensity") == 0) {
     return &GetAirDensity();
-  if (name.compare("AirVelocity") == 0)
+  }
+  if (name.compare("AirVelocity") == 0) {
     return &GetAirVelocity();
-  if (name.compare("AmbientTemperature") == 0)
+  }
+  if (name.compare("AmbientTemperature") == 0) {
     return &GetAmbientTemperature();
-  if (name.compare("AtmosphericPressure") == 0)
+  }
+  if (name.compare("AtmosphericPressure") == 0) {
     return &GetAtmosphericPressure();
+  }
   if (name.compare("ClothingResistance") == 0)
     return &GetClothingResistance();
-  if (name.compare("Emissivity") == 0)
+  if (name.compare("Emissivity") == 0) {
     return &GetEmissivity();
-  if (name.compare("MeanRadiantTemperature") == 0)
+  }
+  if (name.compare("MeanRadiantTemperature") == 0) {
     return &GetMeanRadiantTemperature();
-  if (name.compare("RelativeHumidity") == 0)
+  }
+  if (name.compare("RelativeHumidity") == 0) {
     return &GetRelativeHumidity();
-  if (name.compare("RespirationAmbientTemperature") == 0)
+  }
+  if (name.compare("RespirationAmbientTemperature") == 0) {
     return &GetRespirationAmbientTemperature();
+  }
   // I did not support for getting a specific gas/aerosol scalars due to lack of coffee
   return nullptr;
 }
@@ -107,26 +115,36 @@ const SEScalar* SEEnvironmentalConditions::GetScalar(const std::string& name)
 bool SEEnvironmentalConditions::Load(const CDM::EnvironmentalConditionsData& in)
 {
   Clear();
-  if (in.SurroundingType().present())
+  if (in.SurroundingType().present()) {
     m_SurroundingType = in.SurroundingType().get();
-  if (in.AirDensity().present())
+  }
+  if (in.AirDensity().present()) {
     GetAirDensity().Load(in.AirDensity().get());
-  if (in.AirVelocity().present())
+  }
+  if (in.AirVelocity().present()) {
     GetAirVelocity().Load(in.AirVelocity().get());
-  if (in.AmbientTemperature().present())
+  }
+  if (in.AmbientTemperature().present()) {
     GetAmbientTemperature().Load(in.AmbientTemperature().get());
-  if (in.AtmosphericPressure().present())
+  }
+  if (in.AtmosphericPressure().present()) {
     GetAtmosphericPressure().Load(in.AtmosphericPressure().get());
-  if (in.ClothingResistance().present())
+  }
+  if (in.ClothingResistance().present()) {
     GetClothingResistance().Load(in.ClothingResistance().get());
-  if (in.Emissivity().present())
+  }
+  if (in.Emissivity().present()) {
     GetEmissivity().Load(in.Emissivity().get());
-  if (in.MeanRadiantTemperature().present())
+  }
+  if (in.MeanRadiantTemperature().present()) {
     GetMeanRadiantTemperature().Load(in.MeanRadiantTemperature().get());
-  if (in.RelativeHumidity().present())
+  }
+  if (in.RelativeHumidity().present()) {
     GetRelativeHumidity().Load(in.RelativeHumidity().get());
-  if (in.RespirationAmbientTemperature().present())
+  }
+  if (in.RespirationAmbientTemperature().present()) {
     GetRespirationAmbientTemperature().Load(in.RespirationAmbientTemperature().get());
+  }
 
   SESubstance* sub;
   for (const CDM::SubstanceFractionData& sfData : in.AmbientGas()) {
@@ -173,38 +191,51 @@ CDM::EnvironmentalConditionsData* SEEnvironmentalConditions::Unload() const
 
 void SEEnvironmentalConditions::Unload(CDM::EnvironmentalConditionsData& data) const
 {
-  if (HasSurroundingType())
+  if (HasSurroundingType()) {
     data.SurroundingType(m_SurroundingType);
-  if (m_AirDensity != nullptr)
+  }
+  if (m_AirDensity != nullptr) {
     data.AirDensity(std::unique_ptr<CDM::ScalarMassPerVolumeData>(m_AirDensity->Unload()));
-  if (m_AirVelocity != nullptr)
+  }
+  if (m_AirVelocity != nullptr) {
     data.AirVelocity(std::unique_ptr<CDM::ScalarLengthPerTimeData>(m_AirVelocity->Unload()));
-  if (m_AmbientTemperature != nullptr)
+  }
+  if (m_AmbientTemperature != nullptr) {
     data.AmbientTemperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_AmbientTemperature->Unload()));
-  if (m_AtmosphericPressure != nullptr)
+  }
+  if (m_AtmosphericPressure != nullptr) {
     data.AtmosphericPressure(std::unique_ptr<CDM::ScalarPressureData>(m_AtmosphericPressure->Unload()));
-  if (m_ClothingResistance != nullptr)
+  }
+  if (m_ClothingResistance != nullptr) {
     data.ClothingResistance(std::unique_ptr<CDM::ScalarHeatResistanceAreaData>(m_ClothingResistance->Unload()));
-  if (m_Emissivity != nullptr)
+  }
+  if (m_Emissivity != nullptr) {
     data.Emissivity(std::unique_ptr<CDM::ScalarFractionData>(m_Emissivity->Unload()));
-  if (m_MeanRadiantTemperature != nullptr)
+  }
+  if (m_MeanRadiantTemperature != nullptr) {
     data.MeanRadiantTemperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_MeanRadiantTemperature->Unload()));
-  if (m_RelativeHumidity != nullptr)
+  }
+  if (m_RelativeHumidity != nullptr) {
     data.RelativeHumidity(std::unique_ptr<CDM::ScalarFractionData>(m_RelativeHumidity->Unload()));
-  if (m_RespirationAmbientTemperature != nullptr)
+  }
+  if (m_RespirationAmbientTemperature != nullptr) {
     data.RespirationAmbientTemperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_RespirationAmbientTemperature->Unload()));
+  }
 
-  for (SESubstanceFraction* sf : m_AmbientGases)
+  for (SESubstanceFraction* sf : m_AmbientGases) {
     data.AmbientGas().push_back(std::unique_ptr<CDM::SubstanceFractionData>(sf->Unload()));
+  }
 
-  for (SESubstanceConcentration* sc : m_AmbientAerosols)
+  for (SESubstanceConcentration* sc : m_AmbientAerosols) {
     data.AmbientAerosol().push_back(std::unique_ptr<CDM::SubstanceConcentrationData>(sc->Unload()));
+  }
 }
 
 void SEEnvironmentalConditions::Merge(const SEEnvironmentalConditions& from)
 {
-  if (from.HasSurroundingType())
+  if (from.HasSurroundingType()) {
     SetSurroundingType(from.m_SurroundingType);
+  }
   COPY_PROPERTY(AirDensity);
   COPY_PROPERTY(AirVelocity);
   COPY_PROPERTY(AmbientTemperature);
@@ -230,8 +261,9 @@ void SEEnvironmentalConditions::Merge(const SEEnvironmentalConditions& from)
           ss << "Do not have substance : " << osf->GetSubstance().GetName();
           Error(ss);
         }
-      } else
+      } else {
         sub = &osf->GetSubstance();
+      }
 
       sf = new SESubstanceFraction(*sub);
       sf->GetFractionAmount().Set(osf->GetFractionAmount());
@@ -241,8 +273,9 @@ void SEEnvironmentalConditions::Merge(const SEEnvironmentalConditions& from)
       m_cAmbientGases.push_back(sf);
       m_Substances.AddActiveSubstance((SESubstance&)sf->m_Substance);
     }
-    if (!SEScalar::IsValue(1, total))
+    if (!SEScalar::IsValue(1, total)) {
       Error("Environment Ambient Substance fractions do not sum to 1");
+    }
   }
 
   if (from.HasAmbientAerosol()) {
@@ -271,8 +304,9 @@ bool SEEnvironmentalConditions::LoadFile(const std::string& environmentFile)
     Error(ss);
     return false;
   }
-  if (!Load(*eData))
+  if (!Load(*eData)) {
     return false;
+  }
 
   return true;
 }
@@ -300,14 +334,16 @@ bool SEEnvironmentalConditions::HasAirDensity() const
 }
 SEScalarMassPerVolume& SEEnvironmentalConditions::GetAirDensity()
 {
-  if (m_AirDensity == nullptr)
+  if (m_AirDensity == nullptr) {
     m_AirDensity = new SEScalarMassPerVolume();
+  }
   return *m_AirDensity;
 }
 double SEEnvironmentalConditions::GetAirDensity(const MassPerVolumeUnit& unit) const
 {
-  if (m_AirDensity == nullptr)
+  if (m_AirDensity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_AirDensity->GetValue(unit);
 }
 
@@ -317,14 +353,16 @@ bool SEEnvironmentalConditions::HasAirVelocity() const
 }
 SEScalarLengthPerTime& SEEnvironmentalConditions::GetAirVelocity()
 {
-  if (m_AirVelocity == nullptr)
+  if (m_AirVelocity == nullptr) {
     m_AirVelocity = new SEScalarLengthPerTime();
+  }
   return *m_AirVelocity;
 }
 double SEEnvironmentalConditions::GetAirVelocity(const LengthPerTimeUnit& unit) const
 {
-  if (m_AirVelocity == nullptr)
+  if (m_AirVelocity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_AirVelocity->GetValue(unit);
 }
 
@@ -334,14 +372,16 @@ bool SEEnvironmentalConditions::HasAmbientTemperature() const
 }
 SEScalarTemperature& SEEnvironmentalConditions::GetAmbientTemperature()
 {
-  if (m_AmbientTemperature == nullptr)
+  if (m_AmbientTemperature == nullptr) {
     m_AmbientTemperature = new SEScalarTemperature();
+  }
   return *m_AmbientTemperature;
 }
 double SEEnvironmentalConditions::GetAmbientTemperature(const TemperatureUnit& unit) const
 {
-  if (m_AmbientTemperature == nullptr)
+  if (m_AmbientTemperature == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_AmbientTemperature->GetValue(unit);
 }
 
@@ -351,14 +391,16 @@ bool SEEnvironmentalConditions::HasAtmosphericPressure() const
 }
 SEScalarPressure& SEEnvironmentalConditions::GetAtmosphericPressure()
 {
-  if (m_AtmosphericPressure == nullptr)
+  if (m_AtmosphericPressure == nullptr) {
     m_AtmosphericPressure = new SEScalarPressure();
+  }
   return *m_AtmosphericPressure;
 }
 double SEEnvironmentalConditions::GetAtmosphericPressure(const PressureUnit& unit) const
 {
-  if (m_AtmosphericPressure == nullptr)
+  if (m_AtmosphericPressure == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_AtmosphericPressure->GetValue(unit);
 }
 
@@ -368,14 +410,16 @@ bool SEEnvironmentalConditions::HasClothingResistance() const
 }
 SEScalarHeatResistanceArea& SEEnvironmentalConditions::GetClothingResistance()
 {
-  if (m_ClothingResistance == nullptr)
+  if (m_ClothingResistance == nullptr) {
     m_ClothingResistance = new SEScalarHeatResistanceArea();
+  }
   return *m_ClothingResistance;
 }
 double SEEnvironmentalConditions::GetClothingResistance(const HeatResistanceAreaUnit& unit) const
 {
-  if (m_ClothingResistance == nullptr)
+  if (m_ClothingResistance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ClothingResistance->GetValue(unit);
 }
 
@@ -385,14 +429,16 @@ bool SEEnvironmentalConditions::HasEmissivity() const
 }
 SEScalarFraction& SEEnvironmentalConditions::GetEmissivity()
 {
-  if (m_Emissivity == nullptr)
+  if (m_Emissivity == nullptr) {
     m_Emissivity = new SEScalarFraction();
+  }
   return *m_Emissivity;
 }
 double SEEnvironmentalConditions::GetEmissivity() const
 {
-  if (m_Emissivity == nullptr)
+  if (m_Emissivity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Emissivity->GetValue();
 }
 
@@ -402,14 +448,16 @@ bool SEEnvironmentalConditions::HasMeanRadiantTemperature() const
 }
 SEScalarTemperature& SEEnvironmentalConditions::GetMeanRadiantTemperature()
 {
-  if (m_MeanRadiantTemperature == nullptr)
+  if (m_MeanRadiantTemperature == nullptr) {
     m_MeanRadiantTemperature = new SEScalarTemperature();
+  }
   return *m_MeanRadiantTemperature;
 }
 double SEEnvironmentalConditions::GetMeanRadiantTemperature(const TemperatureUnit& unit) const
 {
-  if (m_MeanRadiantTemperature == nullptr)
+  if (m_MeanRadiantTemperature == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_MeanRadiantTemperature->GetValue(unit);
 }
 
@@ -419,14 +467,16 @@ bool SEEnvironmentalConditions::HasRelativeHumidity() const
 }
 SEScalarFraction& SEEnvironmentalConditions::GetRelativeHumidity()
 {
-  if (m_RelativeHumidity == nullptr)
+  if (m_RelativeHumidity == nullptr) {
     m_RelativeHumidity = new SEScalarFraction();
+  }
   return *m_RelativeHumidity;
 }
 double SEEnvironmentalConditions::GetRelativeHumidity() const
 {
-  if (m_RelativeHumidity == nullptr)
+  if (m_RelativeHumidity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_RelativeHumidity->GetValue();
 }
 
@@ -436,14 +486,16 @@ bool SEEnvironmentalConditions::HasRespirationAmbientTemperature() const
 }
 SEScalarTemperature& SEEnvironmentalConditions::GetRespirationAmbientTemperature()
 {
-  if (m_RespirationAmbientTemperature == nullptr)
+  if (m_RespirationAmbientTemperature == nullptr) {
     m_RespirationAmbientTemperature = new SEScalarTemperature();
+  }
   return *m_RespirationAmbientTemperature;
 }
 double SEEnvironmentalConditions::GetRespirationAmbientTemperature(const TemperatureUnit& unit) const
 {
-  if (m_RespirationAmbientTemperature == nullptr)
+  if (m_RespirationAmbientTemperature == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_RespirationAmbientTemperature->GetValue(unit);
 }
 
@@ -454,8 +506,9 @@ bool SEEnvironmentalConditions::HasAmbientGas() const
 bool SEEnvironmentalConditions::HasAmbientGas(const SESubstance& s) const
 {
   for (const SESubstanceFraction* sf : m_AmbientGases) {
-    if (&s == &sf->GetSubstance())
+    if (&s == &sf->GetSubstance()) {
       return true;
+    }
   }
   return false;
 }
@@ -470,8 +523,9 @@ const std::vector<const SESubstanceFraction*>& SEEnvironmentalConditions::GetAmb
 SESubstanceFraction& SEEnvironmentalConditions::GetAmbientGas(SESubstance& s)
 {
   for (SESubstanceFraction* sf : m_AmbientGases) {
-    if (&s == &sf->GetSubstance())
+    if (&s == &sf->GetSubstance()) {
       return *sf;
+    }
   }
   SESubstanceFraction* sf = new SESubstanceFraction(s);
   sf->GetFractionAmount().SetValue(0);
@@ -484,8 +538,9 @@ const SESubstanceFraction* SEEnvironmentalConditions::GetAmbientGas(const SESubs
   const SESubstanceFraction* sf = nullptr;
   for (unsigned int i = 0; i < m_AmbientGases.size(); i++) {
     sf = m_AmbientGases[i];
-    if (&s == &sf->GetSubstance())
+    if (&s == &sf->GetSubstance()) {
       return sf;
+    }
   }
   return sf;
 }
@@ -514,8 +569,9 @@ bool SEEnvironmentalConditions::HasAmbientAerosol() const
 bool SEEnvironmentalConditions::HasAmbientAerosol(const SESubstance& substance) const
 {
   for (const SESubstanceConcentration* sc : m_AmbientAerosols) {
-    if (&substance == &sc->GetSubstance())
+    if (&substance == &sc->GetSubstance()) {
       return true;
+    }
   }
   return false;
 }
@@ -530,8 +586,9 @@ const std::vector<const SESubstanceConcentration*>& SEEnvironmentalConditions::G
 SESubstanceConcentration& SEEnvironmentalConditions::GetAmbientAerosol(SESubstance& substance)
 {
   for (SESubstanceConcentration* sc : m_AmbientAerosols) {
-    if (&substance == &sc->GetSubstance())
+    if (&substance == &sc->GetSubstance()) {
       return *sc;
+    }
   }
   SESubstanceConcentration* sc = new SESubstanceConcentration(substance);
   sc->GetConcentration().SetValue(0, MassPerVolumeUnit::ug_Per_L);
@@ -544,8 +601,9 @@ const SESubstanceConcentration* SEEnvironmentalConditions::GetAmbientAerosol(con
   const SESubstanceConcentration* sc = nullptr;
   for (unsigned int i = 0; i < m_AmbientAerosols.size(); i++) {
     sc = m_AmbientAerosols[i];
-    if (&substance == &sc->GetSubstance())
+    if (&substance == &sc->GetSubstance()) {
       return sc;
+    }
   }
   return sc;
 }

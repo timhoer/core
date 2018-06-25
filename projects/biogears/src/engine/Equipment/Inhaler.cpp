@@ -63,8 +63,9 @@ void Inhaler::Initialize()
 
 bool Inhaler::Load(const CDM::BioGearsInhalerData& in)
 {
-  if (!SEInhaler::Load(in))
+  if (!SEInhaler::Load(in)) {
     return false;
+  }
   BioGearsSystem::LoadState();
   return true;
 }
@@ -225,8 +226,9 @@ void Inhaler::Administer()
 
   // Loop all the substances on the inhaler node
   for (SELiquidSubstanceQuantity* subQ : m_AerosolMouthpiece->GetSubstanceQuantities()) {
-    if (!subQ->HasMass())
+    if (!subQ->HasMass()) {
       continue;
+    }
 
     if (&subQ->GetSubstance() == m_Substance) {
       // This is the metered dose of the substance we're adding to the inhaler

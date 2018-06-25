@@ -158,29 +158,38 @@ void SECompartmentManager::Unload(CDM::CompartmentManagerData& data) const
 {
   for (SELiquidCompartment* cmpt : m_LiquidCompartments)
     data.LiquidCompartment().push_back(std::unique_ptr<CDM::LiquidCompartmentData>(cmpt->Unload()));
-  for (SELiquidCompartmentLink* link : m_LiquidLinks)
+  for (SELiquidCompartmentLink* link : m_LiquidLinks) {
     data.LiquidLink().push_back(std::unique_ptr<CDM::LiquidCompartmentLinkData>(link->Unload()));
-  for (SELiquidCompartmentGraph* graph : m_LiquidGraphs)
+  }
+  for (SELiquidCompartmentGraph* graph : m_LiquidGraphs) {
     data.LiquidGraph().push_back(std::unique_ptr<CDM::LiquidCompartmentGraphData>(graph->Unload()));
-  for (SESubstance* sub : m_LiquidSubstances)
+  }
+  for (SESubstance* sub : m_LiquidSubstances) {
     data.LiquidSubstance().push_back(sub->GetName());
+  }
 
-  for (SEGasCompartment* cmpt : m_GasCompartments)
+  for (SEGasCompartment* cmpt : m_GasCompartments) {
     data.GasCompartment().push_back(std::unique_ptr<CDM::GasCompartmentData>(cmpt->Unload()));
+  }
   for (SEGasCompartmentLink* link : m_GasLinks)
     data.GasLink().push_back(std::unique_ptr<CDM::GasCompartmentLinkData>(link->Unload()));
-  for (SEGasCompartmentGraph* graph : m_GasGraphs)
+  for (SEGasCompartmentGraph* graph : m_GasGraphs) {
     data.GasGraph().push_back(std::unique_ptr<CDM::GasCompartmentGraphData>(graph->Unload()));
-  for (SESubstance* sub : m_GasSubstances)
+  }
+  for (SESubstance* sub : m_GasSubstances) {
     data.GasSubstance().push_back(sub->GetName());
+  }
 
-  for (SEThermalCompartment* cmpt : m_ThermalCompartments)
+  for (SEThermalCompartment* cmpt : m_ThermalCompartments) {
     data.ThermalCompartment().push_back(std::unique_ptr<CDM::ThermalCompartmentData>(cmpt->Unload()));
-  for (SEThermalCompartmentLink* link : m_ThermalLinks)
+  }
+  for (SEThermalCompartmentLink* link : m_ThermalLinks) {
     data.ThermalLink().push_back(std::unique_ptr<CDM::ThermalCompartmentLinkData>(link->Unload()));
+  }
 
-  for (SETissueCompartment* cmpt : m_TissueCompartments)
+  for (SETissueCompartment* cmpt : m_TissueCompartments) {
     data.TissueCompartment().push_back(std::unique_ptr<CDM::TissueCompartmentData>(cmpt->Unload()));
+  }
 }
 
 bool SECompartmentManager::HasCompartment(CDM::enumCompartmentType::value type, const std::string& name) const
@@ -241,8 +250,9 @@ void SECompartmentManager::DeleteGasCompartment(const std::string& name)
     m_GasName2Compartments.erase(name);
     Remove(m_GasCompartments, cmpt);
     Remove(m_GasLeafCompartments, cmpt);
-    for (SEGasCompartmentGraph* g : m_GasGraphs)
+    for (SEGasCompartmentGraph* g : m_GasGraphs) {
       g->RemoveCompartment(*cmpt);
+    }
     SAFE_DELETE(cmpt);
   }
 }
@@ -276,8 +286,9 @@ void SECompartmentManager::DeleteGasLink(const std::string& name)
   if (link != nullptr) {
     m_GasName2Links.erase(name);
     Remove(m_GasLinks, link);
-    for (SEGasCompartmentGraph* g : m_GasGraphs)
+    for (SEGasCompartmentGraph* g : m_GasGraphs) {
       g->RemoveLink(*link);
+    }
     SAFE_DELETE(link);
   }
 }
@@ -308,8 +319,9 @@ SEGasCompartmentGraph& SECompartmentManager::CreateGasGraph(const std::string& n
     m_GasGraphs.push_back(graph);
   } else {
     graph = find->second;
-    if (graph->GetName() != name)
+    if (graph->GetName() != name) {
       throw CommonDataModelException("Compartment Graph already exists for name(" + name + ")");
+    }
   }
   return *graph;
 }
@@ -329,8 +341,9 @@ bool SECompartmentManager::HasGasGraph(const std::string& name) const
 SEGasCompartmentGraph* SECompartmentManager::GetGasGraph(const std::string& name)
 {
   auto it = m_GasName2Graphs.find(name);
-  if (it != m_GasName2Graphs.end())
+  if (it != m_GasName2Graphs.end()) {
     return it->second;
+  }
   return nullptr;
 }
 const SEGasCompartmentGraph* SECompartmentManager::GetGasGraph(const std::string& name) const
@@ -743,8 +756,9 @@ template <typename CompartmentType, typename LinkType>
 void SECompartmentManager::GetChildLinks(CompartmentType* pnt, CompartmentType* child) const
 {
   if (child->HasChildren()) {
-    for (CompartmentType* grandchild : child->GetChildren())
+    for (CompartmentType* grandchild : child->GetChildren()) {
       GetChildLinks<CompartmentType, LinkType>(child, grandchild);
+    }
   }
   for (LinkType* in : child->m_IncomingLinks) {
     if (!Contains(pnt->m_Links, (*in))) {
@@ -829,8 +843,9 @@ LinkType& SECompartmentManager::CreateLink(CompartmentType& src, CompartmentType
     tgt.AddLink(*link);
   } else {
     link = find->second;
-    if (link->GetName() != name)
+    if (link->GetName() != name) {
       throw CommonDataModelException("Link already exists for name(" + name + ")");
+    }
   }
   return *link;
 }
@@ -845,8 +860,9 @@ template <typename LinkType>
 LinkType* SECompartmentManager::GetLink(const std::string& name, std::map<std::string, LinkType*>& name2link) const
 {
   auto it = name2link.find(name);
-  if (it != name2link.end())
+  if (it != name2link.end()) {
     return it->second;
+  }
   return nullptr;
 }
 
@@ -870,14 +886,16 @@ void SECompartmentManager::SetSubstances(CompartmentType& cmpt, std::vector<SESu
       if (gcmpt != nullptr) {
         if (!AllowGasSubstance(*s, *gcmpt))
           continue;
-        if (!gcmpt->HasSubstanceQuantity(*s))
+        if (!gcmpt->HasSubstanceQuantity(*s)) {
           gcmpt->CreateSubstanceQuantity(*s);
+        }
       } else if (lcmpt != nullptr) {
         if (!AllowLiquidSubstance(*s, *lcmpt))
           continue;
         SELiquidSubstanceQuantity& subQ = lcmpt->CreateSubstanceQuantity(*s);
-        if (s == m_O2 || s == m_CO2 || s == m_CO)
+        if (s == m_O2 || s == m_CO2 || s == m_CO) {
           subQ.SetHemoglobins(*m_Hb, *m_HbO2, *m_HbCO2, *m_HbO2CO2, *m_HbCO);
+        }
       }
     }
   }
@@ -886,10 +904,12 @@ void SECompartmentManager::SetSubstances(CompartmentType& cmpt, std::vector<SESu
 template <typename CompartmentType>
 void SECompartmentManager::AddSubstance(SESubstance& s, CompartmentType& cmpt) const
 {
-  if (cmpt.HasSubstanceQuantity(s))
+  if (cmpt.HasSubstanceQuantity(s)) {
     return;
+  }
   auto& subQ = cmpt.CreateSubstanceQuantity(s);
   SELiquidSubstanceQuantity* lsubQ = dynamic_cast<SELiquidSubstanceQuantity*>(&subQ);
-  if (lsubQ != nullptr && (&s == m_O2 || &s == m_CO2 || &s == m_CO))
+  if (lsubQ != nullptr && (&s == m_O2 || &s == m_CO2 || &s == m_CO)) {
     lsubQ->SetHemoglobins(*m_Hb, *m_HbO2, *m_HbCO2, *m_HbO2CO2, *m_HbCO);
+  }
 }

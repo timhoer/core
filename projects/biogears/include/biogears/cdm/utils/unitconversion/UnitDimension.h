@@ -297,8 +297,9 @@ public:
     ExponentList::const_iterator iend = m_EList.end();
     ExponentList::const_iterator ibgn = m_EList.begin();
     // Find first trailing zero as new "end"
-    while ((iend != ibgn) && *--iend == 0)
+    while ((iend != ibgn) && *--iend == 0) {
       ;
+    }
     iend++;
 
     // Now invoke the collection hash routine provided in <xhash>

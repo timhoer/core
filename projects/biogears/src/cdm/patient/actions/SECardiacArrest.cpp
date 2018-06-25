@@ -68,8 +68,9 @@ void SECardiacArrest::Unload(CDM::CardiacArrestData& data) const
 void SECardiacArrest::ToString(std::ostream& str) const
 {
   str << "Patient Action : Cardiac Arrest";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tState: " << IsActive();
   str << std::flush;
 }

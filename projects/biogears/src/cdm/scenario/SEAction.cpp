@@ -471,16 +471,18 @@ SEAction* SEAction::newFromBind(const CDM::ActionData& data, SESubstanceManager&
     }
   }
 
-  if (substances.GetLogger() != nullptr)
+  if (substances.GetLogger() != nullptr) {
     substances.GetLogger()->Error("Unsupported Action Received", "SEAction::newFromBind");
+  }
   return nullptr;
 }
 
 bool SEAction::Load(const CDM::ActionData& in)
 {
   Clear();
-  if (in.Comment().present())
+  if (in.Comment().present()) {
     m_Comment = in.Comment().get();
+  }
   return true;
 }
 
@@ -493,8 +495,9 @@ CDM::ActionData* SEAction::Unload() const
 
 void SEAction::Unload(CDM::ActionData& data) const
 {
-  if (HasComment())
+  if (HasComment()) {
     data.Comment(m_Comment);
+  }
 }
 
 std::string SEAction::GetComment() const

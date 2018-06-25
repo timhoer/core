@@ -108,8 +108,9 @@ void Environment::Initialize()
 
 bool Environment::Load(const CDM::BioGearsEnvironmentData& in)
 {
-  if (!SEEnvironment::Load(in))
+  if (!SEEnvironment::Load(in)) {
     return false;
+  }
   BioGearsSystem::LoadState();
   m_PatientEquivalentDiameter_m = in.PatientEquivalentDiameter_m();
   StateChange();
@@ -166,8 +167,9 @@ void Environment::SetUp()
 //--------------------------------------------------------------------------------------------------
 void Environment::StateChange()
 {
-  if (m_AmbientGases == nullptr || m_AmbientAerosols == nullptr)
+  if (m_AmbientGases == nullptr || m_AmbientAerosols == nullptr) {
     return;
+  }
 
   // Add Gases to the environment
   //Check to make sure fractions sum to 1.0
@@ -185,8 +187,9 @@ void Environment::StateChange()
     Fatal(ss);
   }
   // Reset what we have
-  for (SEGasSubstanceQuantity* subQ : m_AmbientGases->GetSubstanceQuantities())
+  for (SEGasSubstanceQuantity* subQ : m_AmbientGases->GetSubstanceQuantities()) {
     subQ->SetToZero();
+  }
   //Update the substance values on the Ambient Node based on the Action/File settings
   //We want to set an ambient volume fraction for all active gases
   for (SESubstanceFraction* subFrac : GetConditions().GetAmbientGases()) {
@@ -214,8 +217,9 @@ void Environment::StateChange()
 void Environment::AtSteadyState()
 {
   if (m_data.GetState() == EngineState::AtInitialStableState) {
-    if (m_data.GetConditions().HasInitialEnvironment())
+    if (m_data.GetConditions().HasInitialEnvironment()) {
       ProcessChange(*m_data.GetConditions().GetInitialEnvironment());
+    }
   }
 }
 

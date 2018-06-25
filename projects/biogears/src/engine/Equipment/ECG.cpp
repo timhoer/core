@@ -91,8 +91,9 @@ void ECG::Initialize()
 
 bool ECG::Load(const CDM::BioGearsElectroCardioGramData& in)
 {
-  if (!SEElectroCardioGram::Load(in))
+  if (!SEElectroCardioGram::Load(in)) {
     return false;
+  }
   BioGearsSystem::LoadState();
   m_heartRhythmTime.Load(in.HeartRythmTime());
   m_heartRhythmPeriod.Load(in.HeartRythmPeriod());
@@ -153,9 +154,9 @@ void ECG::Process()
     m_heartRhythmPeriod.SetValue(1 / m_data.GetCardiovascular().GetHeartRate(FrequencyUnit::Per_s), TimeUnit::s);
     // Currently we  have one data set for all currently supported Heart Rhythms
     // Eventually we will support multiple rhythmic data
-    if (m_data.GetCardiovascular().GetHeartRhythm() == CDM::enumHeartRhythm::NormalSinus)
+    if (m_data.GetCardiovascular().GetHeartRhythm() == CDM::enumHeartRhythm::NormalSinus) {
       m_interpolator.StartNewCycle(CDM::enumHeartRhythm::NormalSinus);
-    else {
+    } else {
       m_ss << m_data.GetCardiovascular().GetHeartRhythm() << " is not a supported Heart Rhythm for ECG";
       Error(m_ss);
     }

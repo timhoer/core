@@ -32,42 +32,60 @@ void SEElectricalCircuitPath::Clear()
 bool SEElectricalCircuitPath::Load(const CDM::ElectricalCircuitPathData& in)
 {
   SECircuitPath::Load(in);
-  if (in.Resistance().present())
+  if (in.Resistance().present()) {
     GetResistance().Load(in.Resistance().get());
-  if (in.NextResistance().present())
+  }
+  if (in.NextResistance().present()) {
     GetNextResistance().Load(in.NextResistance().get());
-  if (in.ResistanceBaseline().present())
+  }
+  if (in.ResistanceBaseline().present()) {
     GetResistanceBaseline().Load(in.ResistanceBaseline().get());
-  if (in.Capacitance().present())
+  }
+  if (in.Capacitance().present()) {
     GetCapacitance().Load(in.Capacitance().get());
-  if (in.NextCapacitance().present())
+  }
+  if (in.NextCapacitance().present()) {
     GetNextCapacitance().Load(in.NextCapacitance().get());
-  if (in.CapacitanceBaseline().present())
+  }
+  if (in.CapacitanceBaseline().present()) {
     GetCapacitanceBaseline().Load(in.CapacitanceBaseline().get());
-  if (in.Inductance().present())
+  }
+  if (in.Inductance().present()) {
     GetInductance().Load(in.Inductance().get());
-  if (in.NextInductance().present())
+  }
+  if (in.NextInductance().present()) {
     GetNextInductance().Load(in.NextInductance().get());
-  if (in.InductanceBaseline().present())
+  }
+  if (in.InductanceBaseline().present()) {
     GetInductanceBaseline().Load(in.InductanceBaseline().get());
-  if (in.Current().present())
+  }
+  if (in.Current().present()) {
     GetCurrent().Load(in.Current().get());
-  if (in.NextCurrent().present())
+  }
+  if (in.NextCurrent().present()) {
     GetNextCurrent().Load(in.NextCurrent().get());
-  if (in.CurrentSource().present())
+  }
+  if (in.CurrentSource().present()) {
     GetCurrentSource().Load(in.CurrentSource().get());
-  if (in.NextCurrentSource().present())
+  }
+  if (in.NextCurrentSource().present()) {
     GetNextCurrentSource().Load(in.NextCurrentSource().get());
-  if (in.CurrentSourceBaseline().present())
+  }
+  if (in.CurrentSourceBaseline().present()) {
     GetCurrentSourceBaseline().Load(in.CurrentSourceBaseline().get());
-  if (in.VoltageSource().present())
+  }
+  if (in.VoltageSource().present()) {
     GetVoltageSource().Load(in.VoltageSource().get());
-  if (in.NextVoltageSource().present())
+  }
+  if (in.NextVoltageSource().present()) {
     GetNextVoltageSource().Load(in.NextVoltageSource().get());
-  if (in.VoltageSourceBaseline().present())
+  }
+  if (in.VoltageSourceBaseline().present()) {
     GetVoltageSourceBaseline().Load(in.VoltageSourceBaseline().get());
-  if (in.ValveBreakdownVoltage().present())
+  }
+  if (in.ValveBreakdownVoltage().present()) {
     GetValveBreakdownVoltage().Load(in.ValveBreakdownVoltage().get());
+  }
 
   return HasValidElements();
 }
@@ -80,42 +98,60 @@ CDM::ElectricalCircuitPathData* SEElectricalCircuitPath::Unload() const
 void SEElectricalCircuitPath::Unload(CDM::ElectricalCircuitPathData& data) const
 {
   SECircuitPath::Unload(data);
-  if (HasResistance())
+  if (HasResistance()) {
     data.Resistance(std::unique_ptr<CDM::ScalarElectricResistanceData>(m_Resistance->Unload()));
-  if (HasNextResistance())
+  }
+  if (HasNextResistance()) {
     data.NextResistance(std::unique_ptr<CDM::ScalarElectricResistanceData>(m_NextResistance->Unload()));
-  if (HasResistanceBaseline())
+  }
+  if (HasResistanceBaseline()) {
     data.ResistanceBaseline(std::unique_ptr<CDM::ScalarElectricResistanceData>(m_ResistanceBaseline->Unload()));
-  if (HasCapacitance())
+  }
+  if (HasCapacitance()) {
     data.Capacitance(std::unique_ptr<CDM::ScalarElectricCapacitanceData>(m_Capacitance->Unload()));
-  if (HasNextCapacitance())
+  }
+  if (HasNextCapacitance()) {
     data.NextCapacitance(std::unique_ptr<CDM::ScalarElectricCapacitanceData>(m_NextCapacitance->Unload()));
-  if (HasCapacitanceBaseline())
+  }
+  if (HasCapacitanceBaseline()) {
     data.CapacitanceBaseline(std::unique_ptr<CDM::ScalarElectricCapacitanceData>(m_CapacitanceBaseline->Unload()));
-  if (HasInductance())
+  }
+  if (HasInductance()) {
     data.Inductance(std::unique_ptr<CDM::ScalarElectricInductanceData>(m_Inductance->Unload()));
-  if (HasNextInductance())
+  }
+  if (HasNextInductance()) {
     data.NextInductance(std::unique_ptr<CDM::ScalarElectricInductanceData>(m_NextInductance->Unload()));
-  if (HasInductanceBaseline())
+  }
+  if (HasInductanceBaseline()) {
     data.InductanceBaseline(std::unique_ptr<CDM::ScalarElectricInductanceData>(m_InductanceBaseline->Unload()));
-  if (HasCurrent())
+  }
+  if (HasCurrent()) {
     data.Current(std::unique_ptr<CDM::ScalarElectricCurrentData>(m_Flux->Unload()));
-  if (HasNextCurrent())
+  }
+  if (HasNextCurrent()) {
     data.NextCurrent(std::unique_ptr<CDM::ScalarElectricCurrentData>(m_NextFlux->Unload()));
-  if (HasCurrentSource())
+  }
+  if (HasCurrentSource()) {
     data.CurrentSource(std::unique_ptr<CDM::ScalarElectricCurrentData>(m_FluxSource->Unload()));
-  if (HasNextCurrentSource())
+  }
+  if (HasNextCurrentSource()) {
     data.NextCurrentSource(std::unique_ptr<CDM::ScalarElectricCurrentData>(m_NextFluxSource->Unload()));
-  if (HasCurrentSourceBaseline())
+  }
+  if (HasCurrentSourceBaseline()) {
     data.CurrentSourceBaseline(std::unique_ptr<CDM::ScalarElectricCurrentData>(m_FluxSourceBaseline->Unload()));
-  if (HasVoltageSource())
+  }
+  if (HasVoltageSource()) {
     data.VoltageSource(std::unique_ptr<CDM::ScalarElectricPotentialData>(m_PotentialSource->Unload()));
-  if (HasNextVoltageSource())
+  }
+  if (HasNextVoltageSource()) {
     data.NextVoltageSource(std::unique_ptr<CDM::ScalarElectricPotentialData>(m_NextPotentialSource->Unload()));
-  if (HasVoltageSourceBaseline())
+  }
+  if (HasVoltageSourceBaseline()) {
     data.VoltageSourceBaseline(std::unique_ptr<CDM::ScalarElectricPotentialData>(m_PotentialSourceBaseline->Unload()));
-  if (HasValveBreakdownVoltage())
+  }
+  if (HasValveBreakdownVoltage()) {
     data.ValveBreakdownVoltage(std::unique_ptr<CDM::ScalarElectricPotentialData>(m_ValveBreakdownPotential->Unload()));
+  }
 }
 
 ////////////////////////////////
@@ -132,8 +168,9 @@ SEScalarElectricResistance& SEElectricalCircuitPath::GetResistance()
 }
 double SEElectricalCircuitPath::GetResistance(const ElectricResistanceUnit& unit) const
 {
-  if (m_Resistance == nullptr)
+  if (m_Resistance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Resistance->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasNextResistance() const
@@ -146,8 +183,9 @@ SEScalarElectricResistance& SEElectricalCircuitPath::GetNextResistance()
 }
 double SEElectricalCircuitPath::GetNextResistance(const ElectricResistanceUnit& unit) const
 {
-  if (m_NextResistance == nullptr)
+  if (m_NextResistance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextResistance->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasResistanceBaseline() const
@@ -160,8 +198,9 @@ SEScalarElectricResistance& SEElectricalCircuitPath::GetResistanceBaseline()
 }
 double SEElectricalCircuitPath::GetResistanceBaseline(const ElectricResistanceUnit& unit) const
 {
-  if (m_ResistanceBaseline == nullptr)
+  if (m_ResistanceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ResistanceBaseline->GetValue(unit);
 }
 
@@ -179,8 +218,9 @@ SEScalarElectricCapacitance& SEElectricalCircuitPath::GetCapacitance()
 }
 double SEElectricalCircuitPath::GetCapacitance(const ElectricCapacitanceUnit& unit) const
 {
-  if (m_Capacitance == nullptr)
+  if (m_Capacitance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Capacitance->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasNextCapacitance() const
@@ -193,8 +233,9 @@ SEScalarElectricCapacitance& SEElectricalCircuitPath::GetNextCapacitance()
 }
 double SEElectricalCircuitPath::GetNextCapacitance(const ElectricCapacitanceUnit& unit) const
 {
-  if (m_NextCapacitance == nullptr)
+  if (m_NextCapacitance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextCapacitance->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasCapacitanceBaseline() const
@@ -207,8 +248,9 @@ SEScalarElectricCapacitance& SEElectricalCircuitPath::GetCapacitanceBaseline()
 }
 double SEElectricalCircuitPath::GetCapacitanceBaseline(const ElectricCapacitanceUnit& unit) const
 {
-  if (m_CapacitanceBaseline == nullptr)
+  if (m_CapacitanceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_CapacitanceBaseline->GetValue(unit);
 }
 
@@ -226,8 +268,9 @@ SEScalarElectricInductance& SEElectricalCircuitPath::GetInductance()
 }
 double SEElectricalCircuitPath::GetInductance(const ElectricInductanceUnit& unit) const
 {
-  if (m_Inductance == nullptr)
+  if (m_Inductance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Inductance->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasNextInductance() const
@@ -240,8 +283,9 @@ SEScalarElectricInductance& SEElectricalCircuitPath::GetNextInductance()
 }
 double SEElectricalCircuitPath::GetNextInductance(const ElectricInductanceUnit& unit) const
 {
-  if (m_NextInductance == nullptr)
+  if (m_NextInductance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextInductance->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasInductanceBaseline() const
@@ -254,8 +298,9 @@ SEScalarElectricInductance& SEElectricalCircuitPath::GetInductanceBaseline()
 }
 double SEElectricalCircuitPath::GetInductanceBaseline(const ElectricInductanceUnit& unit) const
 {
-  if (m_InductanceBaseline == nullptr)
+  if (m_InductanceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_InductanceBaseline->GetValue(unit);
 }
 
@@ -272,8 +317,9 @@ SEScalarElectricCurrent& SEElectricalCircuitPath::GetCurrent()
 }
 double SEElectricalCircuitPath::GetCurrent(const ElectricCurrentUnit& unit) const
 {
-  if (m_Flux == nullptr)
+  if (m_Flux == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Flux->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasNextCurrent() const
@@ -286,8 +332,9 @@ SEScalarElectricCurrent& SEElectricalCircuitPath::GetNextCurrent()
 }
 double SEElectricalCircuitPath::GetNextCurrent(const ElectricCurrentUnit& unit) const
 {
-  if (m_NextFlux == nullptr)
+  if (m_NextFlux == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextFlux->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasCurrentSource() const
@@ -300,8 +347,9 @@ SEScalarElectricCurrent& SEElectricalCircuitPath::GetCurrentSource()
 }
 double SEElectricalCircuitPath::GetCurrentSource(const ElectricCurrentUnit& unit) const
 {
-  if (m_FluxSource == nullptr)
+  if (m_FluxSource == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FluxSource->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasNextCurrentSource() const
@@ -314,8 +362,9 @@ SEScalarElectricCurrent& SEElectricalCircuitPath::GetNextCurrentSource()
 }
 double SEElectricalCircuitPath::GetNextCurrentSource(const ElectricCurrentUnit& unit) const
 {
-  if (m_NextFluxSource == nullptr)
+  if (m_NextFluxSource == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextFluxSource->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasCurrentSourceBaseline() const
@@ -328,8 +377,9 @@ SEScalarElectricCurrent& SEElectricalCircuitPath::GetCurrentSourceBaseline()
 }
 double SEElectricalCircuitPath::GetCurrentSourceBaseline(const ElectricCurrentUnit& unit) const
 {
-  if (m_FluxSourceBaseline == nullptr)
+  if (m_FluxSourceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FluxSourceBaseline->GetValue(unit);
 }
 
@@ -346,8 +396,9 @@ SEScalarElectricPotential& SEElectricalCircuitPath::GetVoltageSource()
 }
 double SEElectricalCircuitPath::GetVoltageSource(const ElectricPotentialUnit& unit) const
 {
-  if (m_PotentialSource == nullptr)
+  if (m_PotentialSource == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_PotentialSource->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasNextVoltageSource() const
@@ -360,8 +411,9 @@ SEScalarElectricPotential& SEElectricalCircuitPath::GetNextVoltageSource()
 }
 double SEElectricalCircuitPath::GetNextVoltageSource(const ElectricPotentialUnit& unit) const
 {
-  if (m_NextPotentialSource == nullptr)
+  if (m_NextPotentialSource == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextPotentialSource->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasVoltageSourceBaseline() const
@@ -374,8 +426,9 @@ SEScalarElectricPotential& SEElectricalCircuitPath::GetVoltageSourceBaseline()
 }
 double SEElectricalCircuitPath::GetVoltageSourceBaseline(const ElectricPotentialUnit& unit) const
 {
-  if (m_PotentialSourceBaseline == nullptr)
+  if (m_PotentialSourceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_PotentialSourceBaseline->GetValue(unit);
 }
 bool SEElectricalCircuitPath::HasValveBreakdownVoltage() const
@@ -388,7 +441,8 @@ SEScalarElectricPotential& SEElectricalCircuitPath::GetValveBreakdownVoltage()
 }
 double SEElectricalCircuitPath::GetValveBreakdownVoltage(const ElectricPotentialUnit& unit) const
 {
-  if (m_ValveBreakdownPotential == nullptr)
+  if (m_ValveBreakdownPotential == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ValveBreakdownPotential->GetValue(unit);
 }

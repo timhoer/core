@@ -19,8 +19,9 @@ const FrequencyUnit FrequencyUnit::Hz("Hz");
 
 CDM::ScalarFrequencyData* SEScalarFrequency::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarFrequencyData* data(new CDM::ScalarFrequencyData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -28,23 +29,29 @@ CDM::ScalarFrequencyData* SEScalarFrequency::Unload() const
 
 bool FrequencyUnit::IsValidUnit(const std::string& unit)
 {
-  if (Per_min.GetString().compare(unit) == 0)
+  if (Per_min.GetString().compare(unit) == 0) {
     return true;
-  if (Per_s.GetString().compare(unit) == 0)
+  }
+  if (Per_s.GetString().compare(unit) == 0) {
     return true;
-  if (Hz.GetString().compare(unit) == 0)
+  }
+  if (Hz.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const FrequencyUnit& FrequencyUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (Per_min.GetString().compare(unit) == 0)
+  if (Per_min.GetString().compare(unit) == 0) {
     return Per_min;
-  if (Per_s.GetString().compare(unit) == 0)
+  }
+  if (Per_s.GetString().compare(unit) == 0) {
     return Per_s;
-  if (Hz.GetString().compare(unit) == 0)
+  }
+  if (Hz.GetString().compare(unit) == 0) {
     return Hz;
+  }
   std::stringstream err;
   err << unit << " is not a valid Frequency unit";
   throw CommonDataModelException(err.str());

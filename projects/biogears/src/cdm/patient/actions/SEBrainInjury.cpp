@@ -63,10 +63,12 @@ CDM::BrainInjuryData* SEBrainInjury::Unload() const
 void SEBrainInjury::Unload(CDM::BrainInjuryData& data) const
 {
   SEPatientAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
-  if (HasType())
+  }
+  if (HasType()) {
     data.Type(m_Type);
+  }
 }
 
 bool SEBrainInjury::HasSeverity() const
@@ -75,8 +77,9 @@ bool SEBrainInjury::HasSeverity() const
 }
 SEScalar0To1& SEBrainInjury::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
@@ -100,8 +103,9 @@ void SEBrainInjury::InvalidateType()
 void SEBrainInjury::ToString(std::ostream& str) const
 {
   str << "Patient Action : Brain Injury";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity: ";
   HasSeverity() ? str << *m_Severity : str << "Not Set";
   str << "\n\tType: ";

@@ -48,10 +48,12 @@ bool SEInhalerConfiguration::IsValid() const
 bool SEInhalerConfiguration::Load(const CDM::InhalerConfigurationData& in)
 {
   SEInhalerAction::Load(in);
-  if (in.ConfigurationFile().present())
+  if (in.ConfigurationFile().present()) {
     SetConfigurationFile(in.ConfigurationFile().get());
-  if (in.Configuration().present())
+  }
+  if (in.Configuration().present()) {
     GetConfiguration().Load(in.Configuration().get());
+  }
   return true;
 }
 
@@ -64,10 +66,11 @@ CDM::InhalerConfigurationData* SEInhalerConfiguration::Unload() const
 void SEInhalerConfiguration::Unload(CDM::InhalerConfigurationData& data) const
 {
   SEInhalerAction::Unload(data);
-  if (HasConfiguration())
+  if (HasConfiguration()) {
     data.Configuration(std::unique_ptr<CDM::InhalerData>(m_Configuration->Unload()));
-  else if (HasConfigurationFile())
+  } else if (HasConfigurationFile()) {
     data.ConfigurationFile(m_ConfigurationFile);
+  }
 }
 
 bool SEInhalerConfiguration::HasConfiguration() const
@@ -77,8 +80,9 @@ bool SEInhalerConfiguration::HasConfiguration() const
 SEInhaler& SEInhalerConfiguration::GetConfiguration()
 {
   m_ConfigurationFile = "";
-  if (m_Configuration == nullptr)
+  if (m_Configuration == nullptr) {
     m_Configuration = new SEInhaler(m_Substances);
+  }
   return *m_Configuration;
 }
 const SEInhaler* SEInhalerConfiguration::GetConfiguration() const
@@ -108,10 +112,12 @@ void SEInhalerConfiguration::InvalidateConfigurationFile()
 void SEInhalerConfiguration::ToString(std::ostream& str) const
 {
   str << "Inhaler Configuration";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
-  if (HasConfigurationFile())
+  }
+  if (HasConfigurationFile()) {
     str << "\n\tConfiguration File: ";
+  }
   str << m_ConfigurationFile;
   if (HasConfiguration()) {
     str << "\n\tState: ";

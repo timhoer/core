@@ -21,8 +21,9 @@ const VolumeUnit VolumeUnit::m3("m^3");
 
 CDM::ScalarVolumeData* SEScalarVolume::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarVolumeData* data(new CDM::ScalarVolumeData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -30,14 +31,18 @@ CDM::ScalarVolumeData* SEScalarVolume::Unload() const
 
 bool VolumeUnit::IsValidUnit(const std::string& unit)
 {
-  if (L.GetString().compare(unit) == 0)
+  if (L.GetString().compare(unit) == 0) {
     return true;
-  if (dL.GetString().compare(unit) == 0)
+  }
+  if (dL.GetString().compare(unit) == 0) {
     return true;
-  if (mL.GetString().compare(unit) == 0)
+  }
+  if (mL.GetString().compare(unit) == 0) {
     return true;
-  if (uL.GetString().compare(unit) == 0)
+  }
+  if (uL.GetString().compare(unit) == 0) {
     return true;
+  }
   if (m3.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -45,16 +50,21 @@ bool VolumeUnit::IsValidUnit(const std::string& unit)
 
 const VolumeUnit& VolumeUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (L.GetString().compare(unit) == 0)
+  if (L.GetString().compare(unit) == 0) {
     return L;
-  if (mL.GetString().compare(unit) == 0)
+  }
+  if (mL.GetString().compare(unit) == 0) {
     return mL;
-  if (m3.GetString().compare(unit) == 0)
+  }
+  if (m3.GetString().compare(unit) == 0) {
     return m3;
-  if (dL.GetString().compare(unit) == 0)
+  }
+  if (dL.GetString().compare(unit) == 0) {
     return dL;
-  if (uL.GetString().compare(unit) == 0)
+  }
+  if (uL.GetString().compare(unit) == 0) {
     return uL;
+  }
   std::stringstream err;
   err << unit << " is not a valid Volume unit";
   throw CommonDataModelException(err.str());

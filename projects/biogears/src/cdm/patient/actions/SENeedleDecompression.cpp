@@ -66,8 +66,9 @@ void SENeedleDecompression::Unload(CDM::NeedleDecompressionData& data) const
 {
   SEPatientAction::Unload(data);
   data.State(m_State);
-  if (HasSide())
+  if (HasSide()) {
     data.Side(m_Side);
+  }
 }
 
 CDM::enumSide::value SENeedleDecompression::GetSide() const
@@ -90,8 +91,9 @@ void SENeedleDecompression::InvalidateSide()
 void SENeedleDecompression::ToString(std::ostream& str) const
 {
   str << "Patient Action : Needle Decompression";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tState: " << IsActive();
   str << "\n\tSide: ";
   HasSide() ? str << GetSide() : str << "No Side Set";

@@ -58,10 +58,12 @@ CDM::ChronicObstructivePulmonaryDiseaseData* SEChronicObstructivePulmonaryDiseas
 void SEChronicObstructivePulmonaryDisease::Unload(CDM::ChronicObstructivePulmonaryDiseaseData& data) const
 {
   SEPatientCondition::Unload(data);
-  if (m_BronchitisSeverity != nullptr)
+  if (m_BronchitisSeverity != nullptr) {
     data.BronchitisSeverity(std::unique_ptr<CDM::Scalar0To1Data>(m_BronchitisSeverity->Unload()));
-  if (m_EmphysemaSeverity != nullptr)
+  }
+  if (m_EmphysemaSeverity != nullptr) {
     data.EmphysemaSeverity(std::unique_ptr<CDM::Scalar0To1Data>(m_EmphysemaSeverity->Unload()));
+  }
 }
 
 bool SEChronicObstructivePulmonaryDisease::HasBronchitisSeverity() const
@@ -70,8 +72,9 @@ bool SEChronicObstructivePulmonaryDisease::HasBronchitisSeverity() const
 }
 SEScalar0To1& SEChronicObstructivePulmonaryDisease::GetBronchitisSeverity()
 {
-  if (m_BronchitisSeverity == nullptr)
+  if (m_BronchitisSeverity == nullptr) {
     m_BronchitisSeverity = new SEScalar0To1();
+  }
   return *m_BronchitisSeverity;
 }
 
@@ -81,16 +84,18 @@ bool SEChronicObstructivePulmonaryDisease::HasEmphysemaSeverity() const
 }
 SEScalar0To1& SEChronicObstructivePulmonaryDisease::GetEmphysemaSeverity()
 {
-  if (m_EmphysemaSeverity == nullptr)
+  if (m_EmphysemaSeverity == nullptr) {
     m_EmphysemaSeverity = new SEScalar0To1();
+  }
   return *m_EmphysemaSeverity;
 }
 
 void SEChronicObstructivePulmonaryDisease::ToString(std::ostream& str) const
 {
   str << "Patient Condition : COPD";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tBronchitisSeverity: ";
   HasBronchitisSeverity() ? str << *m_BronchitisSeverity : str << "NaN";
   str << "\n\tEmphysemaSeverity: ";

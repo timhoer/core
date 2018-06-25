@@ -35,8 +35,9 @@ void SEAnesthesiaMachineOxygenBottle::Clear()
 
 bool SEAnesthesiaMachineOxygenBottle::Load(const CDM::AnesthesiaMachineOxygenBottleData& in)
 {
-  if (in.Volume().present())
+  if (in.Volume().present()) {
     GetVolume().Load(in.Volume().get());
+  }
   return true;
 }
 
@@ -49,8 +50,9 @@ CDM::AnesthesiaMachineOxygenBottleData* SEAnesthesiaMachineOxygenBottle::Unload(
 
 void SEAnesthesiaMachineOxygenBottle::Unload(CDM::AnesthesiaMachineOxygenBottleData& data) const
 {
-  if (m_Volume != nullptr)
+  if (m_Volume != nullptr) {
     data.Volume(std::unique_ptr<CDM::ScalarVolumeData>(m_Volume->Unload()));
+  }
 }
 
 void SEAnesthesiaMachineOxygenBottle::Merge(const SEAnesthesiaMachineOxygenBottle& from)
@@ -60,8 +62,9 @@ void SEAnesthesiaMachineOxygenBottle::Merge(const SEAnesthesiaMachineOxygenBottl
 
 const SEScalar* SEAnesthesiaMachineOxygenBottle::GetScalar(const std::string& name)
 {
-  if (name == "Volume")
+  if (name == "Volume") {
     return &GetVolume();
+  }
   return nullptr;
 }
 
@@ -72,23 +75,26 @@ bool SEAnesthesiaMachineOxygenBottle::HasVolume() const
 
 SEScalarVolume& SEAnesthesiaMachineOxygenBottle::GetVolume()
 {
-  if (m_Volume == nullptr)
+  if (m_Volume == nullptr) {
     m_Volume = new SEScalarVolume();
+  }
   return *m_Volume;
 }
 double SEAnesthesiaMachineOxygenBottle::GetVolume(const VolumeUnit& unit) const
 {
-  if (m_Volume == nullptr)
+  if (m_Volume == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Volume->GetValue(unit);
 }
 
 void SEAnesthesiaMachineOxygenBottle::ToString(std::ostream& str)
 {
   str << " Anesthesia Machine Oxygen Bottle, ";
-  if (HasVolume())
+  if (HasVolume()) {
     str << "\rVolume : " << GetVolume();
-  else
+  } else {
     str << "\rVolume : NaN" << GetVolume();
+  }
   str << std::flush;
 }

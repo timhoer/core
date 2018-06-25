@@ -55,8 +55,9 @@ CDM::ChronicAnemiaData* SEChronicAnemia::Unload() const
 void SEChronicAnemia::Unload(CDM::ChronicAnemiaData& data) const
 {
   SEPatientCondition::Unload(data);
-  if (m_ReductionFactor != nullptr)
+  if (m_ReductionFactor != nullptr) {
     data.ReductionFactor(std::unique_ptr<CDM::Scalar0To1Data>(m_ReductionFactor->Unload()));
+  }
 }
 
 bool SEChronicAnemia::HasReductionFactor() const
@@ -66,16 +67,18 @@ bool SEChronicAnemia::HasReductionFactor() const
 
 SEScalar0To1& SEChronicAnemia::GetReductionFactor()
 {
-  if (m_ReductionFactor == nullptr)
+  if (m_ReductionFactor == nullptr) {
     m_ReductionFactor = new SEScalar0To1();
+  }
   return *m_ReductionFactor;
 }
 
 void SEChronicAnemia::ToString(std::ostream& str) const
 {
   str << "Patient Condition : Anemia";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tReduction Factor: ";
   HasReductionFactor() ? str << m_ReductionFactor : str << "NaN";
   str << std::flush;

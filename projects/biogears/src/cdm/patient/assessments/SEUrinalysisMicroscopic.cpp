@@ -77,24 +77,33 @@ CDM::UrinalysisMicroscopicData* SEUrinalysisMicroscopic::Unload()
 
 void SEUrinalysisMicroscopic::Unload(CDM::UrinalysisMicroscopicData& data)
 {
-  if (HasObservationType())
+  if (HasObservationType()) {
     data.ObservationType(m_ObservationType);
-  if (HasRedBloodCellsResult())
+  }
+  if (HasRedBloodCellsResult()) {
     data.RedBloodCells(std::unique_ptr<CDM::ScalarAmountData>(m_RedBloodCells->Unload()));
-  if (HasWhiteBloodCellsResult())
+  }
+  if (HasWhiteBloodCellsResult()) {
     data.WhiteBloodCells(std::unique_ptr<CDM::ScalarAmountData>(m_WhiteBloodCells->Unload()));
-  if (HasEpithelialCellsResult())
+  }
+  if (HasEpithelialCellsResult()) {
     data.EpithelialCells(m_EpithelialCells);
-  if (HasCastsResult())
+  }
+  if (HasCastsResult()) {
     data.Casts(std::unique_ptr<CDM::ScalarAmountData>(m_Casts->Unload()));
-  if (HasCrystalsResult())
+  }
+  if (HasCrystalsResult()) {
     data.Crystals(m_Crystals);
-  if (HasBacteriaResult())
+  }
+  if (HasBacteriaResult()) {
     data.Bacteria(m_Bacteria);
-  if (HasTrichomonadsResult())
+  }
+  if (HasTrichomonadsResult()) {
     data.Trichomonads(m_Trichomonads);
-  if (HasYeastResult())
+  }
+  if (HasYeastResult()) {
     data.Yeast(m_Yeast);
+  }
 }
 
 bool SEUrinalysisMicroscopic::HasRedBloodCellsResult() const
@@ -103,8 +112,9 @@ bool SEUrinalysisMicroscopic::HasRedBloodCellsResult() const
 }
 SEScalarAmount& SEUrinalysisMicroscopic::GetRedBloodCellsResult()
 {
-  if (m_RedBloodCells == nullptr)
+  if (m_RedBloodCells == nullptr) {
     m_RedBloodCells = new SEScalarAmount();
+  }
   return *m_RedBloodCells;
 }
 
@@ -131,8 +141,9 @@ bool SEUrinalysisMicroscopic::HasWhiteBloodCellsResult() const
 }
 SEScalarAmount& SEUrinalysisMicroscopic::GetWhiteBloodCellsResult()
 {
-  if (m_WhiteBloodCells == nullptr)
+  if (m_WhiteBloodCells == nullptr) {
     m_WhiteBloodCells = new SEScalarAmount();
+  }
   return *m_WhiteBloodCells;
 }
 
@@ -159,8 +170,9 @@ bool SEUrinalysisMicroscopic::HasCastsResult() const
 }
 SEScalarAmount& SEUrinalysisMicroscopic::GetCastsResult()
 {
-  if (m_Casts == nullptr)
+  if (m_Casts == nullptr) {
     m_Casts = new SEScalarAmount();
+  }
   return *m_Casts;
 }
 

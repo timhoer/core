@@ -81,8 +81,9 @@ void Hepatic::Initialize()
 
 bool Hepatic::Load(const CDM::BioGearsHepaticSystemData& in)
 {
-  if (!SEHepaticSystem::Load(in))
+  if (!SEHepaticSystem::Load(in)) {
     return false;
+  }
 
   BioGearsSystem::LoadState();
 
@@ -355,10 +356,11 @@ void Hepatic::Gluconeogenesis()
   double rateLimitingTuningFactor = 1;
   double liverLactate_mol = m_liverExtracellularLactate->GetMass().GetValue(MassUnit::g) / m_Lactate->GetMolarMass(MassPerAmountUnit::g_Per_mol);
   double reconvertedGlucose_mol = liverLactate_mol * .5;
-  if (rateLimitingTuningFactor == 1)
+  if (rateLimitingTuningFactor == 1) {
     m_liverExtracellularLactate->GetMass().SetValue(0, MassUnit::g); //using IncrementValue to remove ALL lactate can result in numerical error negative masses
-  else
+  } else {
     m_liverExtracellularLactate->GetMass().IncrementValue(-rateLimitingTuningFactor * liverLactate_mol * m_Lactate->GetMolarMass(MassPerAmountUnit::g_Per_mol), MassUnit::g);
+  }
   m_liverExtracellularGlucose->GetMass().IncrementValue(rateLimitingTuningFactor * reconvertedGlucose_mol * m_Glucose->GetMolarMass(MassPerAmountUnit::g_Per_mol), MassUnit::g);
   totalGlucoseFromGluconeogenesis_mol += rateLimitingTuningFactor * reconvertedGlucose_mol;
   glucoseFromLactate_mol += rateLimitingTuningFactor * reconvertedGlucose_mol;
@@ -482,10 +484,13 @@ void Hepatic::Gluconeogenesis()
     }
   }
   m_data.GetCompartments().GetLiquidCompartment(BGE::ExtravascularCompartment::LiverExtracellular)->Balance(BalanceLiquidBy::Mass);
-  if (ketoneProductionRate_mol_Per_s < .0001138) //don't record values greater than 1000 g/day to eliminate initial spikes in ketogenesis and gluconeogenesis
+  if (ketoneProductionRate_mol_Per_s < .0001138) {
+    //don't record values greater than 1000 g/day to eliminate initial spikes in ketogenesis and gluconeogenesis
     GetKetoneProductionRate().SetValue(ketoneProductionRate_mol_Per_s, AmountPerTimeUnit::mol_Per_s);
-  if (totalGlucoseFromGluconeogenesis_mol * m_Glucose->GetMolarMass(MassPerAmountUnit::g_Per_mol) * (1 / m_dt_s) * 3600 * 24 < 1000)
+  }
+  if (totalGlucoseFromGluconeogenesis_mol * m_Glucose->GetMolarMass(MassPerAmountUnit::g_Per_mol) * (1 / m_dt_s) * 3600 * 24 < 1000) {
     GetHepaticGluconeogenesisRate().SetValue(totalGlucoseFromGluconeogenesis_mol * m_Glucose->GetMolarMass(MassPerAmountUnit::g_Per_mol) * (1 / m_dt_s) * 3600 * 24, MassPerTimeUnit::g_Per_day);
+  }
   Tissue::m_hepaticO2Consumed_mol += totalO2Consumed_mol;
 
   /*
@@ -562,8 +567,9 @@ void Hepatic::Lipogenesis()
   double lipogenesisRate_g_Per_s = lipogenesisLowerRate_g_Per_s + GeneralMath::LogisticFunction(lipogenesisUpperRate_g_Per_s - lipogenesisLowerRate_g_Per_s, .4, 12, hormoneFactor);
 
   //Don't make new TAG if hormone factor is negative
-  if (hormoneFactor <= 0)
+  if (hormoneFactor <= 0) {
     lipogenesisRate_g_Per_s = 0;
+  }
 
   //https://www.diapedia.org/metabolism-insulin-and-other-hormones/5105592814/fatty-acid-oxidation-and-synthesis
   //Lipogenesis of one palmitic acid requires 8 acetyl-COAs (also 7 ATPs, but we won't consider that for now)

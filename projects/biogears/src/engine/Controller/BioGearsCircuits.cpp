@@ -43,8 +43,9 @@ void BioGearsCircuits::Clear()
 
 bool BioGearsCircuits::Load(const CDM::CircuitManagerData& in)
 {
-  if (!SECircuitManager::Load(in))
+  if (!SECircuitManager::Load(in)) {
     return false;
+  }
   m_CombinedCardiovascularCircuit = GetFluidCircuit(BGE::Circuits::FullCardiovascular);
   if (m_CombinedCardiovascularCircuit == nullptr) {
     Error("BioGearsCircuits::Load could not find circuit : " + std::string(BGE::Circuits::FullCardiovascular));
@@ -117,20 +118,23 @@ void BioGearsCircuits::SetReadOnlyFluid(bool b)
 
 SEFluidCircuit& BioGearsCircuits::GetActiveCardiovascularCircuit()
 {
-  if (m_CombinedCardiovascularCircuit == nullptr)
+  if (m_CombinedCardiovascularCircuit == nullptr) {
     m_CombinedCardiovascularCircuit = &CreateFluidCircuit(BGE::Circuits::FullCardiovascular);
+  }
   return *m_CombinedCardiovascularCircuit;
 }
 SEFluidCircuit& BioGearsCircuits::GetCardiovascularCircuit()
 {
-  if (m_CardiovascularCircuit == nullptr)
+  if (m_CardiovascularCircuit == nullptr) {
     m_CardiovascularCircuit = &CreateFluidCircuit(BGE::Circuits::Cardiovascular);
+  }
   return *m_CardiovascularCircuit;
 }
 SEFluidCircuit& BioGearsCircuits::GetRenalCircuit()
 {
-  if (m_RenalCircuit == nullptr)
+  if (m_RenalCircuit == nullptr) {
     m_RenalCircuit = &CreateFluidCircuit(BGE::Circuits::Renal);
+  }
   return *m_RenalCircuit;
 }
 
@@ -151,49 +155,57 @@ SEFluidCircuit& BioGearsCircuits::GetActiveRespiratoryCircuit()
 }
 SEFluidCircuit& BioGearsCircuits::GetRespiratoryCircuit()
 {
-  if (m_RespiratoryCircuit == nullptr)
+  if (m_RespiratoryCircuit == nullptr) {
     m_RespiratoryCircuit = &CreateFluidCircuit(BGE::Circuits::Respiratory);
+  }
   return *m_RespiratoryCircuit;
 }
 SEFluidCircuit& BioGearsCircuits::GetAnesthesiaMachineCircuit()
 {
-  if (m_AnesthesiaMachineCircuit == nullptr)
+  if (m_AnesthesiaMachineCircuit == nullptr) {
     m_AnesthesiaMachineCircuit = &CreateFluidCircuit(BGE::Circuits::AnesthesiaMachine);
+  }
   return *m_AnesthesiaMachineCircuit;
 }
 SEFluidCircuit& BioGearsCircuits::GetRespiratoryAndAnesthesiaMachineCircuit()
 {
-  if (m_CombinedRespiratoryAnesthesiaCircuit == nullptr)
+  if (m_CombinedRespiratoryAnesthesiaCircuit == nullptr) {
     m_CombinedRespiratoryAnesthesiaCircuit = &CreateFluidCircuit(BGE::Circuits::RespiratoryAnesthesia);
+  }
   return *m_CombinedRespiratoryAnesthesiaCircuit;
 }
 SEFluidCircuit& BioGearsCircuits::GetRespiratoryAndInhalerCircuit()
 {
-  if (m_CombinedRespiratoryInhalerCircuit == nullptr)
+  if (m_CombinedRespiratoryInhalerCircuit == nullptr) {
     m_CombinedRespiratoryInhalerCircuit = &CreateFluidCircuit(BGE::Circuits::RespiratoryInhaler);
+  }
   return *m_CombinedRespiratoryInhalerCircuit;
 }
 SEFluidCircuit& BioGearsCircuits::GetRespiratoryAndMechanicalVentilatorCircuit()
 {
-  if (m_CombinedRespiratoryMechanicalVentilatorCircuit == nullptr)
+  if (m_CombinedRespiratoryMechanicalVentilatorCircuit == nullptr) {
     m_CombinedRespiratoryMechanicalVentilatorCircuit = &CreateFluidCircuit(BGE::Circuits::RespiratoryMechanicalVentilator);
+  }
   return *m_CombinedRespiratoryMechanicalVentilatorCircuit;
 }
 SEThermalCircuit& BioGearsCircuits::GetTemperatureCircuit()
 {
-  if (m_TemperatureCircuit == nullptr)
+  if (m_TemperatureCircuit == nullptr) {
     m_TemperatureCircuit = &CreateThermalCircuit(BGE::Circuits::Temperature);
+  }
   return *m_TemperatureCircuit;
 }
 SEThermalCircuit& BioGearsCircuits::GetInternalTemperatureCircuit()
 {
-  if (m_InternalTemperatureCircuit == nullptr)
+  if (m_InternalTemperatureCircuit == nullptr) {
     m_InternalTemperatureCircuit = &CreateThermalCircuit(BGE::Circuits::InternalTemperature);
+  }
   return *m_InternalTemperatureCircuit;
 }
 SEThermalCircuit& BioGearsCircuits::GetExternalTemperatureCircuit()
 {
-  if (m_ExternalTemperatureCircuit == nullptr)
+  if (m_ExternalTemperatureCircuit == nullptr) {
     m_ExternalTemperatureCircuit = &CreateThermalCircuit(BGE::Circuits::ExternalTemperature);
+  }
   return *m_ExternalTemperatureCircuit;
 }

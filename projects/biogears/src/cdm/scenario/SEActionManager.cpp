@@ -44,17 +44,21 @@ void SEActionManager::Clear()
 bool SEActionManager::ProcessAction(const CDM::ActionData& in)
 {
   const CDM::PatientActionData* pAction = dynamic_cast<const CDM::PatientActionData*>(&in);
-  if (pAction != nullptr)
+  if (pAction != nullptr) {
     return m_PatientActions.ProcessAction(*pAction);
+  }
   const CDM::EnvironmentActionData* eAction = dynamic_cast<const CDM::EnvironmentActionData*>(&in);
-  if (eAction != nullptr)
+  if (eAction != nullptr) {
     return m_EnvironmentActions.ProcessAction(*eAction);
+  }
   const CDM::AnesthesiaMachineActionData* aAction = dynamic_cast<const CDM::AnesthesiaMachineActionData*>(&in);
-  if (aAction != nullptr)
+  if (aAction != nullptr) {
     return m_AnesthesiaMachineActions.ProcessAction(*aAction);
+  }
   const CDM::InhalerActionData* iAction = dynamic_cast<const CDM::InhalerActionData*>(&in);
-  if (iAction != nullptr)
+  if (iAction != nullptr) {
     return m_InhalerActions.ProcessAction(*iAction);
+  }
   Error("Unknown Action Type");
   return false;
 }
@@ -74,17 +78,21 @@ bool SEActionManager::ProcessAction(const SEAction& action)
   CDM::ActionData* aData = action.Unload();
   m_ProcessedActions.push_back(action.Unload());
 
-  if (dynamic_cast<const SEPatientAction*>(&action) != nullptr)
+  if (dynamic_cast<const SEPatientAction*>(&action) != nullptr) {
     return m_PatientActions.ProcessAction(dynamic_cast<const CDM::PatientActionData&>(*aData));
+  }
 
-  if (dynamic_cast<const SEAnesthesiaMachineAction*>(&action) != nullptr)
+  if (dynamic_cast<const SEAnesthesiaMachineAction*>(&action) != nullptr) {
     return m_AnesthesiaMachineActions.ProcessAction(dynamic_cast<const CDM::AnesthesiaMachineActionData&>(*aData));
+  }
 
-  if (dynamic_cast<const SEEnvironmentAction*>(&action) != nullptr)
+  if (dynamic_cast<const SEEnvironmentAction*>(&action) != nullptr) {
     return m_EnvironmentActions.ProcessAction(dynamic_cast<const CDM::EnvironmentActionData&>(*aData));
+  }
 
-  if (dynamic_cast<const SEInhalerAction*>(&action) != nullptr)
+  if (dynamic_cast<const SEInhalerAction*>(&action) != nullptr) {
     return m_InhalerActions.ProcessAction(dynamic_cast<const CDM::InhalerActionData&>(*aData));
+  }
 
   /// \error Unsupported Action
   Error("Unsupported Action");

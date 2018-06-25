@@ -65,34 +65,38 @@ public:
     {     
       case CDM::enumPatientEvent::MildAcuteRespiratoryDistress:
       {
-        if (active)
+        if (active) {
           m_Logger->Info("Do something for MildAcuteRespiratoryDistress");
-        else
+        } else {
           m_Logger->Info("Stop doing something for MildAcuteRespiratoryDistress");
+        }
         break;
       }
       case CDM::enumPatientEvent::ModerateAcuteRespiratoryDistress:
       {
-        if (active)
+        if (active) {
           m_Logger->Info("Do something for ModerateAcuteRespiratoryDistress");
-        else
+        } else {
           m_Logger->Info("Stop doing something for ModerateAcuteRespiratoryDistress");
+        }
         break;
       }
       case CDM::enumPatientEvent::SevereAcuteRespiratoryDistress:
       {
-        if (active)
+        if (active) {
           m_Logger->Info("Do something for SevereAcuteRespiratoryDistress");
-        else
+        } else {
           m_Logger->Info("Stop doing something for SevereAcuteRespiratoryDistress");
+        }
         break;
       }
       case CDM::enumPatientEvent::CardiogenicShock:
       {
-        if (active)
+        if (active) {
           m_Logger->Info("Do something for CardiogenicShock");
-        else
+        } else {
           m_Logger->Info("Stop doing something for CardiogenicShock");
+        }
         break;
       }
     }

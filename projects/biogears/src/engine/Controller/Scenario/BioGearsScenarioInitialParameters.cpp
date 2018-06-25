@@ -24,8 +24,9 @@ BioGearsScenarioInitialParameters::~BioGearsScenarioInitialParameters()
 
 BioGearsConfiguration& BioGearsScenarioInitialParameters::GetConfiguration()
 {
-  if (m_Configuration == nullptr)
+  if (m_Configuration == nullptr) {
     m_Configuration = new BioGearsConfiguration(m_SubMgr);
+  }
   return *((BioGearsConfiguration*)(m_Configuration));
 }
 const BioGearsConfiguration* BioGearsScenarioInitialParameters::GetConfiguration() const

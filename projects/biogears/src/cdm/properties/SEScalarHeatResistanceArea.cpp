@@ -20,8 +20,9 @@ const HeatResistanceAreaUnit HeatResistanceAreaUnit::tog("tog");
 
 CDM::ScalarHeatResistanceAreaData* SEScalarHeatResistanceArea::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarHeatResistanceAreaData* data(new CDM::ScalarHeatResistanceAreaData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarHeatResistanceAreaData* SEScalarHeatResistanceArea::Unload() const
 
 bool HeatResistanceAreaUnit::IsValidUnit(const std::string& unit)
 {
-  if (rsi.GetString().compare(unit) == 0)
+  if (rsi.GetString().compare(unit) == 0) {
     return true;
-  if (clo.GetString().compare(unit) == 0)
+  }
+  if (clo.GetString().compare(unit) == 0) {
     return true;
-  if (rValue.GetString().compare(unit) == 0)
+  }
+  if (rValue.GetString().compare(unit) == 0) {
     return true;
-  if (tog.GetString().compare(unit) == 0)
+  }
+  if (tog.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const HeatResistanceAreaUnit& HeatResistanceAreaUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (rsi.GetString().compare(unit) == 0)
+  if (rsi.GetString().compare(unit) == 0) {
     return rsi;
-  if (clo.GetString().compare(unit) == 0)
+  }
+  if (clo.GetString().compare(unit) == 0) {
     return clo;
-  if (rValue.GetString().compare(unit) == 0)
+  }
+  if (rValue.GetString().compare(unit) == 0) {
     return rValue;
-  if (tog.GetString().compare(unit) == 0)
+  }
+  if (tog.GetString().compare(unit) == 0) {
     return tog;
+  }
   std::stringstream err;
   err << unit << " is not a valid HeatResistanceArea unit";
   throw CommonDataModelException(err.str());

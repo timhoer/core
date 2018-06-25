@@ -55,8 +55,9 @@ CDM::DehydrationData* SEDehydration::Unload() const
 void SEDehydration::Unload(CDM::DehydrationData& data) const
 {
   SEPatientCondition::Unload(data);
-  if (m_DehydrationFraction != nullptr)
+  if (m_DehydrationFraction != nullptr) {
     data.DehydrationFraction(std::unique_ptr<CDM::Scalar0To1Data>(m_DehydrationFraction->Unload()));
+  }
 }
 
 bool SEDehydration::HasDehydrationFraction() const
@@ -66,16 +67,18 @@ bool SEDehydration::HasDehydrationFraction() const
 
 SEScalar0To1& SEDehydration::GetDehydrationFraction()
 {
-  if (m_DehydrationFraction == nullptr)
+  if (m_DehydrationFraction == nullptr) {
     m_DehydrationFraction = new SEScalar0To1();
+  }
   return *m_DehydrationFraction;
 }
 
 void SEDehydration::ToString(std::ostream& str) const
 {
   str << "Patient Condition : Dehydration";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tFractional amount of body weight change due to fluid loss: ";
   HasDehydrationFraction() ? str << m_DehydrationFraction : str << "NaN";
   str << std::flush;

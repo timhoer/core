@@ -97,10 +97,11 @@ public:
 
 inline std::ostream& operator<<(std::ostream& out, const SEScalar* s)
 {
-  if (s == nullptr)
+  if (s == nullptr) {
     out << SEScalar::NaN << std::flush;
-  else
+  } else {
     (*s).ToString(out);
+  }
   return out;
 }
 inline std::ostream& operator<<(std::ostream& out, const SEScalar& s)

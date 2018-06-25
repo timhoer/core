@@ -85,10 +85,12 @@ CDM::HemorrhageData* SEHemorrhage::Unload() const
 void SEHemorrhage::Unload(CDM::HemorrhageData& data) const
 {
   SEPatientAction::Unload(data);
-  if (HasCompartment())
+  if (HasCompartment()) {
     data.Compartment(m_Compartment);
-  if (HasInitialRate())
+  }
+  if (HasInitialRate()) {
     data.InitialRate(std::unique_ptr<CDM::ScalarVolumePerTimeData>(m_InitialRate->Unload()));
+  }
 }
 
 void SEHemorrhage::SetMCIS()
@@ -157,8 +159,9 @@ bool SEHemorrhage::HasInitialRate() const
 }
 SEScalarVolumePerTime& SEHemorrhage::GetInitialRate()
 {
-  if (m_InitialRate == nullptr)
+  if (m_InitialRate == nullptr) {
     m_InitialRate = new SEScalarVolumePerTime();
+  }
   return *m_InitialRate;
 }
 
@@ -178,22 +181,25 @@ void SEHemorrhage::ToString(std::ostream& str) const
 {
   if (m_InitialRate->GetValue(VolumePerTimeUnit::mL_Per_min) < ZERO_APPROX) {
     str << "Patient Action : Stop Hemorrhage";
-    if (HasComment())
+    if (HasComment()) {
       str << "\n\tComment: ";
+    }
     str << m_Comment;
     str << "\n\tCompartment: ";
     HasCompartment() ? str << GetCompartment() : str << "No Compartment Set";
   } else {
     str << "Patient Action : Hemorrhage";
-    if (HasComment())
+    if (HasComment()) {
       str << "\n\tComment: " << m_Comment;
+    }
     str << "\n\tInitial Bleeding Rate:  ";
     str << *m_InitialRate;
     str << "\n\tCompartment: ";
     HasCompartment() ? str << GetCompartment() : str << "No Compartment Set";
     str << "\n\tInjury Code: ";
-    for (int i : m_MCIS)
+    for (int i : m_MCIS) {
       str << i;
+    }
   }
   str << std::flush;
 }

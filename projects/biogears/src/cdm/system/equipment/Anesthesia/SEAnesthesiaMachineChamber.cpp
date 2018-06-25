@@ -41,10 +41,12 @@ void SEAnesthesiaMachineChamber::Clear()
 
 bool SEAnesthesiaMachineChamber::Load(const CDM::AnesthesiaMachineChamberData& in)
 {
-  if (in.State().present())
+  if (in.State().present()) {
     SetState(in.State().get());
-  if (in.SubstanceFraction().present())
+  }
+  if (in.SubstanceFraction().present()) {
     GetSubstanceFraction().Load(in.SubstanceFraction().get());
+  }
   if (in.Substance().present()) {
     m_Substance = m_Substances.GetSubstance(in.Substance().get());
     if (m_Substance == nullptr) {
@@ -66,20 +68,25 @@ CDM::AnesthesiaMachineChamberData* SEAnesthesiaMachineChamber::Unload() const
 
 void SEAnesthesiaMachineChamber::Unload(CDM::AnesthesiaMachineChamberData& data) const
 {
-  if (HasState())
+  if (HasState()) {
     data.State(m_State);
-  if (m_SubstanceFraction != nullptr)
+  }
+  if (m_SubstanceFraction != nullptr) {
     data.SubstanceFraction(std::unique_ptr<CDM::ScalarFractionData>(m_SubstanceFraction->Unload()));
-  if (HasSubstance())
+  }
+  if (HasSubstance()) {
     data.Substance(m_Substance->GetName());
+  }
 }
 
 void SEAnesthesiaMachineChamber::Merge(const SEAnesthesiaMachineChamber& from)
 {
-  if (from.HasState())
+  if (from.HasState()) {
     SetState(from.m_State);
-  if (from.HasSubstanceFraction())
+  }
+  if (from.HasSubstanceFraction()) {
     GetSubstanceFraction().Set(*from.m_SubstanceFraction);
+  }
   if (from.m_Substance != nullptr) {
     if (&m_Substances != &from.m_Substances) {
       m_Substance = m_Substances.GetSubstance(from.m_Substance->GetName());
@@ -88,15 +95,17 @@ void SEAnesthesiaMachineChamber::Merge(const SEAnesthesiaMachineChamber& from)
         ss << "Do not have substance : " << from.m_Substance->GetName();
         Error(ss);
       }
-    } else
+    } else {
       m_Substance = from.m_Substance;
+    }
   }
 }
 
 const SEScalar* SEAnesthesiaMachineChamber::GetScalar(const std::string& name)
 {
-  if (name == "SubstanceFraction")
+  if (name == "SubstanceFraction") {
     return &GetSubstanceFraction();
+  }
   return nullptr;
 }
 
@@ -123,14 +132,16 @@ bool SEAnesthesiaMachineChamber::HasSubstanceFraction() const
 }
 SEScalarFraction& SEAnesthesiaMachineChamber::GetSubstanceFraction()
 {
-  if (m_SubstanceFraction == nullptr)
+  if (m_SubstanceFraction == nullptr) {
     m_SubstanceFraction = new SEScalarFraction();
+  }
   return *m_SubstanceFraction;
 }
 double SEAnesthesiaMachineChamber::GetSubstanceFraction() const
 {
-  if (m_SubstanceFraction == nullptr)
+  if (m_SubstanceFraction == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_SubstanceFraction->GetValue();
 }
 
@@ -154,9 +165,10 @@ void SEAnesthesiaMachineChamber::RemoveSubstance()
 
 void SEAnesthesiaMachineChamber::ToString(std::ostream& str) const
 {
-  if (m_SubstanceFraction != nullptr)
+  if (m_SubstanceFraction != nullptr) {
     str << " Anesthesia Machine Chamber, Substance Fraction" << m_SubstanceFraction
         << ", Substance :" << GetSubstance()->GetName() << std::flush;
-  else
+  } else {
     str << "Action not specified properly" << std::flush;
+  }
 }

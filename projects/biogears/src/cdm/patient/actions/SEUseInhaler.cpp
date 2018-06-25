@@ -64,7 +64,8 @@ void SEUseInhaler::Unload(CDM::UseInhalerData& data) const
 void SEUseInhaler::ToString(std::ostream& str) const
 {
   str << "Use Inhaler";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << std::flush;
 }

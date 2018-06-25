@@ -109,8 +109,9 @@ void BloodChemistry::Initialize()
 
 bool BloodChemistry::Load(const CDM::BioGearsBloodChemistrySystemData& in)
 {
-  if (!SEBloodChemistrySystem::Load(in))
+  if (!SEBloodChemistrySystem::Load(in)) {
     return false;
+  }
   m_ArterialOxygen_mmHg.Load(in.ArterialOxygenAverage_mmHg());
   m_ArterialCarbonDioxide_mmHg.Load(in.ArterialCarbonDioxideAverage_mmHg());
   BioGearsSystem::LoadState();
@@ -230,8 +231,9 @@ void BloodChemistry::Process()
   //Push the compartment values of O2 and CO2 partial pressures on the corresponding system data.
   GetOxygenSaturation().Set(m_aortaO2->GetSaturation());
   GetCarbonDioxideSaturation().Set(m_aortaCO2->GetSaturation());
-  if (m_aortaCO == nullptr && m_data.GetSubstances().IsActive(m_data.GetSubstances().GetCO()))
+  if (m_aortaCO == nullptr && m_data.GetSubstances().IsActive(m_data.GetSubstances().GetCO())) {
     m_aortaCO = m_aorta->GetSubstanceQuantity(m_data.GetSubstances().GetCO());
+  }
   if (m_aortaCO != nullptr) {
     GetCarbonMonoxideSaturation().Set(m_aortaCO->GetSaturation());
     GetPulseOximetry().SetValue(GetOxygenSaturation().GetValue() + GetCarbonMonoxideSaturation().GetValue());
@@ -250,8 +252,9 @@ void BloodChemistry::Process()
   double totalHbCO2_g = (m_data.GetSubstances().GetSubstanceMass(m_data.GetSubstances().GetHbCO2(), m_data.GetCompartments().GetVascularLeafCompartments(), MassUnit::g) / m_data.GetSubstances().GetHbCO2().GetMolarMass(MassPerAmountUnit::g_Per_mol)) * m_data.GetSubstances().GetHb().GetMolarMass(MassPerAmountUnit::g_Per_mol);
   double totalHBO2CO2_g = (m_data.GetSubstances().GetSubstanceMass(m_data.GetSubstances().GetHbO2CO2(), m_data.GetCompartments().GetVascularLeafCompartments(), MassUnit::g) / m_data.GetSubstances().GetHbO2CO2().GetMolarMass(MassPerAmountUnit::g_Per_mol)) * m_data.GetSubstances().GetHb().GetMolarMass(MassPerAmountUnit::g_Per_mol);
   double totalHBCO_g = 0.0;
-  if (m_aortaCO != nullptr)
+  if (m_aortaCO != nullptr) {
     totalHBCO_g = (m_data.GetSubstances().GetSubstanceMass(m_data.GetSubstances().GetHbCO(), m_data.GetCompartments().GetVascularLeafCompartments(), MassUnit::g) / m_data.GetSubstances().GetHbCO().GetMolarMass(MassPerAmountUnit::g_Per_mol)) * m_data.GetSubstances().GetHb().GetMolarMass(MassPerAmountUnit::g_Per_mol);
+  }
 
   double totalHemoglobinO2Hemoglobin_g = totalHb_g + totalHbO2_g + totalHbCO2_g + totalHBO2CO2_g + totalHBCO_g;
   GetHemoglobinContent().SetValue(totalHemoglobinO2Hemoglobin_g, MassUnit::g);
@@ -620,8 +623,9 @@ bool BloodChemistry::CalculateCompleteBloodCount(SECompleteBloodCount& cbc)
 
 void BloodChemistry::Sepsis()
 {
-  if (!m_PatientActions->HasSepsis())
+  if (!m_PatientActions->HasSepsis()) {
     return;
+  }
 
   SESepsis* sep = m_PatientActions->GetSepsis();
   std::map<std::string, std::string> tissueResistors = sep->GetTissueResistorMap();
@@ -654,8 +658,9 @@ void BloodChemistry::Sepsis()
   //Other values we need to evaluate the system
   double couplingFunction = 1.0 + tanh((whiteBloodCell - activationThreshold) / activationWidth);
   double effectiveAntibiotic_g = 0;
-  if (antibiotic_g > minimumInhibitory_g)
+  if (antibiotic_g > minimumInhibitory_g) {
     effectiveAntibiotic_g = (antibiotic_g - minimumInhibitory_g) / sep->GetSeverity().GetValue();
+  }
 
   //Calculate rates of change using Kumar model (@ cite Kumar2004Dynamics)
   double dPathogen_Per_hr = kp_Per_hr * pathogen * (1.0 - pathogen) / (1 + effectiveAntibiotic_g) - kpm_Per_hr * whiteBloodCell * pathogen;
@@ -682,11 +687,11 @@ void BloodChemistry::Sepsis()
   sep->GetPathogen().IncrementValue(dPathogen_Per_hr * dt_hr);
   sep->GetEarlyMediator().IncrementValue(dWhiteBloodCell_Per_hr * dt_hr);
   sep->GetLateMediator().IncrementValue(dLateMediator_Per_hr * dt_hr);
-
-  if (sep->GetEarlyMediator().GetValue() < wbcFractionInitial)
-    sep->GetSeverity().SetValue(0.0); //Our White blood cell count has return to normal.  This will cause the Sepsis action to be inactivated
-
-  //Use the change in white blood cell count to scale down the resistance of the vascular -> tissue paths
+  
+  if (sep->GetEarlyMediator().GetValue() < wbcFractionInitial) {
+    sep->GetSeverity().SetValue(0.0); //Our White blood cell count has return to normal.  This will cause the Sepsis action to be inactivated }
+    }
+    //Use the change in white blood cell count to scale down the resistance of the vascular -> tissue paths
   //The circuit needs continuous values to solve, so we cannot change reflection coefficient values (which are mapped to oncotic pressure
   //sources) to arbitrary values.  Thus we use the linear interpolator to move coefficients from initial value of 1.0 as function of
   //white blood cell fraction.
@@ -704,9 +709,10 @@ void BloodChemistry::Sepsis()
   double modsThreshold = 0.85 * wbcFractionMax;
 
   for (auto comp : m_data.GetCompartments().GetTissueLeafCompartments()) {
-    if (comp->GetName().compare(BGE::TissueCompartment::Brain) == 0 || comp->GetName().compare(sepComp) == 0)
-      continue; //Don't mess with the brain and don't repeat the compartment the infection started in
-    if (whiteBloodCell > severeThreshold && whiteBloodCell <= modsThreshold) {
+    if (comp->GetName().compare(BGE::TissueCompartment::Brain) == 0 || comp->GetName().compare(sepComp) == 0) {
+      continue; //Don't mess with the brain and don't repeat the compartment the infection started in }
+      }
+      if (whiteBloodCell > severeThreshold && whiteBloodCell <= modsThreshold) {
       nextReflectionCoefficient = GeneralMath::LinearInterpolator(severeThreshold, modsThreshold, 1.0, 0.5, whiteBloodCell);
       BLIM(nextReflectionCoefficient, 0.0, 1.0);
       comp->GetReflectionCoefficient().SetValue(nextReflectionCoefficient);

@@ -214,30 +214,31 @@ void HowToBrainInjury()
 // Note that in Biogears, CBF is pulsatile
 int GlasgowEstimator(double cbf)
 {
-  if (cbf < 116)
+  if (cbf < 116) {
     return 3;
-  else if (cbf < 151)
+  } else if (cbf < 151) {
     return 4;
-  else if (cbf < 186)
+  } else if (cbf < 186) {
     return 5;
-  else if (cbf < 220)
+  } else if (cbf < 220) {
     return 6;
-  else if (cbf < 255)
+  } else if (cbf < 255) {
     return 7;
-  else if (cbf < 290)
+  } else if (cbf < 290) {
     return 8;
-  else if (cbf < 363)
+  } else if (cbf < 363) {
     return 9;
-  else if (cbf < 435)
+  } else if (cbf < 435) {
     return 10;
-  else if (cbf < 508)
+  } else if (cbf < 508) {
     return 11;
-  else if (cbf < 580)
+  } else if (cbf < 580) {
     return 12;
-  else if (cbf < 628)
+  } else if (cbf < 628) {
     return 13;
-  else if (cbf < 725)
+  } else if (cbf < 725) {
     return 14;
-  else
+  } else {
     return 15;
+  }
 }

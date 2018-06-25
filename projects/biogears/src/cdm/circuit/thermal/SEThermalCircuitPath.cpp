@@ -33,42 +33,60 @@ void SEThermalCircuitPath::Clear()
 bool SEThermalCircuitPath::Load(const CDM::ThermalCircuitPathData& in)
 {
   SECircuitPath::Load(in);
-  if (in.Resistance().present())
+  if (in.Resistance().present()) {
     GetResistance().Load(in.Resistance().get());
-  if (in.NextResistance().present())
+  }
+  if (in.NextResistance().present()) {
     GetNextResistance().Load(in.NextResistance().get());
-  if (in.ResistanceBaseline().present())
+  }
+  if (in.ResistanceBaseline().present()) {
     GetResistanceBaseline().Load(in.ResistanceBaseline().get());
-  if (in.Capacitance().present())
+  }
+  if (in.Capacitance().present()) {
     GetCapacitance().Load(in.Capacitance().get());
-  if (in.NextCapacitance().present())
+  }
+  if (in.NextCapacitance().present()) {
     GetNextCapacitance().Load(in.NextCapacitance().get());
-  if (in.CapacitanceBaseline().present())
+  }
+  if (in.CapacitanceBaseline().present()) {
     GetCapacitanceBaseline().Load(in.CapacitanceBaseline().get());
-  if (in.Inductance().present())
+  }
+  if (in.Inductance().present()) {
     GetInductance().Load(in.Inductance().get());
-  if (in.NextInductance().present())
+  }
+  if (in.NextInductance().present()) {
     GetNextInductance().Load(in.NextInductance().get());
-  if (in.InductanceBaseline().present())
+  }
+  if (in.InductanceBaseline().present()) {
     GetInductanceBaseline().Load(in.InductanceBaseline().get());
-  if (in.HeatTransferRate().present())
+  }
+  if (in.HeatTransferRate().present()) {
     GetHeatTransferRate().Load(in.HeatTransferRate().get());
-  if (in.NextHeatTransferRate().present())
+  }
+  if (in.NextHeatTransferRate().present()) {
     GetNextHeatTransferRate().Load(in.NextHeatTransferRate().get());
-  if (in.HeatSource().present())
+  }
+  if (in.HeatSource().present()) {
     GetHeatSource().Load(in.HeatSource().get());
-  if (in.NextHeatSource().present())
+  }
+  if (in.NextHeatSource().present()) {
     GetNextHeatSource().Load(in.NextHeatSource().get());
-  if (in.HeatSourceBaseline().present())
+  }
+  if (in.HeatSourceBaseline().present()) {
     GetHeatSourceBaseline().Load(in.HeatSourceBaseline().get());
-  if (in.TemperatureSource().present())
+  }
+  if (in.TemperatureSource().present()) {
     GetTemperatureSource().Load(in.TemperatureSource().get());
-  if (in.NextTemperatureSource().present())
+  }
+  if (in.NextTemperatureSource().present()) {
     GetNextTemperatureSource().Load(in.NextTemperatureSource().get());
-  if (in.TemperatureSourceBaseline().present())
+  }
+  if (in.TemperatureSourceBaseline().present()) {
     GetTemperatureSourceBaseline().Load(in.TemperatureSourceBaseline().get());
-  if (in.ValveBreakdownTemperature().present())
+  }
+  if (in.ValveBreakdownTemperature().present()) {
     GetValveBreakdownTemperature().Load(in.ValveBreakdownTemperature().get());
+  }
 
   return HasValidElements();
 }
@@ -81,42 +99,60 @@ CDM::ThermalCircuitPathData* SEThermalCircuitPath::Unload() const
 void SEThermalCircuitPath::Unload(CDM::ThermalCircuitPathData& data) const
 {
   SECircuitPath::Unload(data);
-  if (HasResistance())
+  if (HasResistance()) {
     data.Resistance(std::unique_ptr<CDM::ScalarHeatResistanceData>(m_Resistance->Unload()));
-  if (HasNextResistance())
+  }
+  if (HasNextResistance()) {
     data.NextResistance(std::unique_ptr<CDM::ScalarHeatResistanceData>(m_NextResistance->Unload()));
-  if (HasResistanceBaseline())
+  }
+  if (HasResistanceBaseline()) {
     data.ResistanceBaseline(std::unique_ptr<CDM::ScalarHeatResistanceData>(m_ResistanceBaseline->Unload()));
-  if (HasCapacitance())
+  }
+  if (HasCapacitance()) {
     data.Capacitance(std::unique_ptr<CDM::ScalarHeatCapacitanceData>(m_Capacitance->Unload()));
-  if (HasNextCapacitance())
+  }
+  if (HasNextCapacitance()) {
     data.NextCapacitance(std::unique_ptr<CDM::ScalarHeatCapacitanceData>(m_NextCapacitance->Unload()));
-  if (HasCapacitanceBaseline())
+  }
+  if (HasCapacitanceBaseline()) {
     data.CapacitanceBaseline(std::unique_ptr<CDM::ScalarHeatCapacitanceData>(m_CapacitanceBaseline->Unload()));
-  if (HasInductance())
+  }
+  if (HasInductance()) {
     data.Inductance(std::unique_ptr<CDM::ScalarHeatInductanceData>(m_Inductance->Unload()));
-  if (HasNextInductance())
+  }
+  if (HasNextInductance()) {
     data.NextInductance(std::unique_ptr<CDM::ScalarHeatInductanceData>(m_NextInductance->Unload()));
-  if (HasInductanceBaseline())
+  }
+  if (HasInductanceBaseline()) {
     data.InductanceBaseline(std::unique_ptr<CDM::ScalarHeatInductanceData>(m_InductanceBaseline->Unload()));
-  if (HasHeatTransferRate())
+  }
+  if (HasHeatTransferRate()) {
     data.HeatTransferRate(std::unique_ptr<CDM::ScalarPowerData>(m_Flux->Unload()));
-  if (HasNextHeatTransferRate())
+  }
+  if (HasNextHeatTransferRate()) {
     data.NextHeatTransferRate(std::unique_ptr<CDM::ScalarPowerData>(m_NextFlux->Unload()));
-  if (HasHeatSource())
+  }
+  if (HasHeatSource()) {
     data.HeatSource(std::unique_ptr<CDM::ScalarPowerData>(m_FluxSource->Unload()));
-  if (HasNextHeatSource())
+  }
+  if (HasNextHeatSource()) {
     data.NextHeatSource(std::unique_ptr<CDM::ScalarPowerData>(m_NextFluxSource->Unload()));
-  if (HasHeatSourceBaseline())
+  }
+  if (HasHeatSourceBaseline()) {
     data.HeatSourceBaseline(std::unique_ptr<CDM::ScalarPowerData>(m_FluxSourceBaseline->Unload()));
-  if (HasTemperatureSource())
+  }
+  if (HasTemperatureSource()) {
     data.TemperatureSource(std::unique_ptr<CDM::ScalarTemperatureData>(m_PotentialSource->Unload()));
-  if (HasNextTemperatureSource())
+  }
+  if (HasNextTemperatureSource()) {
     data.NextTemperatureSource(std::unique_ptr<CDM::ScalarTemperatureData>(m_NextPotentialSource->Unload()));
-  if (HasTemperatureSourceBaseline())
+  }
+  if (HasTemperatureSourceBaseline()) {
     data.TemperatureSourceBaseline(std::unique_ptr<CDM::ScalarTemperatureData>(m_PotentialSourceBaseline->Unload()));
-  if (HasValveBreakdownTemperature())
+  }
+  if (HasValveBreakdownTemperature()) {
     data.ValveBreakdownTemperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_ValveBreakdownPotential->Unload()));
+  }
 }
 
 ////////////////////////////////
@@ -133,8 +169,9 @@ SEScalarHeatResistance& SEThermalCircuitPath::GetResistance()
 }
 double SEThermalCircuitPath::GetResistance(const HeatResistanceUnit& unit) const
 {
-  if (m_Resistance == nullptr)
+  if (m_Resistance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Resistance->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasNextResistance() const
@@ -147,8 +184,9 @@ SEScalarHeatResistance& SEThermalCircuitPath::GetNextResistance()
 }
 double SEThermalCircuitPath::GetNextResistance(const HeatResistanceUnit& unit) const
 {
-  if (m_NextResistance == nullptr)
+  if (m_NextResistance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextResistance->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasResistanceBaseline() const
@@ -161,8 +199,9 @@ SEScalarHeatResistance& SEThermalCircuitPath::GetResistanceBaseline()
 }
 double SEThermalCircuitPath::GetResistanceBaseline(const HeatResistanceUnit& unit) const
 {
-  if (m_ResistanceBaseline == nullptr)
+  if (m_ResistanceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ResistanceBaseline->GetValue(unit);
 }
 
@@ -180,8 +219,9 @@ SEScalarHeatCapacitance& SEThermalCircuitPath::GetCapacitance()
 }
 double SEThermalCircuitPath::GetCapacitance(const HeatCapacitanceUnit& unit) const
 {
-  if (m_Capacitance == nullptr)
+  if (m_Capacitance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Capacitance->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasNextCapacitance() const
@@ -194,8 +234,9 @@ SEScalarHeatCapacitance& SEThermalCircuitPath::GetNextCapacitance()
 }
 double SEThermalCircuitPath::GetNextCapacitance(const HeatCapacitanceUnit& unit) const
 {
-  if (m_NextCapacitance == nullptr)
+  if (m_NextCapacitance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextCapacitance->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasCapacitanceBaseline() const
@@ -208,8 +249,9 @@ SEScalarHeatCapacitance& SEThermalCircuitPath::GetCapacitanceBaseline()
 }
 double SEThermalCircuitPath::GetCapacitanceBaseline(const HeatCapacitanceUnit& unit) const
 {
-  if (m_CapacitanceBaseline == nullptr)
+  if (m_CapacitanceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_CapacitanceBaseline->GetValue(unit);
 }
 
@@ -227,8 +269,9 @@ SEScalarHeatInductance& SEThermalCircuitPath::GetInductance()
 }
 double SEThermalCircuitPath::GetInductance(const HeatInductanceUnit& unit) const
 {
-  if (m_Inductance == nullptr)
+  if (m_Inductance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Inductance->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasNextInductance() const
@@ -241,8 +284,9 @@ SEScalarHeatInductance& SEThermalCircuitPath::GetNextInductance()
 }
 double SEThermalCircuitPath::GetNextInductance(const HeatInductanceUnit& unit) const
 {
-  if (m_NextInductance == nullptr)
+  if (m_NextInductance == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextInductance->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasInductanceBaseline() const
@@ -255,8 +299,9 @@ SEScalarHeatInductance& SEThermalCircuitPath::GetInductanceBaseline()
 }
 double SEThermalCircuitPath::GetInductanceBaseline(const HeatInductanceUnit& unit) const
 {
-  if (m_InductanceBaseline == nullptr)
+  if (m_InductanceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_InductanceBaseline->GetValue(unit);
 }
 
@@ -273,8 +318,9 @@ SEScalarPower& SEThermalCircuitPath::GetHeatTransferRate()
 }
 double SEThermalCircuitPath::GetHeatTransferRate(const PowerUnit& unit) const
 {
-  if (m_Flux == nullptr)
+  if (m_Flux == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Flux->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasNextHeatTransferRate() const
@@ -287,8 +333,9 @@ SEScalarPower& SEThermalCircuitPath::GetNextHeatTransferRate()
 }
 double SEThermalCircuitPath::GetNextHeatTransferRate(const PowerUnit& unit) const
 {
-  if (m_NextFlux == nullptr)
+  if (m_NextFlux == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextFlux->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasHeatSource() const
@@ -301,8 +348,9 @@ SEScalarPower& SEThermalCircuitPath::GetHeatSource()
 }
 double SEThermalCircuitPath::GetHeatSource(const PowerUnit& unit) const
 {
-  if (m_FluxSource == nullptr)
+  if (m_FluxSource == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FluxSource->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasNextHeatSource() const
@@ -315,8 +363,9 @@ SEScalarPower& SEThermalCircuitPath::GetNextHeatSource()
 }
 double SEThermalCircuitPath::GetNextHeatSource(const PowerUnit& unit) const
 {
-  if (m_NextFluxSource == nullptr)
+  if (m_NextFluxSource == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextFluxSource->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasHeatSourceBaseline() const
@@ -329,8 +378,9 @@ SEScalarPower& SEThermalCircuitPath::GetHeatSourceBaseline()
 }
 double SEThermalCircuitPath::GetHeatSourceBaseline(const PowerUnit& unit) const
 {
-  if (m_FluxSourceBaseline == nullptr)
+  if (m_FluxSourceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_FluxSourceBaseline->GetValue(unit);
 }
 
@@ -347,8 +397,9 @@ SEScalarTemperature& SEThermalCircuitPath::GetTemperatureSource()
 }
 double SEThermalCircuitPath::GetTemperatureSource(const TemperatureUnit& unit) const
 {
-  if (m_PotentialSource == nullptr)
+  if (m_PotentialSource == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_PotentialSource->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasNextTemperatureSource() const
@@ -361,8 +412,9 @@ SEScalarTemperature& SEThermalCircuitPath::GetNextTemperatureSource()
 }
 double SEThermalCircuitPath::GetNextTemperatureSource(const TemperatureUnit& unit) const
 {
-  if (m_NextPotentialSource == nullptr)
+  if (m_NextPotentialSource == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextPotentialSource->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasTemperatureSourceBaseline() const
@@ -375,8 +427,9 @@ SEScalarTemperature& SEThermalCircuitPath::GetTemperatureSourceBaseline()
 }
 double SEThermalCircuitPath::GetTemperatureSourceBaseline(const TemperatureUnit& unit) const
 {
-  if (m_PotentialSourceBaseline == nullptr)
+  if (m_PotentialSourceBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_PotentialSourceBaseline->GetValue(unit);
 }
 bool SEThermalCircuitPath::HasValveBreakdownTemperature() const
@@ -389,7 +442,8 @@ SEScalarTemperature& SEThermalCircuitPath::GetValveBreakdownTemperature()
 }
 double SEThermalCircuitPath::GetValveBreakdownTemperature(const TemperatureUnit& unit) const
 {
-  if (m_ValveBreakdownPotential == nullptr)
+  if (m_ValveBreakdownPotential == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_ValveBreakdownPotential->GetValue(unit);
 }

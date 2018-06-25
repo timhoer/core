@@ -17,8 +17,9 @@ const ElectricInductanceUnit ElectricInductanceUnit::H("H");
 
 CDM::ScalarElectricInductanceData* SEScalarElectricInductance::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarElectricInductanceData* data(new CDM::ScalarElectricInductanceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -26,15 +27,17 @@ CDM::ScalarElectricInductanceData* SEScalarElectricInductance::Unload() const
 
 bool ElectricInductanceUnit::IsValidUnit(const std::string& unit)
 {
-  if (H.GetString().compare(unit) == 0)
+  if (H.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const ElectricInductanceUnit& ElectricInductanceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (H.GetString().compare(unit) == 0)
+  if (H.GetString().compare(unit) == 0) {
     return H;
+  }
   std::stringstream err;
   err << unit << " is not a valid ElectricInductance unit";
   throw CommonDataModelException(err.str());

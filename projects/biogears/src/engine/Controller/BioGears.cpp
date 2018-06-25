@@ -54,8 +54,10 @@ BioGears::BioGears(Logger* logger)
 {
   myLogger = false;
   m_DataTrack = nullptr;
-  if (!m_Logger->HasForward()) // Don't override a forwarder, if there already is one there
+  if (!m_Logger->HasForward()) {
+    // Don't override a forwarder, if there already is one there
     m_Logger->SetForward(this);
+  }
 
   m_CurrentTime = std::unique_ptr<SEScalarTime>(new SEScalarTime());
   m_SimulationTime = std::unique_ptr<SEScalarTime>(new SEScalarTime());
@@ -103,8 +105,9 @@ BioGears::BioGears(Logger* logger)
 
 DataTrack& BioGears::GetDataTrack()
 {
-  if (m_DataTrack == nullptr)
+  if (m_DataTrack == nullptr) {
     m_DataTrack = new DataTrack();
+  }
   return *m_DataTrack;
 }
 
@@ -195,10 +198,12 @@ void BioGears::SetAirwayMode(CDM::enumBioGearsAirwayMode::value mode)
     return; // do nazing!
   if (mode == CDM::enumBioGearsAirwayMode::Inhaler && m_AirwayMode != CDM::enumBioGearsAirwayMode::Free)
     throw CommonDataModelException("Can only change airway mode to Inhaler from the Free mode, Disable other equipment first.");
-  if (mode == CDM::enumBioGearsAirwayMode::AnesthesiaMachine && m_AirwayMode != CDM::enumBioGearsAirwayMode::Free)
+  if (mode == CDM::enumBioGearsAirwayMode::AnesthesiaMachine && m_AirwayMode != CDM::enumBioGearsAirwayMode::Free) {
     throw CommonDataModelException("Can only change airway mode to Anesthesia Machine from the Free mode, Disable other equipment first.");
-  if (mode == CDM::enumBioGearsAirwayMode::MechanicalVentilator && m_AirwayMode != CDM::enumBioGearsAirwayMode::Free)
+  }
+  if (mode == CDM::enumBioGearsAirwayMode::MechanicalVentilator && m_AirwayMode != CDM::enumBioGearsAirwayMode::Free) {
     throw CommonDataModelException("Can only change airway mode to Mechanical Ventilator from the Free mode, Disable other equipment first.");
+  }
   if (mode != m_AirwayMode)
     m_Compartments->UpdateAirwayGraph();
   m_AirwayMode = mode;
@@ -210,8 +215,9 @@ void BioGears::SetIntubation(CDM::enumOnOff::value s)
 {
   if (m_Intubation == s)
     return; // do nazing!
-  if (m_AirwayMode == CDM::enumBioGearsAirwayMode::Inhaler)
+  if (m_AirwayMode == CDM::enumBioGearsAirwayMode::Inhaler) {
     throw CommonDataModelException("Cannot intubate if the inhaler is active.");
+  }
   m_Intubation = s;
 }
 
@@ -754,8 +760,9 @@ bool BioGears::SetupPatient()
     Warning(ss);
   }
 
-  if (err)
+  if (err) {
     return false;
+  }
   return true;
 }
 
@@ -763,8 +770,10 @@ BioGears::~BioGears()
 {
   if (myLogger) {
     SAFE_DELETE(m_Logger);
-  } else //Turn off forwarding for this logger
+  } else {
+    //Turn off forwarding for this logger
     m_Logger->SetForward(nullptr);
+  }
 }
 
 EngineState BioGears::GetState() { return m_State; }
@@ -876,16 +885,19 @@ void BioGears::PostProcess()
 bool BioGears::GetPatientAssessment(SEPatientAssessment& assessment)
 {
   SEPulmonaryFunctionTest* pft = dynamic_cast<SEPulmonaryFunctionTest*>(&assessment);
-  if (pft != nullptr)
+  if (pft != nullptr) {
     return m_RespiratorySystem->CalculatePulmonaryFunctionTest(*pft);
+  }
 
   SECompleteBloodCount* cbc = dynamic_cast<SECompleteBloodCount*>(&assessment);
-  if (cbc != nullptr)
+  if (cbc != nullptr) {
     return m_BloodChemistrySystem->CalculateCompleteBloodCount(*cbc);
+  }
 
   SEComprehensiveMetabolicPanel* cmp = dynamic_cast<SEComprehensiveMetabolicPanel*>(&assessment);
-  if (cmp != nullptr)
+  if (cmp != nullptr) {
     return m_BloodChemistrySystem->CalculateComprehensiveMetabolicPanel(*cmp);
+  }
 
   SEUrinalysis* u = dynamic_cast<SEUrinalysis*>(&assessment);
   if (u != nullptr) {
@@ -911,10 +923,12 @@ bool BioGears::CreateCircuitsAndCompartments()
   m_Compartments->Clear();
 
   SetupCardiovascular();
-  if (m_Config->IsRenalEnabled())
+  if (m_Config->IsRenalEnabled()) {
     SetupRenal();
-  if (m_Config->IsTissueEnabled())
+  }
+  if (m_Config->IsTissueEnabled()) {
     SetupTissue();
+  }
   SetupGastrointestinal();
 
   ///////////////////////////////////////////////////////////////////
@@ -1206,11 +1220,13 @@ void BioGears::SetupCardiovascular()
 
   double blood_mL = 0;
   for (SEFluidCircuitNode* n : cCardiovascular.GetNodes()) {
-    if (n->HasVolumeBaseline())
+    if (n->HasVolumeBaseline()) {
       blood_mL += n->GetVolumeBaseline(VolumeUnit::mL);
+    }
   }
-  if (blood_mL > bloodVolume_mL)
+  if (blood_mL > bloodVolume_mL) {
     Error("Blood volume greater than total blood volume");
+  }
 
   SEFluidCircuitNode& Pericardium = cCardiovascular.CreateNode(BGE::CardiovascularNode::Pericardium1);
   Pericardium.GetVolumeBaseline().SetValue(15.0, VolumeUnit::mL);
@@ -1469,8 +1485,9 @@ void BioGears::SetupCardiovascular()
   for (SEFluidCircuitPath* p : cCardiovascular.GetPaths()) {
     if (p->HasCapacitanceBaseline()) {
       SEFluidCircuitNode& src = p->GetSourceNode();
-      if (!src.HasVolumeBaseline())
+      if (!src.HasVolumeBaseline()) {
         Fatal("Compliance paths must have a volume baseline.");
+      }
       double pressure = src.GetPressure(PressureUnit::mmHg);
       double volume = src.GetVolumeBaseline(VolumeUnit::mL);
       p->GetComplianceBaseline().SetValue(volume / pressure, FlowComplianceUnit::mL_Per_mmHg);
@@ -4161,8 +4178,9 @@ void BioGears::SetupRespiratory()
     SEGasCompartment* gasCmpt = m_Compartments->GetGasCompartment(name);
     SELiquidCompartment& liquidCmpt = m_Compartments->CreateLiquidCompartment(name);
     if (gasCmpt->HasNodeMapping()) {
-      for (auto node : gasCmpt->GetNodeMapping().GetNodes())
+      for (auto node : gasCmpt->GetNodeMapping().GetNodes()) {
         liquidCmpt.MapNode(*node);
+      }
     }
   }
   // Hook up any hierarchies
@@ -4170,15 +4188,17 @@ void BioGears::SetupRespiratory()
     SEGasCompartment* gasCmpt = m_Compartments->GetGasCompartment(name);
     SELiquidCompartment* liquidCmpt = m_Compartments->GetLiquidCompartment(name);
     if (gasCmpt->HasChildren()) {
-      for (auto child : gasCmpt->GetChildren())
+      for (auto child : gasCmpt->GetChildren()) {
         liquidCmpt->AddChild(*m_Compartments->GetLiquidCompartment(child->GetName()));
+      }
     }
   }
   // Add leaf compartments to the graph
   for (auto name : BGE::PulmonaryCompartment::GetValues()) {
     SELiquidCompartment* liquidCmpt = m_Compartments->GetLiquidCompartment(name);
-    if (!liquidCmpt->HasChildren())
+    if (!liquidCmpt->HasChildren()) {
       lAerosol.AddCompartment(*liquidCmpt);
+    }
   }
   // Create Links
   for (auto name : BGE::PulmonaryLink::GetValues()) {

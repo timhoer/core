@@ -30,16 +30,21 @@ void SEElectricalCircuitNode::Clear()
 bool SEElectricalCircuitNode::Load(const CDM::ElectricalCircuitNodeData& in)
 {
   SECircuitNode::Load(in);
-  if (in.Voltage().present())
+  if (in.Voltage().present()) {
     GetVoltage().Load(in.Voltage().get());
-  if (in.NextVoltage().present())
+  }
+  if (in.NextVoltage().present()) {
     GetNextVoltage().Load(in.NextVoltage().get());
-  if (in.Charge().present())
+  }
+  if (in.Charge().present()) {
     GetCharge().Load(in.Charge().get());
-  if (in.NextCharge().present())
+  }
+  if (in.NextCharge().present()) {
     GetNextCharge().Load(in.NextCharge().get());
-  if (in.ChargeBaseline().present())
+  }
+  if (in.ChargeBaseline().present()) {
     GetChargeBaseline().Load(in.ChargeBaseline().get());
+  }
   return true;
 }
 CDM::ElectricalCircuitNodeData* SEElectricalCircuitNode::Unload() const
@@ -51,16 +56,21 @@ CDM::ElectricalCircuitNodeData* SEElectricalCircuitNode::Unload() const
 void SEElectricalCircuitNode::Unload(CDM::ElectricalCircuitNodeData& data) const
 {
   SECircuitNode::Unload(data);
-  if (HasVoltage())
+  if (HasVoltage()) {
     data.Voltage(std::unique_ptr<CDM::ScalarElectricPotentialData>(m_Potential->Unload()));
-  if (HasNextVoltage())
+  }
+  if (HasNextVoltage()) {
     data.NextVoltage(std::unique_ptr<CDM::ScalarElectricPotentialData>(m_NextPotential->Unload()));
-  if (HasCharge())
+  }
+  if (HasCharge()) {
     data.Charge(std::unique_ptr<CDM::ScalarElectricChargeData>(m_Quantity->Unload()));
-  if (HasNextCharge())
+  }
+  if (HasNextCharge()) {
     data.NextCharge(std::unique_ptr<CDM::ScalarElectricChargeData>(m_NextQuantity->Unload()));
-  if (HasChargeBaseline())
+  }
+  if (HasChargeBaseline()) {
     data.ChargeBaseline(std::unique_ptr<CDM::ScalarElectricChargeData>(m_QuantityBaseline->Unload()));
+  }
 }
 
 bool SEElectricalCircuitNode::HasVoltage() const
@@ -73,8 +83,9 @@ SEScalarElectricPotential& SEElectricalCircuitNode::GetVoltage()
 }
 double SEElectricalCircuitNode::GetVoltage(const ElectricPotentialUnit& unit) const
 {
-  if (m_Potential == nullptr)
+  if (m_Potential == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Potential->GetValue(unit);
 }
 
@@ -88,8 +99,9 @@ SEScalarElectricPotential& SEElectricalCircuitNode::GetNextVoltage()
 }
 double SEElectricalCircuitNode::GetNextVoltage(const ElectricPotentialUnit& unit) const
 {
-  if (m_NextPotential == nullptr)
+  if (m_NextPotential == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextPotential->GetValue(unit);
 }
 
@@ -103,8 +115,9 @@ SEScalarElectricCharge& SEElectricalCircuitNode::GetCharge()
 }
 double SEElectricalCircuitNode::GetCharge(const ElectricChargeUnit& unit) const
 {
-  if (m_Quantity == nullptr)
+  if (m_Quantity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Quantity->GetValue(unit);
 }
 
@@ -118,8 +131,9 @@ SEScalarElectricCharge& SEElectricalCircuitNode::GetNextCharge()
 }
 double SEElectricalCircuitNode::GetNextCharge(const ElectricChargeUnit& unit) const
 {
-  if (m_NextQuantity == nullptr)
+  if (m_NextQuantity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextQuantity->GetValue(unit);
 }
 
@@ -133,7 +147,8 @@ SEScalarElectricCharge& SEElectricalCircuitNode::GetChargeBaseline()
 }
 double SEElectricalCircuitNode::GetChargeBaseline(const ElectricChargeUnit& unit) const
 {
-  if (m_QuantityBaseline == nullptr)
+  if (m_QuantityBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_QuantityBaseline->GetValue(unit);
 }

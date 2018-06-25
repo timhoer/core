@@ -39,8 +39,9 @@ void CommonDataModelTest::ReadPatientDirectory(const std::string& rptDirectory)
       pTimer.Start("Case");
       SETestCase& testCase = testSuite.CreateTestCase();
       logger.Info(it->c_str());
-      if (!obj.LoadFile(*it))
+      if (!obj.LoadFile(*it)) {
         testCase.AddFailure("Unable to load patient " + *it);
+      }
       testCase.GetDuration().SetValue(pTimer.GetElapsedTime_s("Case"), TimeUnit::s);
       testCase.SetName(obj.GetName());
     }

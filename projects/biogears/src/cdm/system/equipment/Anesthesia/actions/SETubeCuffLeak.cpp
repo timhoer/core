@@ -58,8 +58,9 @@ CDM::TubeCuffLeakData* SETubeCuffLeak::Unload() const
 void SETubeCuffLeak::Unload(CDM::TubeCuffLeakData& data) const
 {
   SEAnesthesiaMachineAction::Unload(data);
-  if (m_Severity != nullptr)
+  if (m_Severity != nullptr) {
     data.Severity(std::unique_ptr<CDM::Scalar0To1Data>(m_Severity->Unload()));
+  }
 }
 
 bool SETubeCuffLeak::HasSeverity() const
@@ -68,16 +69,18 @@ bool SETubeCuffLeak::HasSeverity() const
 }
 SEScalar0To1& SETubeCuffLeak::GetSeverity()
 {
-  if (m_Severity == nullptr)
+  if (m_Severity == nullptr) {
     m_Severity = new SEScalar0To1();
+  }
   return *m_Severity;
 }
 
 void SETubeCuffLeak::ToString(std::ostream& str) const
 {
   str << "Anesthesia Machine Action : Tube Cuff Leak";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tSeverity :";
   HasSeverity() ? str << *m_Severity : str << "NaN";
   str << std::flush;

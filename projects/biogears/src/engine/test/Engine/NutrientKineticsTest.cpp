@@ -339,8 +339,10 @@ void BioGearsEngineTest::NutrientKineticsTest(bool usingAbsorption, bool usingDy
   for (SELiquidCompartment* c : extracellularCompartments) {
     c->GetSubstanceQuantity(aminoAcids)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * aminoAcidsBaseline_mg_Per_dL, MassUnit::mg);
     c->GetSubstanceQuantity(glucose)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * glucoseBaseline_mg_Per_dL, MassUnit::mg);
-    if (c != cBrainExtracellular) //TAG can't cross blood-brain barrier
+    if (c != cBrainExtracellular) {
+      //TAG can't cross blood-brain barrier
       c->GetSubstanceQuantity(triacylglycerol)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * triacylglycerolBaseline_mg_Per_dL, MassUnit::mg);
+    }
     c->GetSubstanceQuantity(glucagon)->GetMass().SetValue(0, MassUnit::mg);
     c->GetSubstanceQuantity(lactate)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * 13, MassUnit::mg);
     c->GetSubstanceQuantity(ketones)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * ketonesBaseline_mg_Per_dL, MassUnit::mg); //.2 mmol
@@ -353,8 +355,10 @@ void BioGearsEngineTest::NutrientKineticsTest(bool usingAbsorption, bool usingDy
   for (SELiquidCompartment* c : intracellularCompartments) {
     c->GetSubstanceQuantity(aminoAcids)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * aminoAcidsBaseline_mg_Per_dL, MassUnit::mg);
     c->GetSubstanceQuantity(glucose)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * glucoseBaseline_mg_Per_dL, MassUnit::mg);
-    if (c != cBrainIntracellular) //TAG can't cross blood-brain barrier
+    if (c != cBrainIntracellular) {
+      //TAG can't cross blood-brain barrier
       c->GetSubstanceQuantity(triacylglycerol)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * triacylglycerolBaseline_mg_Per_dL, MassUnit::mg);
+    }
     c->GetSubstanceQuantity(glucagon)->GetMass().SetValue(0, MassUnit::mg);
     c->GetSubstanceQuantity(lactate)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * 13, MassUnit::mg);
     c->GetSubstanceQuantity(ketones)->GetMass().SetValue(c->GetVolume(VolumeUnit::dL) * ketonesBaseline_mg_Per_dL, MassUnit::mg); //.2 mmol
@@ -474,8 +478,9 @@ void BioGearsEngineTest::NutrientKineticsTest(bool usingAbsorption, bool usingDy
     //Nutrient storage handling
     if (usingGlycogen) {
       hormoneFactor = hptc.CalculateRelativeHormoneChange(insulinBaseline_pmol_Per_L, glucagonBaseline_pg_Per_mL, cLiverVascular->GetSubstanceQuantity(insulin), cLiverVascular->GetSubstanceQuantity(glucagon), bg);
-      if (i % trackSkipper == 0)
+      if (i % trackSkipper == 0) {
         trk.Track("LiverHormoneFactor", time, hormoneFactor);
+      }
       //double insulinDeviation = (cLiverVascular.GetSubstanceQuantity(insulin)->GetMolarity(AmountPerVolumeUnit::mmol_Per_L)*1e9 - insulinBaseline_pmol_Per_L) / insulinBaseline_pmol_Per_L;
       //double glucagonDeviation = (cLiverVascular.GetSubstanceQuantity(glucagon)->GetConcentration(MassPerVolumeUnit::mg_Per_mL)*1e9 - glucagonBaseline_pg_Per_mL) / glucagonBaseline_pg_Per_mL;
       //trk.Track("InsulinDeviation", time, insulinDeviation);
@@ -542,8 +547,9 @@ void BioGearsEngineTest::NutrientKineticsTest(bool usingAbsorption, bool usingDy
 
     if (usingProteinStorage) {
       hormoneFactor = hptc.CalculateRelativeHormoneChange(insulinBaseline_pmol_Per_L, glucagonBaseline_pg_Per_mL, cMuscleVascular->GetSubstanceQuantity(insulin), cMuscleVascular->GetSubstanceQuantity(glucagon), bg);
-      if (i % trackSkipper == 0)
+      if (i % trackSkipper == 0) {
         trk.Track("MuscleHormoneFactor", time, hormoneFactor);
+      }
 
       //Guyton says protein blood concentrations should only rise 2-3 mg/dL even after eating because of absorption into tissues
       //These values allow a 75g protein meal to only raise amino acid blood concentration ~7 mg/dL
@@ -592,8 +598,9 @@ void BioGearsEngineTest::NutrientKineticsTest(bool usingAbsorption, bool usingDy
 
     if (usingFatStorage) {
       hormoneFactor = hptc.CalculateRelativeHormoneChange(insulinBaseline_pmol_Per_L, glucagonBaseline_pg_Per_mL, cFatVascular->GetSubstanceQuantity(insulin), cFatVascular->GetSubstanceQuantity(glucagon), bg);
-      if (i % trackSkipper == 0)
+      if (i % trackSkipper == 0) {
         trk.Track("FatHormoneFactor", time, hormoneFactor);
+      }
 
       //Guyton says triglycerides in chylomicrons are clear from blood in "a few hours" with chylomicrons having half-life <1 hour
       //Other sources show triglycerides returning to normal in ~4 hours after peak
@@ -640,8 +647,9 @@ void BioGearsEngineTest::NutrientKineticsTest(bool usingAbsorption, bool usingDy
     }
 
     //Diffuse to tissues
-    if (useDiffusion)
+    if (useDiffusion) {
       NutrientDiffusion(vascularCompartments, extracellularCompartments, bg, tissueTotalMasses, deltaT_s, trk, time);
+    }
 
     double CO2Produced_mol = 0;
     double O2Consumed_mol = 0;
@@ -751,10 +759,11 @@ void BioGearsEngineTest::NutrientKineticsTest(bool usingAbsorption, bool usingDy
       double rateLimitingTuningFactor = 1;
       double liverLactate_mol = cLiverExtracellular->GetSubstanceQuantity(lactate)->GetMass().GetValue(MassUnit::g) / lactate.GetMolarMass(MassPerAmountUnit::g_Per_mol);
       double reconvertedGlucose_mol = liverLactate_mol * .5;
-      if (rateLimitingTuningFactor == 1)
+      if (rateLimitingTuningFactor == 1) {
         cLiverExtracellular->GetSubstanceQuantity(lactate)->GetMass().SetValue(0, MassUnit::g); //using IncrementValue to remove ALL lactate can result in numerical error negative masses
-      else
+      } else {
         cLiverExtracellular->GetSubstanceQuantity(lactate)->GetMass().IncrementValue(-rateLimitingTuningFactor * liverLactate_mol * lactate.GetMolarMass(MassPerAmountUnit::g_Per_mol), MassUnit::g);
+      }
       cLiverExtracellular->GetSubstanceQuantity(glucose)->GetMass().IncrementValue(rateLimitingTuningFactor * reconvertedGlucose_mol * glucose.GetMolarMass(MassPerAmountUnit::g_Per_mol), MassUnit::g);
 
       totalGlucoseFromLactate_g += rateLimitingTuningFactor * reconvertedGlucose_mol * glucose.GetMolarMass(MassPerAmountUnit::g_Per_mol);
@@ -950,14 +959,16 @@ void BioGearsEngineTest::NutrientDiffusion(std::vector<SELiquidCompartment*>& va
         //Note: in the current Tissue::CalculateDiffusion(), gases move by instant diffusion, and THEN
         //have a contribution by simple diffusion, causing possible overshoot. This is removed here.
         movedMass_ug = tsu.MoveMassByInstantDiffusion(*vascularCompartment, *ECtissueCompartment, *sub, deltaT_s);
-        if (ICtissueCompartment != nullptr)
+        if (ICtissueCompartment != nullptr) {
           movedMass_ug = tsu.MoveMassByInstantDiffusion(*ECtissueCompartment, *ICtissueCompartment, *sub, deltaT_s);
+        }
       }
       //Sodium is currently an oddball handled by instant diffusion, but we may want to change to simple and/or active when we do other ions
       else if (sub->GetName() == "Sodium") {
         movedMass_ug = tsu.MoveMassByInstantDiffusion(*vascularCompartment, *ECtissueCompartment, *sub, deltaT_s);
-        if (ICtissueCompartment != nullptr)
+        if (ICtissueCompartment != nullptr) {
           movedMass_ug = tsu.MoveMassByInstantDiffusion(*ECtissueCompartment, *ICtissueCompartment, *sub, deltaT_s);
+        }
       }
       //All non-gas substances (besides sodium) use either simple, facilitated, or active diffusion
       else {
@@ -975,12 +986,13 @@ void BioGearsEngineTest::NutrientDiffusion(std::vector<SELiquidCompartment*>& va
           /// \todo I believe we can optimize with a cache of these values. Also, we can cache permeabilityCoefficient_mL_Per_s_g which is not a function of the tissue properties
           double vToECpermeabilityCoefficient_mL_Per_s_g = 0;
           double molecularRadius_nm = 0.0348 * pow(molarMass_g_Per_mol, 0.4175);
-          if (molecularRadius_nm < 1.0)
+          if (molecularRadius_nm < 1.0) {
             vToECpermeabilityCoefficient_mL_Per_s_g = 0.0184 * pow(molecularRadius_nm, -1.223) / 100.0;
-          else
-            vToECpermeabilityCoefficient_mL_Per_s_g = 0.0287 * pow(molecularRadius_nm, -2.920) / 100.0; // This is only valid if the molecular radius is > 1.0 nm.
+          } else {
+            vToECpermeabilityCoefficient_mL_Per_s_g = 0.0287 * pow(molecularRadius_nm, -2.920) / 100.0; // This is only valid if the molecular radius is > 1.0 nm. 
+            }
 
-          // Multiply by tissue mass to get the tissue-dependent coefficient.
+            // Multiply by tissue mass to get the tissue-dependent coefficient.
           double vToECpermeabilityCoefficient_mL_Per_s = vToECpermeabilityCoefficient_mL_Per_s_g * tissueTotalMasses.at(tissueIndex);
           // A tuning factor helps tune the dynamics - note that concentrations will ALWAYS equilibrate in steady state given enough time regardless of the permeability
           double vToECPermeabilityTuningFactor = 1.0;
@@ -989,9 +1001,10 @@ void BioGearsEngineTest::NutrientDiffusion(std::vector<SELiquidCompartment*>& va
           //trk.Track(ECtissueCompartment->GetName() + sub->GetName() + "_SimpleDiffusionMass", time, movedMass_ug);
 
           //Assume EC to IC permeability is the same as V to EC; can use tuning factor if desired
-          if (ICtissueCompartment != nullptr)
+          if (ICtissueCompartment != nullptr) {
             movedMass_ug = tsu.MoveMassBySimpleDiffusion(*ECtissueCompartment, *ICtissueCompartment, *sub, ECToICPermeabilityTuningFactor * vToECpermeabilityCoefficient_mL_Per_s, deltaT_s);
-        }
+            }
+          }
 
         //Now facilitated diffusion
         if (sub->HasMaximumDiffusionFlux()) {
@@ -1002,8 +1015,9 @@ void BioGearsEngineTest::NutrientDiffusion(std::vector<SELiquidCompartment*>& va
           movedMass_ug = tsu.MoveMassByFacilitatedDiffusion(*vascularCompartment, *ECtissueCompartment, *sub, combinedCoefficient_g_Per_s, deltaT_s);
           //trk.Track(ECtissueCompartment->GetName() + sub->GetName() + "_FacilitatedDiffusionMass", time, movedMass_ug);
 
-          if (ICtissueCompartment != nullptr)
+          if (ICtissueCompartment != nullptr) {
             movedMass_ug = tsu.MoveMassByFacilitatedDiffusion(*ECtissueCompartment, *ICtissueCompartment, *sub, combinedCoefficient_g_Per_s, deltaT_s);
+          }
         }
 
         //Last, active diffusion (inactive here for now)
@@ -1017,9 +1031,10 @@ void BioGearsEngineTest::NutrientDiffusion(std::vector<SELiquidCompartment*>& va
       //Now that mass has been moved, balance to set concentrations and molarities
       vascularCompartment->GetSubstanceQuantity(*sub)->Balance(BalanceLiquidBy::Mass);
       ECtissueCompartment->GetSubstanceQuantity(*sub)->Balance(BalanceLiquidBy::Mass);
-      if (ICtissueCompartment != nullptr)
+      if (ICtissueCompartment != nullptr) {
         ICtissueCompartment->GetSubstanceQuantity(*sub)->Balance(BalanceLiquidBy::Mass);
-    }
+        }
+      }
   }
 }
 
@@ -1149,8 +1164,9 @@ void BioGearsEngineTest::ProduceAndConsume(double baseEnergyRequested_kcal, doub
   }
 
   //If our obligatory protein consumption met our energy request (unlikely), no need to consume glucose
-  if (muscleNeededEnergy_kcal <= 0)
+  if (muscleNeededEnergy_kcal <= 0) {
     return;
+  }
 
   //Under aerobic conditions, muscles and other tissues burn intracellular FFA by B-oxidation
   //Fat-burning is highest at low-to-moderate exertion levels, and drops back down at high levels

@@ -59,8 +59,9 @@ CDM::PericardialEffusionData* SEPericardialEffusion::Unload() const
 void SEPericardialEffusion::Unload(CDM::PericardialEffusionData& data) const
 {
   SEPatientAction::Unload(data);
-  if (m_EffusionRate != nullptr)
+  if (m_EffusionRate != nullptr) {
     data.EffusionRate(std::unique_ptr<CDM::ScalarVolumePerTimeData>(m_EffusionRate->Unload()));
+  }
 }
 
 bool SEPericardialEffusion::HasEffusionRate() const
@@ -70,16 +71,18 @@ bool SEPericardialEffusion::HasEffusionRate() const
 
 SEScalarVolumePerTime& SEPericardialEffusion::GetEffusionRate()
 {
-  if (m_EffusionRate == nullptr)
+  if (m_EffusionRate == nullptr) {
     m_EffusionRate = new SEScalarVolumePerTime();
+  }
   return *m_EffusionRate;
 }
 
 void SEPericardialEffusion::ToString(std::ostream& str) const
 {
   str << "Patient Action : Pericardial Effusion";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tEffusion Rate: ";
   HasEffusionRate() ? str << *m_EffusionRate : str << "NaN";
   str << std::flush;

@@ -267,8 +267,9 @@ void CommonDataModelTest::TestCompartmentSerialization(SECompartmentManager& mgr
   std::unique_ptr<CDM::ObjectData> bind = Serializer::ReadFile(fileName, m_Logger);
   CDM::CompartmentManagerData* data = dynamic_cast<CDM::CompartmentManagerData*>(bind.get());
   if (data != nullptr) {
-    if (!mgr.Load(*data, &m_Circuits))
+    if (!mgr.Load(*data, &m_Circuits)) {
       Error("Could not load Compartment Manager Data");
+    }
   } else {
     Error("Could not cast loaded Compartment Manager Data");
   }

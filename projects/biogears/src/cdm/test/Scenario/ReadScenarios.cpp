@@ -79,16 +79,18 @@ void CommonDataModelTest::ReadScenarios(const std::string& rptDirectory)
   ListFiles(dir, files, ".xml");
   for (std::vector<std::string>::iterator it = files.begin(); it != files.end(); ++it) {
     if (it->find("xml") != std::string::npos) {
-      if (it->find("PFT@") != std::string::npos || it->find("CBC@") != std::string::npos || it->find("MP@") != std::string::npos || it->find("Urinalysis@") != std::string::npos) // Ignore PFT, CBC, UPanel  and MP files
-        continue; // TODO should actually peek the file and ensure it starts with a <scenario> tag
+      if (it->find("PFT@") != std::string::npos || it->find("CBC@") != std::string::npos || it->find("MP@") != std::string::npos || it->find("Urinalysis@") != std::string::npos) {
+        // Ignore PFT, CBC, UPanel  and MP files
+        continue; // TODO should actually peek the file and ensure it starts with a <scenario> tag }
 
-      pTimer.Start("Case");
+        pTimer.Start("Case");
       SETestCase& testCase = testSuite.CreateTestCase();
       Info(it->c_str());
       try {
         if (scenario.LoadFile(*it)) {
-          if (!scenario.IsValid())
+          if (!scenario.IsValid()) {
             testCase.AddFailure(*it + " is not a valid scenario!");
+          }
 
           //if (scenario.GetInitialParameters().HasPatientFile())
           //{
@@ -147,3 +149,4 @@ void CommonDataModelTest::ReadScenarios(const std::string& rptDirectory)
   }
   testReport.WriteFile(rptDirectory + "/" + testName + "Report.xml");
 }
+  }

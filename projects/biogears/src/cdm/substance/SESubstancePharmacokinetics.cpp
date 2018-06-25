@@ -37,17 +37,20 @@ void SESubstancePharmacokinetics::Clear()
 
 bool SESubstancePharmacokinetics::IsValid() const
 {
-  if (HasPhysicochemicals())
+  if (HasPhysicochemicals()) {
     return true;
-  if (HasTissueKinetics())
+  }
+  if (HasTissueKinetics()) {
     return true;
+  }
   return false;
 }
 
 const SEScalar* SESubstancePharmacokinetics::GetScalar(const std::string& name)
 {
-  if (HasPhysicochemicals())
+  if (HasPhysicochemicals()) {
     return GetPhysicochemicals().GetScalar(name);
+  }
   // I did not support for getting a specific tissue kinetic scalar due to lack of coffee
   return nullptr;
 }
@@ -56,8 +59,9 @@ bool SESubstancePharmacokinetics::Load(const CDM::SubstancePharmacokineticsData&
 {
   Clear();
 
-  if (in.Physicochemicals().present())
+  if (in.Physicochemicals().present()) {
     GetPhysicochemicals().Load(in.Physicochemicals().get());
+  }
 
   SESubstanceTissuePharmacokinetics* fx;
   const CDM::SubstanceTissuePharmacokineticsData* fxData;
@@ -73,8 +77,9 @@ bool SESubstancePharmacokinetics::Load(const CDM::SubstancePharmacokineticsData&
 
 CDM::SubstancePharmacokineticsData* SESubstancePharmacokinetics::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::SubstancePharmacokineticsData* data = new CDM::SubstancePharmacokineticsData();
   Unload(*data);
   return data;
@@ -82,8 +87,9 @@ CDM::SubstancePharmacokineticsData* SESubstancePharmacokinetics::Unload() const
 
 void SESubstancePharmacokinetics::Unload(CDM::SubstancePharmacokineticsData& data) const
 {
-  if (HasPhysicochemicals())
+  if (HasPhysicochemicals()) {
     data.Physicochemicals(std::unique_ptr<CDM::SubstancePhysicochemicalData>(m_Physicochemicals->Unload()));
+  }
 
   for (auto itr : m_TissueKinetics) {
     data.TissueKinetics().push_back(std::unique_ptr<CDM::SubstanceTissuePharmacokineticsData>(itr.second->Unload()));
@@ -96,8 +102,9 @@ bool SESubstancePharmacokinetics::HasPhysicochemicals() const
 }
 SESubstancePhysicochemicals& SESubstancePharmacokinetics::GetPhysicochemicals()
 {
-  if (m_Physicochemicals == nullptr)
+  if (m_Physicochemicals == nullptr) {
     m_Physicochemicals = new SESubstancePhysicochemicals(GetLogger());
+  }
   return *m_Physicochemicals;
 }
 const SESubstancePhysicochemicals* SESubstancePharmacokinetics::GetPhysicochemicals() const
@@ -112,15 +119,17 @@ bool SESubstancePharmacokinetics::HasTissueKinetics() const
 bool SESubstancePharmacokinetics::HasTissueKinetics(const std::string& name) const
 {
   auto idx = m_TissueKinetics.find(name);
-  if (idx != m_TissueKinetics.end())
+  if (idx != m_TissueKinetics.end()) {
     return true;
+  }
   return false;
 }
 SESubstanceTissuePharmacokinetics& SESubstancePharmacokinetics::GetTissueKinetics(const std::string& name)
 {
   auto idx = m_TissueKinetics.find(name);
-  if (idx != m_TissueKinetics.end())
+  if (idx != m_TissueKinetics.end()) {
     return *(idx->second);
+  }
   SESubstanceTissuePharmacokinetics* fx = new SESubstanceTissuePharmacokinetics(name, GetLogger());
   m_TissueKinetics[name] = fx;
   return *fx;
@@ -128,8 +137,9 @@ SESubstanceTissuePharmacokinetics& SESubstancePharmacokinetics::GetTissueKinetic
 const SESubstanceTissuePharmacokinetics* SESubstancePharmacokinetics::GetTissueKinetics(const std::string& name) const
 {
   auto idx = m_TissueKinetics.find(name);
-  if (idx != m_TissueKinetics.end())
+  if (idx != m_TissueKinetics.end()) {
     return (idx->second);
+  }
   return nullptr;
 }
 void SESubstancePharmacokinetics::RemoveTissueKinetics(const std::string& name)

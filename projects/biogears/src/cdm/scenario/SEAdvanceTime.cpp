@@ -54,14 +54,16 @@ CDM::AdvanceTimeData* SEAdvanceTime::Unload() const
 void SEAdvanceTime::Unload(CDM::AdvanceTimeData& data) const
 {
   SEAction::Unload(data);
-  if (HasTime())
+  if (HasTime()) {
     data.Time(std::unique_ptr<CDM::ScalarTimeData>(m_Time->Unload()));
+  }
 }
 
 void SEAdvanceTime::ToString(std::ostream& str) const
 {
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment : " << m_Comment;
+  }
   str << "Advance Time : " << m_Time;
 }
 
@@ -71,13 +73,15 @@ bool SEAdvanceTime::HasTime() const
 }
 SEScalarTime& SEAdvanceTime::GetTime()
 {
-  if (m_Time == nullptr)
+  if (m_Time == nullptr) {
     m_Time = new SEScalarTime();
+  }
   return *m_Time;
 }
 double SEAdvanceTime::GetTime(const TimeUnit& unit) const
 {
-  if (m_Time == nullptr)
+  if (m_Time == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Time->GetValue(unit);
 }

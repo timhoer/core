@@ -49,10 +49,11 @@ bool SEConsumeNutrients::IsActive() const
 bool SEConsumeNutrients::Load(const CDM::ConsumeNutrientsData& in)
 {
   SEPatientAction::Load(in);
-  if (in.Nutrition().present())
+  if (in.Nutrition().present()) {
     GetNutrition().Load(in.Nutrition().get());
-  else if (in.NutritionFile().present())
+  } else if (in.NutritionFile().present()) {
     SetNutritionFile(in.NutritionFile().get());
+  }
   return true;
 }
 
@@ -66,10 +67,12 @@ CDM::ConsumeNutrientsData* SEConsumeNutrients::Unload() const
 void SEConsumeNutrients::Unload(CDM::ConsumeNutrientsData& data) const
 {
   SEPatientAction::Unload(data);
-  if (HasNutrition())
+  if (HasNutrition()) {
     data.Nutrition(std::unique_ptr<CDM::NutritionData>(m_Nutrition->Unload()));
-  if (HasNutritionFile())
+  }
+  if (HasNutritionFile()) {
     data.NutritionFile(m_NutritionFile);
+  }
 }
 
 bool SEConsumeNutrients::HasNutrition() const
@@ -79,8 +82,9 @@ bool SEConsumeNutrients::HasNutrition() const
 SENutrition& SEConsumeNutrients::GetNutrition()
 {
   m_NutritionFile = "";
-  if (m_Nutrition == nullptr)
+  if (m_Nutrition == nullptr) {
     m_Nutrition = new SENutrition(nullptr);
+  }
   return *m_Nutrition;
 }
 const SENutrition* SEConsumeNutrients::GetNutrition() const
@@ -110,8 +114,9 @@ void SEConsumeNutrients::InvalidateNutritionFile()
 void SEConsumeNutrients::ToString(std::ostream& str) const
 {
   str << "Patient Action : Consume Nutrients";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   if (HasNutrition()) {
     str << "\n\tCharbohydrates: ";
     m_Nutrition->HasCarbohydrate() ? str << m_Nutrition->GetCarbohydrate() : str << "None";
@@ -132,8 +137,9 @@ void SEConsumeNutrients::ToString(std::ostream& str) const
     str << "\n\tWater: ";
     m_Nutrition->HasWater() ? str << m_Nutrition->GetWater() : str << "None";
   }
-  if (HasNutritionFile())
+  if (HasNutritionFile()) {
     str << "\n\tNutrition File: ";
+  }
   str << m_NutritionFile;
   str << std::flush;
 }

@@ -20,8 +20,9 @@ const EnergyUnit EnergyUnit::kcal("kcal");
 
 CDM::ScalarEnergyData* SEScalarEnergy::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarEnergyData* data(new CDM::ScalarEnergyData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -29,27 +30,35 @@ CDM::ScalarEnergyData* SEScalarEnergy::Unload() const
 
 bool EnergyUnit::IsValidUnit(const std::string& unit)
 {
-  if (J.GetString().compare(unit) == 0)
+  if (J.GetString().compare(unit) == 0) {
     return true;
-  if (mJ.GetString().compare(unit) == 0)
+  }
+  if (mJ.GetString().compare(unit) == 0) {
     return true;
-  if (kJ.GetString().compare(unit) == 0)
+  }
+  if (kJ.GetString().compare(unit) == 0) {
     return true;
-  if (kcal.GetString().compare(unit) == 0)
+  }
+  if (kcal.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const EnergyUnit& EnergyUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (J.GetString().compare(unit) == 0)
+  if (J.GetString().compare(unit) == 0) {
     return J;
-  if (mJ.GetString().compare(unit) == 0)
+  }
+  if (mJ.GetString().compare(unit) == 0) {
     return mJ;
-  if (kJ.GetString().compare(unit) == 0)
+  }
+  if (kJ.GetString().compare(unit) == 0) {
     return kJ;
-  if (kcal.GetString().compare(unit) == 0)
+  }
+  if (kcal.GetString().compare(unit) == 0) {
     return kcal;
+  }
   std::stringstream err;
   err << unit << " is not a valid Energy unit";
   throw CommonDataModelException(err.str());

@@ -127,27 +127,31 @@ void BioGearsEngineTest::RespiratoryCircuitAndTransportTest(RespiratoryConfigura
     //Execute the substance transport function
     gtxpt.Transport(*rGraph, deltaT_s);
     // Do it again for aerosols
-    if (aGraph != nullptr)
+    if (aGraph != nullptr) {
       ltxpt.Transport(*aGraph, deltaT_s);
+    }
     //convert 'Next' values to current
     calc.PostProcess(*rCircuit);
 
     outTrkCircuit.Track(time, *rCircuit);
     outTrkGraph.Track(time, *rGraph);
-    if (aGraph != nullptr)
+    if (aGraph != nullptr) {
       aerosolGraphTrk.Track(time, *aGraph);
+    }
     time += deltaT_s;
 
     if (i == 0) {
       outTrkCircuit.CreateFile(std::string(sTestDirectory + sCircuitFileName).c_str(), fileCircuit);
       outTrkGraph.CreateFile(std::string(sTestDirectory + sTransportFileName).c_str(), fileGraph);
-      if (aGraph != nullptr)
+      if (aGraph != nullptr) {
         aerosolGraphTrk.CreateFile(std::string(sTestDirectory + sAerosolTxptFileName).c_str(), fAerosolGraph);
+      }
     }
     outTrkCircuit.StreamTrackToFile(fileCircuit);
     outTrkGraph.StreamTrackToFile(fileGraph);
-    if (aGraph != nullptr)
+    if (aGraph != nullptr) {
       aerosolGraphTrk.StreamTrackToFile(fAerosolGraph);
+    }
   }
   fileCircuit.close();
   fileGraph.close();

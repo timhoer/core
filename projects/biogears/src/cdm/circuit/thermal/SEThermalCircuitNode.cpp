@@ -31,16 +31,21 @@ void SEThermalCircuitNode::Clear()
 bool SEThermalCircuitNode::Load(const CDM::ThermalCircuitNodeData& in)
 {
   SECircuitNode::Load(in);
-  if (in.Temperature().present())
+  if (in.Temperature().present()) {
     GetTemperature().Load(in.Temperature().get());
-  if (in.NextTemperature().present())
+  }
+  if (in.NextTemperature().present()) {
     GetNextTemperature().Load(in.NextTemperature().get());
-  if (in.Heat().present())
+  }
+  if (in.Heat().present()) {
     GetHeat().Load(in.Heat().get());
-  if (in.NextHeat().present())
+  }
+  if (in.NextHeat().present()) {
     GetNextHeat().Load(in.NextHeat().get());
-  if (in.HeatBaseline().present())
+  }
+  if (in.HeatBaseline().present()) {
     GetHeatBaseline().Load(in.HeatBaseline().get());
+  }
   return true;
 }
 CDM::ThermalCircuitNodeData* SEThermalCircuitNode::Unload() const
@@ -52,16 +57,21 @@ CDM::ThermalCircuitNodeData* SEThermalCircuitNode::Unload() const
 void SEThermalCircuitNode::Unload(CDM::ThermalCircuitNodeData& data) const
 {
   SECircuitNode::Unload(data);
-  if (HasTemperature())
+  if (HasTemperature()) {
     data.Temperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_Potential->Unload()));
-  if (HasNextTemperature())
+  }
+  if (HasNextTemperature()) {
     data.NextTemperature(std::unique_ptr<CDM::ScalarTemperatureData>(m_NextPotential->Unload()));
-  if (HasHeat())
+  }
+  if (HasHeat()) {
     data.Heat(std::unique_ptr<CDM::ScalarEnergyData>(m_Quantity->Unload()));
-  if (HasNextHeat())
+  }
+  if (HasNextHeat()) {
     data.NextHeat(std::unique_ptr<CDM::ScalarEnergyData>(m_NextQuantity->Unload()));
-  if (HasHeatBaseline())
+  }
+  if (HasHeatBaseline()) {
     data.HeatBaseline(std::unique_ptr<CDM::ScalarEnergyData>(m_QuantityBaseline->Unload()));
+  }
 }
 
 bool SEThermalCircuitNode::HasTemperature() const
@@ -74,8 +84,9 @@ SEScalarTemperature& SEThermalCircuitNode::GetTemperature()
 }
 double SEThermalCircuitNode::GetTemperature(const TemperatureUnit& unit) const
 {
-  if (m_Potential == nullptr)
+  if (m_Potential == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Potential->GetValue(unit);
 }
 
@@ -89,8 +100,9 @@ SEScalarTemperature& SEThermalCircuitNode::GetNextTemperature()
 }
 double SEThermalCircuitNode::GetNextTemperature(const TemperatureUnit& unit) const
 {
-  if (m_NextPotential == nullptr)
+  if (m_NextPotential == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextPotential->GetValue(unit);
 }
 
@@ -104,8 +116,9 @@ SEScalarEnergy& SEThermalCircuitNode::GetHeat()
 }
 double SEThermalCircuitNode::GetHeat(const EnergyUnit& unit) const
 {
-  if (m_Quantity == nullptr)
+  if (m_Quantity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_Quantity->GetValue(unit);
 }
 
@@ -119,8 +132,9 @@ SEScalarEnergy& SEThermalCircuitNode::GetNextHeat()
 }
 double SEThermalCircuitNode::GetNextHeat(const EnergyUnit& unit) const
 {
-  if (m_NextQuantity == nullptr)
+  if (m_NextQuantity == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_NextQuantity->GetValue(unit);
 }
 
@@ -134,7 +148,8 @@ SEScalarEnergy& SEThermalCircuitNode::GetHeatBaseline()
 }
 double SEThermalCircuitNode::GetHeatBaseline(const EnergyUnit& unit) const
 {
-  if (m_QuantityBaseline == nullptr)
+  if (m_QuantityBaseline == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_QuantityBaseline->GetValue(unit);
 }

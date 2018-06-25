@@ -51,8 +51,9 @@ bool SETestSuite::Load(const CDM::TestSuite& in)
   std::string sData;
   for (unsigned int i = 0; i < in.Requirement().size(); i++) {
     sData = (std::string)in.Requirement().at(i);
-    if (sData != nullptr)
+    if (sData != nullptr) {
       m_Requirements.push_back(sData);
+    }
   }
 
   SETestErrorStatistics* ex;
@@ -94,8 +95,9 @@ void SETestSuite::Unload(CDM::TestSuite& data) const
   std::string sData;
   for (unsigned int i = 0; i < m_Requirements.size(); i++) {
     sData = m_Requirements.at(i);
-    if (sData != nullptr)
+    if (sData != nullptr) {
       data.Requirement().push_back(sData);
+    }
   }
   for (unsigned int i = 0; i < m_SuiteEqualError.size(); i++) {
     data.SuiteEqualError().push_back(*m_SuiteEqualError.at(i)->Unload());
@@ -111,8 +113,9 @@ void SETestSuite::Unload(CDM::TestSuite& data) const
     data.Errors(GetNumberOfErrors());
   }
 
-  if (m_Name.compare("") != 0)
+  if (m_Name.compare("") != 0) {
     data.Name(m_Name);
+  }
 }
 
 void SETestSuite::SetName(const std::string& Name)
@@ -138,8 +141,9 @@ bool SETestSuite::PerformedSuite()
 const SEScalarTime& SETestSuite::GetDuration() const
 {
   double time = 0;
-  for (unsigned int i = 0; i < m_TestCase.size(); i++)
+  for (unsigned int i = 0; i < m_TestCase.size(); i++) {
     time += m_TestCase.at(i)->GetDuration().GetValue(TimeUnit::s);
+  }
   m_Time.SetValue(time, TimeUnit::s);
   return m_Time;
 }

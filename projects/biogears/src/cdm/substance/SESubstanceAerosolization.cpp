@@ -43,21 +43,26 @@ void SESubstanceAerosolization::Clear()
 
 bool SESubstanceAerosolization::IsValid() const
 {
-  if (!HasBronchioleModifier())
+  if (!HasBronchioleModifier()) {
     return false;
-  if (!HasInflammationCoefficient())
+  }
+  if (!HasInflammationCoefficient()) {
     return false;
-  if (!HasParticulateSizeDistribution())
+  }
+  if (!HasParticulateSizeDistribution()) {
     return false;
+  }
   return true;
 }
 
 const SEScalar* SESubstanceAerosolization::GetScalar(const std::string& name)
 {
-  if (name.compare("BronchioleModifier") == 0)
+  if (name.compare("BronchioleModifier") == 0) {
     return &GetBronchioleModifier();
-  if (name.compare("InflammationCoefficient") == 0)
+  }
+  if (name.compare("InflammationCoefficient") == 0) {
     return &GetInflammationCoefficient();
+  }
   return nullptr;
 }
 
@@ -72,8 +77,9 @@ bool SESubstanceAerosolization::Load(const CDM::SubstanceAerosolizationData& in)
 
 CDM::SubstanceAerosolizationData* SESubstanceAerosolization::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::SubstanceAerosolizationData* data = new CDM::SubstanceAerosolizationData();
   Unload(*data);
   return data;
@@ -81,12 +87,15 @@ CDM::SubstanceAerosolizationData* SESubstanceAerosolization::Unload() const
 
 void SESubstanceAerosolization::Unload(CDM::SubstanceAerosolizationData& data) const
 {
-  if (HasBronchioleModifier())
+  if (HasBronchioleModifier()) {
     data.BronchioleModifier(std::unique_ptr<CDM::ScalarNeg1To1Data>(m_BronchioleModifier->Unload()));
-  if (HasInflammationCoefficient())
+  }
+  if (HasInflammationCoefficient()) {
     data.InflammationCoefficient(std::unique_ptr<CDM::Scalar0To1Data>(m_InflammationCoefficient->Unload()));
-  if (HasParticulateSizeDistribution())
+  }
+  if (HasParticulateSizeDistribution()) {
     data.ParticulateSizeDistribution(std::unique_ptr<CDM::HistogramFractionVsLengthData>(m_ParticulateSizeDistribution->Unload()));
+  }
 };
 
 bool SESubstanceAerosolization::HasBronchioleModifier() const
@@ -95,14 +104,16 @@ bool SESubstanceAerosolization::HasBronchioleModifier() const
 }
 SEScalarNeg1To1& SESubstanceAerosolization::GetBronchioleModifier()
 {
-  if (m_BronchioleModifier == nullptr)
+  if (m_BronchioleModifier == nullptr) {
     m_BronchioleModifier = new SEScalarNeg1To1();
+  }
   return *m_BronchioleModifier;
 }
 double SESubstanceAerosolization::GetBronchioleModifier() const
 {
-  if (m_BronchioleModifier == nullptr)
+  if (m_BronchioleModifier == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_BronchioleModifier->GetValue();
 }
 
@@ -112,14 +123,16 @@ bool SESubstanceAerosolization::HasInflammationCoefficient() const
 }
 SEScalar0To1& SESubstanceAerosolization::GetInflammationCoefficient()
 {
-  if (m_InflammationCoefficient == nullptr)
+  if (m_InflammationCoefficient == nullptr) {
     m_InflammationCoefficient = new SEScalar0To1();
+  }
   return *m_InflammationCoefficient;
 }
 double SESubstanceAerosolization::GetInflammationCoefficient() const
 {
-  if (m_InflammationCoefficient == nullptr)
+  if (m_InflammationCoefficient == nullptr) {
     return SEScalar::dNaN();
+  }
   return m_InflammationCoefficient->GetValue();
 }
 
@@ -129,8 +142,9 @@ bool SESubstanceAerosolization::HasParticulateSizeDistribution() const
 }
 SEHistogramFractionVsLength& SESubstanceAerosolization::GetParticulateSizeDistribution()
 {
-  if (m_ParticulateSizeDistribution == nullptr)
+  if (m_ParticulateSizeDistribution == nullptr) {
     m_ParticulateSizeDistribution = new SEHistogramFractionVsLength();
+  }
   return *m_ParticulateSizeDistribution;
 }
 const SEHistogramFractionVsLength* SESubstanceAerosolization::GetParticulateSizeDistribution() const

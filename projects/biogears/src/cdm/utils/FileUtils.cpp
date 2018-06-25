@@ -57,8 +57,9 @@ bool CreateFilePath(const std::string& path)
   // Create the folders iteratively, backwards
   for (unsigned int i = folderLevels.size() - 1; i >= 1; i--) {
     dir = folderLevels.at(i);
-    if (dir == "/" || dir == "\\")
+    if (dir == "/" || dir == "\\") {
       continue;
+    }
     destDir += dir;
     MKDIR(destDir.c_str());
   }
@@ -74,15 +75,17 @@ void ListFiles(const std::string& dir, std::vector<std::string>& files, const st
     while ((ent = readdir(d)) != nullptr) {
       int nameLength = strlen(ent->d_name);
 
-      if (ent->d_name[0] == '.' && ((nameLength == 1) || (nameLength == 2 && ent->d_name[1] == '.')))
+      if (ent->d_name[0] == '.' && ((nameLength == 1) || (nameLength == 2 && ent->d_name[1] == '.'))) {
         continue;
+      }
       filename = dir;
       filename += "/";
       filename += ent->d_name;
 
       if (!IsDirectory(ent)) {
-        if (filename.find(mask) != std::string::npos)
+        if (filename.find(mask) != std::string::npos) {
           files.push_back(filename);
+        }
       } else {
         ListFiles(filename, files, mask);
       }
@@ -99,8 +102,9 @@ void DeleteDirectory(const std::string& dir, bool bDeleteSubdirectories)
     while ((ent = readdir(d)) != nullptr) {
       int nameLength = strlen(ent->d_name);
 
-      if (ent->d_name[0] == '.' && ((nameLength == 1) || (nameLength == 2 && ent->d_name[1] == '.')))
+      if (ent->d_name[0] == '.' && ((nameLength == 1) || (nameLength == 2 && ent->d_name[1] == '.'))) {
         continue;
+      }
       filename = dir;
       filename += "/";
       filename += ent->d_name;

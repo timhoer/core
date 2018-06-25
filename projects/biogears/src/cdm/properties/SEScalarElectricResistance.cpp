@@ -17,8 +17,9 @@ const ElectricResistanceUnit ElectricResistanceUnit::Ohm("ohm");
 
 CDM::ScalarElectricResistanceData* SEScalarElectricResistance::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarElectricResistanceData* data(new CDM::ScalarElectricResistanceData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -26,15 +27,17 @@ CDM::ScalarElectricResistanceData* SEScalarElectricResistance::Unload() const
 
 bool ElectricResistanceUnit::IsValidUnit(const std::string& unit)
 {
-  if (Ohm.GetString().compare(unit) == 0)
+  if (Ohm.GetString().compare(unit) == 0) {
     return true;
+  }
   return false;
 }
 
 const ElectricResistanceUnit& ElectricResistanceUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (Ohm.GetString().compare(unit) == 0)
+  if (Ohm.GetString().compare(unit) == 0) {
     return Ohm;
+  }
   std::stringstream err;
   err << unit << " is not a valid ElectricResistance unit";
   throw CommonDataModelException(err.str());

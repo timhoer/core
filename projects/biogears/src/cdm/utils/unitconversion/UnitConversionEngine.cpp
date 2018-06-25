@@ -305,8 +305,9 @@ CUnitDescriptor* CUnitConversionEngine::NewUnit(const std::string& name, const s
   // Add it to the list
   m_UList->push_back(ud);
   auto itr = m_USMap->find(symbol);
-  if (itr != m_USMap->end())
+  if (itr != m_USMap->end()) {
     std::cerr << "Symbol '" << symbol << "' is trying to be used as " << name << ", but it has already been defined as " << (*m_UList)[itr->second]->GetName() << std::endl;
+  }
 
   // Since we just added it to the end of the vector, the size of the vector
   // is one more than the index where we added it.

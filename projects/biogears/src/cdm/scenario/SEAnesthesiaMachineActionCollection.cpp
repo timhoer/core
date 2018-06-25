@@ -68,38 +68,52 @@ void SEAnesthesiaMachineActionCollection::Clear()
 
 void SEAnesthesiaMachineActionCollection::Unload(std::vector<CDM::ActionData*>& to)
 {
-  if (HasConfiguration())
+  if (HasConfiguration()) {
     to.push_back(GetConfiguration()->Unload());
-  if (HasOxygenTankPressureLoss())
+  }
+  if (HasOxygenTankPressureLoss()) {
     to.push_back(GetOxygenTankPressureLoss()->Unload());
-  if (HasOxygenWallPortPressureLoss())
+  }
+  if (HasOxygenWallPortPressureLoss()) {
     to.push_back(GetOxygenWallPortPressureLoss()->Unload());
-  if (HasExpiratoryValveLeak())
+  }
+  if (HasExpiratoryValveLeak()) {
     to.push_back(GetExpiratoryValveLeak()->Unload());
-  if (HasExpiratoryValveObstruction())
+  }
+  if (HasExpiratoryValveObstruction()) {
     to.push_back(GetExpiratoryValveObstruction()->Unload());
-  if (HasInspiratoryValveLeak())
+  }
+  if (HasInspiratoryValveLeak()) {
     to.push_back(GetInspiratoryValveLeak()->Unload());
-  if (HasInspiratoryValveObstruction())
+  }
+  if (HasInspiratoryValveObstruction()) {
     to.push_back(GetInspiratoryValveObstruction()->Unload());
-  if (HasMaskLeak())
+  }
+  if (HasMaskLeak()) {
     to.push_back(GetMaskLeak()->Unload());
-  if (HasSodaLimeFailure())
+  }
+  if (HasSodaLimeFailure()) {
     to.push_back(GetSodaLimeFailure()->Unload());
-  if (HasTubeCuffLeak())
+  }
+  if (HasTubeCuffLeak()) {
     to.push_back(GetTubeCuffLeak()->Unload());
-  if (HasVaporizerFailure())
+  }
+  if (HasVaporizerFailure()) {
     to.push_back(GetVaporizerFailure()->Unload());
-  if (HasVentilatorPressureLoss())
+  }
+  if (HasVentilatorPressureLoss()) {
     to.push_back(GetVentilatorPressureLoss()->Unload());
-  if (HasYPieceDisconnect())
+  }
+  if (HasYPieceDisconnect()) {
     to.push_back(GetYPieceDisconnect()->Unload());
+  }
 }
 
 bool SEAnesthesiaMachineActionCollection::ProcessAction(const SEAnesthesiaMachineAction& action)
 {
-  if (!IsValid(action))
+  if (!IsValid(action)) {
     return false;
+  }
   CDM::AnesthesiaMachineActionData* bind = action.Unload();
   bool b = ProcessAction(*bind);
   delete bind;
@@ -110,16 +124,18 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 {
   const CDM::AnesthesiaMachineConfigurationData* config = dynamic_cast<const CDM::AnesthesiaMachineConfigurationData*>(&action);
   if (config != nullptr) {
-    if (m_Configuration == nullptr)
+    if (m_Configuration == nullptr) {
       m_Configuration = new SEAnesthesiaMachineConfiguration(m_Substances);
+    }
     m_Configuration->Load(*config);
     return IsValid(*m_Configuration);
   }
 
   const CDM::OxygenTankPressureLossData* O2Tank = dynamic_cast<const CDM::OxygenTankPressureLossData*>(&action);
   if (O2Tank != nullptr) {
-    if (m_OxygenTankPressureLoss == nullptr)
+    if (m_OxygenTankPressureLoss == nullptr) {
       m_OxygenTankPressureLoss = new SEOxygenTankPressureLoss();
+    }
     m_OxygenTankPressureLoss->Load(*O2Tank);
     if (!m_OxygenTankPressureLoss->IsActive()) {
       RemoveOxygenTankPressureLoss();
@@ -130,8 +146,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::OxygenWallPortPressureLossData* O2Wall = dynamic_cast<const CDM::OxygenWallPortPressureLossData*>(&action);
   if (O2Wall != nullptr) {
-    if (m_OxygenWallPortPressureLoss == nullptr)
+    if (m_OxygenWallPortPressureLoss == nullptr) {
       m_OxygenWallPortPressureLoss = new SEOxygenWallPortPressureLoss();
+    }
     m_OxygenWallPortPressureLoss->Load(*O2Wall);
     if (!m_OxygenWallPortPressureLoss->IsActive()) {
       RemoveOxygenWallPortPressureLoss();
@@ -142,8 +159,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::ExpiratoryValveLeakData* eLeak = dynamic_cast<const CDM::ExpiratoryValveLeakData*>(&action);
   if (eLeak != nullptr) {
-    if (m_ExpiratoryValveLeak == nullptr)
+    if (m_ExpiratoryValveLeak == nullptr) {
       m_ExpiratoryValveLeak = new SEExpiratoryValveLeak();
+    }
     m_ExpiratoryValveLeak->Load(*eLeak);
     if (!m_ExpiratoryValveLeak->IsActive()) {
       RemoveExpiratoryValveLeak();
@@ -154,8 +172,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::ExpiratoryValveObstructionData* eOb = dynamic_cast<const CDM::ExpiratoryValveObstructionData*>(&action);
   if (eOb != nullptr) {
-    if (m_ExpiratoryValveObstruction == nullptr)
+    if (m_ExpiratoryValveObstruction == nullptr) {
       m_ExpiratoryValveObstruction = new SEExpiratoryValveObstruction();
+    }
     m_ExpiratoryValveObstruction->Load(*eOb);
     if (!m_ExpiratoryValveObstruction->IsActive()) {
       RemoveExpiratoryValveObstruction();
@@ -166,8 +185,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::InspiratoryValveLeakData* iLeak = dynamic_cast<const CDM::InspiratoryValveLeakData*>(&action);
   if (iLeak != nullptr) {
-    if (m_InspiratoryValveLeak == nullptr)
+    if (m_InspiratoryValveLeak == nullptr) {
       m_InspiratoryValveLeak = new SEInspiratoryValveLeak();
+    }
     m_InspiratoryValveLeak->Load(*iLeak);
     if (!m_InspiratoryValveLeak->IsActive()) {
       RemoveInspiratoryValveLeak();
@@ -178,8 +198,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::InspiratoryValveObstructionData* iOb = dynamic_cast<const CDM::InspiratoryValveObstructionData*>(&action);
   if (iOb != nullptr) {
-    if (m_InspiratoryValveObstruction == nullptr)
+    if (m_InspiratoryValveObstruction == nullptr) {
       m_InspiratoryValveObstruction = new SEInspiratoryValveObstruction();
+    }
     m_InspiratoryValveObstruction->Load(*iOb);
     if (!m_InspiratoryValveObstruction->IsActive()) {
       RemoveInspiratoryValveObstruction();
@@ -190,8 +211,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::MaskLeakData* mask = dynamic_cast<const CDM::MaskLeakData*>(&action);
   if (mask != nullptr) {
-    if (m_MaskLeak == nullptr)
+    if (m_MaskLeak == nullptr) {
       m_MaskLeak = new SEMaskLeak();
+    }
     m_MaskLeak->Load(*mask);
     if (!m_MaskLeak->IsActive()) {
       RemoveMaskLeak();
@@ -202,8 +224,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::SodaLimeFailureData* soda = dynamic_cast<const CDM::SodaLimeFailureData*>(&action);
   if (soda != nullptr) {
-    if (m_SodaLimeFailure == nullptr)
+    if (m_SodaLimeFailure == nullptr) {
       m_SodaLimeFailure = new SESodaLimeFailure();
+    }
     m_SodaLimeFailure->Load(*soda);
     if (!m_SodaLimeFailure->IsActive()) {
       RemoveSodaLimeFailure();
@@ -214,8 +237,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::TubeCuffLeakData* tube = dynamic_cast<const CDM::TubeCuffLeakData*>(&action);
   if (tube != nullptr) {
-    if (m_TubeCuffLeak == nullptr)
+    if (m_TubeCuffLeak == nullptr) {
       m_TubeCuffLeak = new SETubeCuffLeak();
+    }
     m_TubeCuffLeak->Load(*tube);
     if (!m_TubeCuffLeak->IsActive()) {
       RemoveTubeCuffLeak();
@@ -226,8 +250,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::VaporizerFailureData* vFail = dynamic_cast<const CDM::VaporizerFailureData*>(&action);
   if (vFail != nullptr) {
-    if (m_VaporizerFailure == nullptr)
+    if (m_VaporizerFailure == nullptr) {
       m_VaporizerFailure = new SEVaporizerFailure();
+    }
     m_VaporizerFailure->Load(*vFail);
     if (!m_VaporizerFailure->IsActive()) {
       RemoveVaporizerFailure();
@@ -238,8 +263,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::VentilatorPressureLossData* vLoss = dynamic_cast<const CDM::VentilatorPressureLossData*>(&action);
   if (vLoss != nullptr) {
-    if (m_VentilatorPressureLoss == nullptr)
+    if (m_VentilatorPressureLoss == nullptr) {
       m_VentilatorPressureLoss = new SEVentilatorPressureLoss();
+    }
     m_VentilatorPressureLoss->Load(*vLoss);
     if (!m_VentilatorPressureLoss->IsActive()) {
       RemoveVentilatorPressureLoss();
@@ -250,8 +276,9 @@ bool SEAnesthesiaMachineActionCollection::ProcessAction(const CDM::AnesthesiaMac
 
   const CDM::YPieceDisconnectData* Y = dynamic_cast<const CDM::YPieceDisconnectData*>(&action);
   if (Y != nullptr) {
-    if (m_YPieceDisconnect == nullptr)
+    if (m_YPieceDisconnect == nullptr) {
       m_YPieceDisconnect = new SEYPieceDisconnect();
+    }
     m_YPieceDisconnect->Load(*Y);
     if (!m_YPieceDisconnect->IsActive()) {
       RemoveYPieceDisconnect();

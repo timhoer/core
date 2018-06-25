@@ -38,10 +38,12 @@ void SEFunction::Clear()
 
 bool SEFunction::IsValid() const
 {
-  if (m_Dependent.size() == 0 || m_Independent.size() == 0)
+  if (m_Dependent.size() == 0 || m_Independent.size() == 0) {
     return false;
-  if (m_Dependent.size() != m_Independent.size())
+  }
+  if (m_Dependent.size() != m_Independent.size()) {
     return false;
+  }
   return true;
 }
 
@@ -53,17 +55,20 @@ void SEFunction::Invalidate()
 bool SEFunction::Load(const CDM::FunctionData& in)
 {
   Clear();
-  for (unsigned int i = 0; i < in.Dependent().DoubleList().size(); i++)
+  for (unsigned int i = 0; i < in.Dependent().DoubleList().size(); i++) {
     m_Dependent.push_back(in.Dependent().DoubleList()[i]);
-  for (unsigned int i = 0; i < in.Independent().DoubleList().size(); i++)
+  }
+  for (unsigned int i = 0; i < in.Independent().DoubleList().size(); i++) {
     m_Independent.push_back(in.Independent().DoubleList()[i]);
+  }
   return IsValid();
 }
 
 CDM::FunctionData* SEFunction::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::FunctionData* data(new CDM::FunctionData());
   Unload(*data);
   return data;
@@ -83,15 +88,17 @@ void SEFunction::Unload(CDM::FunctionData& data) const
 
 unsigned int SEFunction::Length()
 {
-  if (IsValid())
+  if (IsValid()) {
     return m_Independent.size();
+  }
   return 0;
 }
 
 double SEFunction::GetDependentValue(unsigned int index)
 {
-  if (index >= m_Dependent.size())
+  if (index >= m_Dependent.size()) {
     throw CommonDataModelException("Dependent index out of bounds");
+  }
   return m_Dependent[index];
 }
 
@@ -102,8 +109,9 @@ std::vector<double>& SEFunction::GetDependent()
 
 double SEFunction::GetIndependentValue(unsigned int index)
 {
-  if (index >= m_Independent.size())
+  if (index >= m_Independent.size()) {
     throw CommonDataModelException("Independent index out of bounds");
+  }
   return m_Independent[index];
 }
 

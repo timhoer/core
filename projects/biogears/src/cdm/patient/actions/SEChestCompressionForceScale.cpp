@@ -50,8 +50,9 @@ bool SEChestCompressionForceScale::Load(const CDM::ChestCompressionForceScaleDat
 {
   SEChestCompression::Load(in);
   GetForceScale().Load(in.ForceScale());
-  if (in.ForcePeriod().present())
+  if (in.ForcePeriod().present()) {
     GetForcePeriod().Load(in.ForcePeriod().get());
+  }
   return true;
 }
 
@@ -65,10 +66,12 @@ CDM::ChestCompressionForceScaleData* SEChestCompressionForceScale::Unload() cons
 void SEChestCompressionForceScale::Unload(CDM::ChestCompressionForceScaleData& data) const
 {
   SEChestCompression::Unload(data);
-  if (m_ForceScale != nullptr)
+  if (m_ForceScale != nullptr) {
     data.ForceScale(std::unique_ptr<CDM::Scalar0To1Data>(m_ForceScale->Unload()));
-  if (m_ForcePeriod != nullptr)
+  }
+  if (m_ForcePeriod != nullptr) {
     data.ForcePeriod(std::unique_ptr<CDM::ScalarTimeData>(m_ForcePeriod->Unload()));
+  }
 }
 
 bool SEChestCompressionForceScale::HasForceScale() const
@@ -77,8 +80,9 @@ bool SEChestCompressionForceScale::HasForceScale() const
 }
 SEScalar0To1& SEChestCompressionForceScale::GetForceScale()
 {
-  if (m_ForceScale == nullptr)
+  if (m_ForceScale == nullptr) {
     m_ForceScale = new SEScalar0To1();
+  }
   return *m_ForceScale;
 }
 
@@ -88,16 +92,18 @@ bool SEChestCompressionForceScale::HasForcePeriod() const
 }
 SEScalarTime& SEChestCompressionForceScale::GetForcePeriod()
 {
-  if (m_ForcePeriod == nullptr)
+  if (m_ForcePeriod == nullptr) {
     m_ForcePeriod = new SEScalarTime();
+  }
   return *m_ForcePeriod;
 }
 
 void SEChestCompressionForceScale::ToString(std::ostream& str) const
 {
   str << "Patient Action : Chest Compression";
-  if (HasComment())
+  if (HasComment()) {
     str << "\n\tComment: " << m_Comment;
+  }
   str << "\n\tForceScale: ";
   HasForceScale() ? str << *m_ForceScale : str << "NaN";
   str << "\n\tForcePeriod: ";

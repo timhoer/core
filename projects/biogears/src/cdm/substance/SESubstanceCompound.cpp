@@ -73,8 +73,9 @@ CDM::SubstanceCompoundData* SESubstanceCompound::Unload() const
 
 void SESubstanceCompound::Unload(CDM::SubstanceCompoundData& data) const
 {
-  if (HasName())
+  if (HasName()) {
     data.Name(m_Name);
+  }
 
   for (unsigned int i = 0; i < m_Components.size(); i++) {
     data.Component().push_back(*m_Components.at(i)->Unload());
@@ -105,8 +106,9 @@ bool SESubstanceCompound::HasComponent() const
 bool SESubstanceCompound::HasComponent(const SESubstance& substance) const
 {
   for (SESubstanceConcentration* q : m_Components) {
-    if (&substance == &q->GetSubstance())
+    if (&substance == &q->GetSubstance()) {
       return true;
+    }
   }
   return false;
 }
@@ -121,8 +123,9 @@ const std::vector<const SESubstanceConcentration*>& SESubstanceCompound::GetComp
 const SESubstanceConcentration& SESubstanceCompound::GetComponent(SESubstance& substance)
 {
   for (SESubstanceConcentration* sq : m_Components) {
-    if (&substance == &sq->GetSubstance())
+    if (&substance == &sq->GetSubstance()) {
       return *sq;
+    }
   }
   SESubstanceConcentration* sq = new SESubstanceConcentration(substance);
   sq->GetConcentration().SetValue(0, MassPerVolumeUnit::ug_Per_mL);
@@ -133,8 +136,9 @@ const SESubstanceConcentration& SESubstanceCompound::GetComponent(SESubstance& s
 const SESubstanceConcentration* SESubstanceCompound::GetComponent(SESubstance& substance) const
 {
   for (SESubstanceConcentration* sq : m_Components) {
-    if (&substance == &sq->GetSubstance())
+    if (&substance == &sq->GetSubstance()) {
       return sq;
+    }
   }
   return nullptr;
 }

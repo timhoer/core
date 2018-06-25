@@ -21,8 +21,9 @@ const PressureUnit PressureUnit::atm("atm");
 
 CDM::ScalarPressureData* SEScalarPressure::Unload() const
 {
-  if (!IsValid())
+  if (!IsValid()) {
     return nullptr;
+  }
   CDM::ScalarPressureData* data(new CDM::ScalarPressureData());
   SEScalarQuantity::Unload(*data);
   return data;
@@ -30,14 +31,18 @@ CDM::ScalarPressureData* SEScalarPressure::Unload() const
 
 bool PressureUnit::IsValidUnit(const std::string& unit)
 {
-  if (Pa.GetString().compare(unit) == 0)
+  if (Pa.GetString().compare(unit) == 0) {
     return true;
-  if (mmHg.GetString().compare(unit) == 0)
+  }
+  if (mmHg.GetString().compare(unit) == 0) {
     return true;
-  if (cmH2O.GetString().compare(unit) == 0)
+  }
+  if (cmH2O.GetString().compare(unit) == 0) {
     return true;
-  if (psi.GetString().compare(unit) == 0)
+  }
+  if (psi.GetString().compare(unit) == 0) {
     return true;
+  }
   if (atm.GetString().compare(unit) == 0)
     return true;
   return false;
@@ -45,16 +50,21 @@ bool PressureUnit::IsValidUnit(const std::string& unit)
 
 const PressureUnit& PressureUnit::GetCompoundUnit(const std::string& unit)
 {
-  if (Pa.GetString().compare(unit) == 0)
+  if (Pa.GetString().compare(unit) == 0) {
     return Pa;
-  if (mmHg.GetString().compare(unit) == 0)
+  }
+  if (mmHg.GetString().compare(unit) == 0) {
     return mmHg;
-  if (cmH2O.GetString().compare(unit) == 0)
+  }
+  if (cmH2O.GetString().compare(unit) == 0) {
     return cmH2O;
-  if (psi.GetString().compare(unit) == 0)
+  }
+  if (psi.GetString().compare(unit) == 0) {
     return psi;
-  if (atm.GetString().compare(unit) == 0)
+  }
+  if (atm.GetString().compare(unit) == 0) {
     return atm;
+  }
   std::stringstream err;
   err << unit << " is not a valid Pressure unit";
   throw CommonDataModelException(err.str());
