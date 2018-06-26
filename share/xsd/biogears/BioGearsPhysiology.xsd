@@ -130,6 +130,9 @@ specific language governing permissions and limitations under the License.
         <xs:sequence>
           <xs:element name="ArterialOxygenSetPoint_mmHg" type="xs:double" minOccurs="1" maxOccurs="1"/>
           <xs:element name="ArterialCarbonDioxideSetPoint_mmHg" type="xs:double" minOccurs="1" maxOccurs="1"/>
+		  <xs:element name="ArterialO2RunningAverage_mmHg" type="RunningAverageData" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="ArterialCO2RunningAverage_mmHg" type="RunningAverageData" minOccurs="1" maxOccurs="1"/>
+		  <xs:element name="PreviousTargetAlveolarVentilation_L_Per_min" type="xs:double" minOccurs="1" maxOccurs="1"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -190,11 +193,8 @@ specific language governing permissions and limitations under the License.
           <xs:element name="InstantaneousFunctionalResidualCapacity_L" type="xs:double" minOccurs="1" maxOccurs="1"/>
           <xs:element name="MaxDriverPressure_cmH2O" type="xs:double" minOccurs="1" maxOccurs="1"/>
           <xs:element name="PeakRespiratoryDrivePressure_cmH2O" type="xs:double" minOccurs="1" maxOccurs="1"/>
-          <xs:element name="PreviousTargetAlveolarVentilation_L_Per_min" type="xs:double" minOccurs="1" maxOccurs="1"/>
           <xs:element name="VentilationFrequency_Per_min" type="xs:double" minOccurs="1" maxOccurs="1"/>
           <xs:element name="VentilationToTidalVolumeSlope" type="xs:double" minOccurs="1" maxOccurs="1"/>
-          <xs:element name="ArterialO2RunningAverage_mmHg" type="RunningAverageData" minOccurs="1" maxOccurs="1"/>
-          <xs:element name="ArterialCO2RunningAverage_mmHg" type="RunningAverageData" minOccurs="1" maxOccurs="1"/>
           <!-- Conscious Breathing -->
           <xs:element name="ConsciousBreathing" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
           <xs:element name="ConsciousRespirationPeriod_s" type="xs:double" minOccurs="1" maxOccurs="1"/>
