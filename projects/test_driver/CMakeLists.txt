@@ -96,7 +96,6 @@ list(APPEND ${PREFIX}_INCLUDES
       bio_INCLUDE_DIR
 )
 list(REMOVE_DUPLICATES ${PREFIX}_INCLUDES)
-ensure_paths_set(${PREFIX}_INCLUDES ${PROJECT_NAME})
 
 foreach( ITEM IN LISTS ${PREFIX}_INCLUDES)
   message(STATUS "  ${${ITEM}}")
@@ -112,6 +111,9 @@ if(WIN32)
 endif()
 set(${PREFIX}_LIBS ${${PREFIX}_LIBS} PARENT_SCOPE)
 target_link_libraries(${PROJECT_NAME}  ${${PREFIX}_LIBS} )
+if(ARA_STAGE_RUNTIME) 
+add_dependencies(${PROJECT_NAME} stage_runtime)
+endif()
 
 
 

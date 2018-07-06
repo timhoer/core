@@ -1,9 +1,15 @@
-cmake_minimum_required(VERSION 3.8.0)
-
-enable_language(CXX)
-
+cmake_policy(SET CMP0070 NEW)
 include(UseJava)
 
+find_program(Java_XML_EXECUTABLE
+  NAMES xjc
+  HINTS ${_JAVA_HINTS}
+  PATHS ${_JAVA_PATHS}
+)
+
+if(NOT CMAKE_LINK_LIBRARY_SUFFIX)
+  set(CMAKE_LINK_LIBRARY_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX})
+endif()
 function(xjc_generate_java _xjc_schema SRCS)
   #Assumes a file of ${XML_SCHEMA}.XJC exist that must be compiled using xjc
   #
@@ -24,7 +30,7 @@ function(xjc_generate_java _xjc_schema SRCS)
     cmake_parse_arguments(_xjc
       "COPY_TEMPLATE;ALWAYS_CLEAN"
       "NAMESPACE;COMPONENT;INPUT_PATH;OUTPUT_PATH;GEN_PATH;PROJECT_FOLDER"
-      "ARGUMENTS"
+      "ARGUMENTS;DEPENDS"
       ${ARGN}
     )
 
@@ -116,6 +122,7 @@ function(xjc_generate_java _xjc_schema SRCS)
                           COMMAND ${CMAKE_COMMAND} -E make_directory ${_xjc_GEN_PATH}/${_xjc_COMPONENT}/${_xjc_COMPONENT}${_xjc_NAMESPACE_PATH} 
                           COMMAND ${CMAKE_COMMAND} -E env  ${Java_XML_EXECUTABLE} -d ${_xjc_GEN_PATH}/${_xjc_COMPONENT} -p ${_xjc_NAMESPACE} ${_xjc_ARUGMENTS} ${_xjc_INPUT_PATH}/${_xjc_schema}.xsd 
                           DEPENDS ${_xjc_INPUT_PATH}/${_xjc_schema}.xsd
+                          DEPENDS ${_xjc_DEPENDS}
                           COMMENT "Generating ${_xjc_schema}.java" )
 
     add_custom_target( xjc_gen_${_xjc_COMPONENT}_${_xjc_schema} DEPENDS  "${JAVA_FILES}"
@@ -132,6 +139,7 @@ function(xjc_generate_java _xjc_schema SRCS)
                           COMMAND ${CMAKE_COMMAND} -E copy ${_xjc_INPUT_PATH}/${_xjc_schema}.xml ${_xjc_OUTPUT_PATH}/${_xjc_schema}.template.xml
                           COMMAND ${CMAKE_COMMAND} -E copy ${_xjc_INPUT_PATH}/${_xjc_schema}.xsd ${_xjc_OUTPUT_PATH}/${_xjc_schema}.xsd
                           DEPENDS ${_xjc_OUTPUT_PATH}/${_xjc_schema}.template.xml ${_xjc_OUTPUT_PATH}/${_xjc_schema}.xsd
+
                           COMMENT "Staging ${_xjc_schema}.template.xml" )
 
       add_custom_target( xjc_stage_${_xjc_COMPONENT}_${_xjc_schema} DEPENDS  ${_xjc_OUTPUT_PATH}/${_xjc_schema}.xsd ${_xjc_OUTPUT_PATH}/${_xjc_schema}.template.xml     

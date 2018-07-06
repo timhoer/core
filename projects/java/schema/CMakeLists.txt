@@ -29,9 +29,12 @@ message(STATUS "Configuring ${PROJECT_NAME}")
 ###############################################################################
 #Code Generation
 ###############################################################################
+file(GLOB_RECURSE xsd_list "${PROJECT_SOURCE_DIR}/share/xsd/*.xsd")
+
 xjc_generate_java(BioGearsDataModel SRCS
     NAMESPACE mil.tatrc.physiology.datamodel.bind
     INPUT_PATH ${PROJECT_SOURCE_DIR}/share/xsd
+    DEPENDS ${xsd_list}
     )
 ###############################################################################
 #Sorce and Header Defines
@@ -48,6 +51,7 @@ string(REGEX REPLACE "Java_" "" SHORT_NAME ${PROJECT_NAME})
 add_jar(${PROJECT_NAME}
         ${${PREFIX}_SOURCES}
         OUTPUT_NAME ${SHORT_NAME}
+
         )
 add_dependencies(${PROJECT_NAME} libbiogears_jni)
 ###############################################################################
@@ -55,7 +59,7 @@ add_dependencies(${PROJECT_NAME} libbiogears_jni)
 ###############################################################################
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
-    FOLDER "Java"
+    FOLDER "Java/jar"
     OUTPUT_NAME ${SHORT_NAME}
     PROJECT_LABEL "${PROJECT_NAME}"
     )

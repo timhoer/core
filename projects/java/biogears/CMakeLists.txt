@@ -65,9 +65,12 @@ add_jar(${PROJECT_NAME}
         ${PROJECT_SOURCE_DIR}/share/jar/slf4j-simple-1.6.1.jar
         ${PROJECT_SOURCE_DIR}/share/jar/xml-apis-1.0.b2.jar
         ${PROJECT_SOURCE_DIR}/share/jar/xmlbeans-2.6.0.jar
-        ${PROJECT_SOURCE_DIR}/share/jar/poi-3.13-20150929.jar
-        ${PROJECT_SOURCE_DIR}/share/jar/poi-ooxml-3.13-20150929.jar
-        ${PROJECT_SOURCE_DIR}/share/jar/poi-ooxml-schemas-3.13-20150929.jar
+        ${PROJECT_SOURCE_DIR}/share/jar/poi-3.17.jar
+        ${PROJECT_SOURCE_DIR}/share/jar/poi-ooxml-3.17.jar
+        ${PROJECT_SOURCE_DIR}/share/jar/poi-ooxml-schemas-3.17.jar
+        ${PROJECT_SOURCE_DIR}/share/jar/commons-math3-3.6.1.jar
+        ${PROJECT_SOURCE_DIR}/share/jar/commons-codec-1.11.jar
+        ${PROJECT_SOURCE_DIR}/share/jar/commons-collections4-4.1.jar
         OUTPUT_NAME ${SHORT_NAME}
         MANIFEST ${CMAKE_CURRENT_SOURCE_DIR}/BioGears_manifest.txt
         INCLUDE_JARS 
@@ -243,41 +246,61 @@ add_custom_target(biogears-gui
     VERBATIM
     USES_TERMINAL
 )
-add_dependencies(gen-states stage_runtime ${PROJECT_NAME})
-add_dependencies(gen-data stage_runtime ${PROJECT_NAME})
-add_dependencies(gen-docs stage_runtime ${PROJECT_NAME})
 
-add_dependencies(run-system-validation stage_runtime ${PROJECT_NAME})
-add_dependencies(report-system-validation stage_runtime ${PROJECT_NAME})
-add_dependencies(run-patient-validation stage_runtime ${PROJECT_NAME})
-add_dependencies(run-drug-validation stage_runtime ${PROJECT_NAME})
-add_dependencies(run-debug stage_runtime ${PROJECT_NAME})
-
-add_dependencies(run-plots stage_runtime ${PROJECT_NAME})
-add_dependencies(run-debug-plots stage_runtime ${PROJECT_NAME})
-add_dependencies(run-cdm-tests stage_runtime ${PROJECT_NAME})
-add_dependencies(run-bge-tests stage_runtime ${PROJECT_NAME})
-add_dependencies(rebase-scenarios stage_runtime ${PROJECT_NAME})
-add_dependencies(rebase-debug stage_runtime ${PROJECT_NAME})
-add_dependencies(rebase-tests stage_runtime ${PROJECT_NAME})
-add_dependencies(biogears-gui stage_runtime ${PROJECT_NAME})
-
-
-set_target_properties(gen-states PROPERTIES FOLDER "Java" )
-set_target_properties(gen-data   PROPERTIES FOLDER "Java" )
-set_target_properties(gen-docs   PROPERTIES FOLDER "Java" )
+add_dependencies(gen-states  ${PROJECT_NAME})
+add_dependencies(gen-data  ${PROJECT_NAME})
+add_dependencies(gen-docs  ${PROJECT_NAME})
+add_dependencies(run-system-validation  ${PROJECT_NAME})
+add_dependencies(report-system-validation  ${PROJECT_NAME})
+add_dependencies(run-patient-validation  ${PROJECT_NAME})
+add_dependencies(run-drug-validation  ${PROJECT_NAME})
+add_dependencies(run-debug  ${PROJECT_NAME})
+add_dependencies(run-plots  ${PROJECT_NAME})
+add_dependencies(run-debug-plots  ${PROJECT_NAME})
+add_dependencies(run-cdm-tests  ${PROJECT_NAME})
+add_dependencies(run-bge-tests  ${PROJECT_NAME})
+add_dependencies(rebase-scenarios  ${PROJECT_NAME})
+add_dependencies(rebase-debug  ${PROJECT_NAME})
+add_dependencies(rebase-tests  ${PROJECT_NAME})
+add_dependencies(biogears-gui  ${PROJECT_NAME})
 
 
-set_target_properties(run-system-validation    PROPERTIES FOLDER "Java" )
-set_target_properties(report-system-validation PROPERTIES FOLDER "Java" )
-set_target_properties(run-patient-validation   PROPERTIES FOLDER "Java" )
-set_target_properties(run-drug-validation      PROPERTIES FOLDER "Java" )
-set_target_properties(run-debug                 PROPERTIES FOLDER "Java" )
+if(ARA_STAGE_RUNTIME)
+ add_dependencies(gen-states stage_runtime )
+ add_dependencies(gen-data stage_runtime )
+ add_dependencies(gen-docs stage_runtime )
+ add_dependencies(run-system-validation stage_runtime )
+ add_dependencies(report-system-validation stage_runtime )
+ add_dependencies(run-patient-validation stage_runtime )
+ add_dependencies(run-drug-validation stage_runtime )
+ add_dependencies(run-debug stage_runtime )
+ add_dependencies(run-plots stage_runtime )
+ add_dependencies(run-debug-plots stage_runtime )
+ add_dependencies(run-cdm-tests stage_runtime )
+ add_dependencies(run-bge-tests stage_runtime )
+ add_dependencies(rebase-scenarios stage_runtime )
+ add_dependencies(rebase-debug stage_runtime )
+ add_dependencies(rebase-tests stage_runtime )
+ add_dependencies(biogears-gui stage_runtime )
+endif()
+set_target_properties(Java_BioGears PROPERTIES FOLDER "Java/jar")
 
+set_target_properties(gen-states PROPERTIES FOLDER "Java/Generate" )
+set_target_properties(gen-data   PROPERTIES FOLDER "Java/Generate" )
+set_target_properties(gen-docs   PROPERTIES FOLDER "Java/Generate" )
+
+
+set_target_properties(run-system-validation    PROPERTIES FOLDER "Java/Validation" )
+set_target_properties(report-system-validation PROPERTIES FOLDER "Java/Validation" )
+set_target_properties(run-patient-validation   PROPERTIES FOLDER "Java/Validation" )
+set_target_properties(run-drug-validation      PROPERTIES FOLDER "Java/Validation" )
+set_target_properties(run-verification         PROPERTIES FOLDER "Java/Validation" )
+
+set_target_properties(run-debug                PROPERTIES FOLDER "Java" )
 set_target_properties(run-plots                PROPERTIES FOLDER "Java" )
 set_target_properties(run-debug-plots          PROPERTIES FOLDER "Java" )
-set_target_properties(run-cdm-tests            PROPERTIES FOLDER "Java" )
-set_target_properties(run-bge-tests            PROPERTIES FOLDER "Java" )
+set_target_properties(run-cdm-tests            PROPERTIES FOLDER "Java/Test" )
+set_target_properties(run-bge-tests            PROPERTIES FOLDER "Java/Test" )
 set_target_properties(rebase-scenarios         PROPERTIES FOLDER "Java" )
 set_target_properties(rebase-debug             PROPERTIES FOLDER "Java" )
 set_target_properties(rebase-tests             PROPERTIES FOLDER "Java" )
